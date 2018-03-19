@@ -15,3 +15,13 @@ Mit Hilfe dieser Anwendung ist die Übersicht über die Paketabhängigkeiten 
 - Objektrelationale Abbildung der Datenbank mit dem Doctrine Framework - Testen der Funktionalität der Anwendung mit Unit Tests
 - Rückwärtssuche, um Projekt-Repositories zu finden, die ein spezielles Composer-Paket einbinden
 - Abhängigkeitsbaum für einzelne Projekt-Repositories - Code wird sorgfältig dokumentiert
+
+## Projektdokumentation
+
+Die Anforderungen der IHK Bonn für die Dokumentation sind in diesem PDF Ab Seite 17 beschrieben:
+
+https://www.ihk-bonn.de/fileadmin/dokumente/Downloads/Ausbildung/IT-Berufe/IT-Handreichung_Stand_Januar_2018.pdf
+
+Die Projektdokumentation wird aktuell hier gepflegt: 
+
+https://docs.google.com/document/d/1dvWUFY6_NgA87uyRw6DVtQiWx1LAdVV1ZOjUTvIm3Ik/edit?usp=sharing
