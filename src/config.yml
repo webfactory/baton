@@ -1,0 +1,4 @@
+imports:
+    - { resource: ../app/config/parameters.yml }
+    - { resource: ../vendor/webfactory/symfony-default-config/config.yml }
+    - { resource: ../vendor/webfactory/doctrine-bundle-default-config/config.yml }

@@ -1,0 +1,41 @@
+{
+    "name": "webfactory/baton",
+    "type": "project",
+    "description": "Composer Dependency Tracking",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.webfactory.de"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "~3.4",
+        "symfony/monolog-bundle": "^3.2.0",
+        "symfony/swiftmailer-bundle": "^2.6.7",
+        "sensio/framework-extra-bundle": "~3.0",
+        "doctrine/orm": "^2.5.14",
+        "doctrine/doctrine-bundle": "^1.8.1",
+        "doctrine/doctrine-migrations-bundle": "^1.3.1",
+        "doctrine/migrations": "^1.4.1",
+        "webfactory/symfony-default-config": "^2.6.0",
+        "webfactory/doctrine-bundle-default-config": "2.0.1"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^4.8.36"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}

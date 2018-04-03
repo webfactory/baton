@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<project>
+    <target name="project:compile">
+        <exec command="gulp compile" passthru="true" />
+    </target>
+</project>
