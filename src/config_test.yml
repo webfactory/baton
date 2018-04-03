@@ -5,22 +5,6 @@ framework:
     test: true
     session:
         storage_id: session.storage.filesystem
-    # Hier wird eine leere Routen-Datei eingelesen, damit in der "test"-Environment, die phpUnit nutzt, insb. bei den
-    # symfony-application-tests beim Routerbau keine Datenbankverbindung zu einer dem pages-bundle entsprechenden
-    # Datenbank benötigt wird (normalerweise würde laut routing.yml die Wurzel des Seiten-Baums eingelesen und sie und
-    # ihre Kinder als Routen ausgewertet werden).
-    #
-    # Das wird für functional Tests https://symfony.com/doc/2.8/testing.html#your-first-functional-test nicht mehr
-    # funktionieren: Hier wollen wir wahrscheinlich anhand des konkreten Seitenbaums bestimmte Seiten testen. D.h. hier
-    # brauchen wir z.B. eine Datenbank mit dem Seitenbaum. Hat man diese, kann man das Unterschieben der leeren Routing-
-    # Datei entfernen und z.B. die Doctrine-Konfiguration für eine entsprechende persistente SQLite-Datenbank schreiben
-    # oder mit Fixtures arbeiten oder oder... Da mir aber noch gar nicht so klar ist, was für functional Tests wir
-    # schreiben und wie wir an die entsprechende Datenbank kommen wollen, will ich da noch nicht zu weit vor preschen.
-    #
-    # Eine ganz andere Stoßrichtung wäre das Überdenken der PagesBundle-Konzepte bzw. das Lösen der Datenbank-
-    # Abhängigkeit.
-    router:
-        resource: ../routing_test.yml
 
 monolog:
     handlers:
