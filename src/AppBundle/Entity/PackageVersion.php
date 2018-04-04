@@ -28,7 +28,8 @@ final class PackageVersion
     /**
      * @ORM\ManyToOne(
      *      targetEntity="Package",
-     *      inversedBy="version"
+     *      inversedBy="version",
+     *      cascade="persist"
      * )
      * @var Package
      */
