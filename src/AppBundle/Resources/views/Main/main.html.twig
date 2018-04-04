@@ -1,7 +1,16 @@
+{# projects Project[] #}
 {% extends '@App/Base/base.html.twig' %}
 
 {% block body %}
     <header>
         <h1>Baton - Composer Dependency Analytics Tool</h1>
     </header>
+    <main>
+        <h2>Tracked Projects</h2>
+        <ul>
+            {% for project in projects %}
+                <li>{{ project.name }}</li>
+            {% endfor %}
+        </ul>
+    </main>
 {% endblock body %}

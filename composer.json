@@ -24,7 +24,8 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^4.8.36"
+        "phpunit/phpunit": "^4.8.36",
+        "doctrine/doctrine-fixtures-bundle": "^3.0"
     },
 
     "autoload": {

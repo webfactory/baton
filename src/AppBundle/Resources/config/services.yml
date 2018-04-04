@@ -1,3 +1,7 @@
 services:
-    app.startseite.controller:
-        class: 'AppBundle\Controller\MainController'
+    AppBundle\Controller\MainController:
+        arguments:
+            $projectRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Project')"
+
+    AppBundle\DataFixtures\AppFixtures:
+        tags: ['doctrine.fixture.orm']
