@@ -26,7 +26,7 @@ class Package
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string|null
      */
     private $description;
@@ -35,7 +35,7 @@ class Package
      * @ORM\OneToMany(
      *      targetEntity="PackageVersion",
      *      mappedBy="package",
-     *     cascade="persist"
+     *      cascade="persist"
      * )
      *
      * @var PackageVersion[]
