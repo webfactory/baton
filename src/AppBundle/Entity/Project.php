@@ -30,7 +30,7 @@ class Project
     private $vcsUrl;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string|null
      */
     private $description;
@@ -39,7 +39,7 @@ class Project
      * @ORM\ManyToMany(
      *      targetEntity="PackageVersion",
      *      mappedBy="projects",
-     *     cascade="persist"
+     *      cascade="persist"
      * )
      *
      * @var PackageVersion[]
