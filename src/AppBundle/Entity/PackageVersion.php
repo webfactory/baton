@@ -5,9 +5,11 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Describes a Composer package used in a specific version number.
+ *
  * @ORM\Entity
  */
-class PackageVersion
+final class PackageVersion
 {
     /**
      * @ORM\Id
@@ -34,10 +36,10 @@ class PackageVersion
 
     /**
      * @ORM\ManyToMany(
-     *      targetEntity="ProjectRepository",
+     *      targetEntity="Project",
      *      inversedBy="usages"
      * )
-     * @var ProjectRepository[]
+     * @var Project[]
      */
     private $projects;
 
@@ -51,7 +53,7 @@ class PackageVersion
         $this->package = $package;
     }
 
-    public function addProject(ProjectRepository $project)
+    public function addProject(Project $project)
     {
         $this->projects[] = $project;
     }
@@ -81,7 +83,7 @@ class PackageVersion
     }
 
     /**
-     * @return ProjectRepository[]
+     * @return Project[]
      */
     public function getProjects()
     {

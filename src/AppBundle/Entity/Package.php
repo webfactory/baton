@@ -44,10 +44,12 @@ class Package
 
     /**
      * @param string $name
+     * @param string|null $description
      */
-    public function __construct($name)
+    public function __construct($name, $description = null)
     {
       $this->name = $name;
+      $this->description = $description;
     }
 
     /**
