@@ -2,12 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+use Webfactory\SlugValidationBundle\Bridge\SluggableInterface;
 
 /**
  * @ORM\Entity
  */
-class Project
+class Project implements SluggableInterface
 {
     /**
      * @ORM\Id
@@ -41,7 +45,6 @@ class Project
      *      mappedBy="projects",
      *      cascade="persist"
      * )
-     *
      * @var PackageVersion[]
      */
     private $usages;
@@ -109,5 +112,16 @@ class Project
     public function getUsages()
     {
         return $this->usages;
+    }
+
+    /**
+     * Returns the slug for the entity.
+     *
+     * @return string|null
+     */
+    public function getSlug()
+    {
+        $slugify = new Slugify();
+        return $slugify->slugify($this->getName());
     }
 }
