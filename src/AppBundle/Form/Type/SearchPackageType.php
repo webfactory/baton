@@ -1,0 +1,46 @@
+<?php
+
+namespace AppBundle\Form\Type;
+
+use AppBundle\Entity\Package;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+class SearchPackageType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('package', DatalistType::class, [
+                'label' => 'Package name',
+                'class' => Package::class,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'placeholder' => 'First choose a package',
+                'label_attr' => ['class' => 'sr-only'],
+                'constraints' => [new NotBlank()]
+            ])
+            ->add('versionConstraintOperator', ChoiceType::class, [
+                'label' => 'Version constraint operator',
+                'label_attr' => ['class' => 'sr-only'],
+                'choices' => ['<' => '<', '<=' => '<=', '>' => '>', '>=' => '>=', '==' => '==', 'all' => 'all'],
+                'choices_as_values' => true,
+                'mapped' => false,
+                'placeholder' => 'Version constraint operator',
+                'disabled' => true
+            ])
+            ->add('versionConstraintValue', ChoiceType::class, [
+                'label' => 'Version constraint value',
+                'label_attr' => ['class' => 'sr-only'],
+                'placeholder' => 'Version constraint value',
+                'choices' => [],
+                'mapped' => false,
+                'disabled' => true,
+                'required' => false
+            ]);
+    }
+}
