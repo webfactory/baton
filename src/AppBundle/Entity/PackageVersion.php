@@ -59,6 +59,15 @@ final class PackageVersion
         $this->projects[] = $project;
     }
 
+    public function removeProject(Project $project)
+    {
+        if (!$this->projects->contains($project)) {
+            return;
+        }
+        $this->projects->removeElement($project);
+        $project->removeUsage($this);
+    }
+
     /**
      * @return int
      */
