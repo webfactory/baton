@@ -13,19 +13,19 @@
 {% endblock %}
 
 {% block main %}
-    {{ form_start(searchPackageForm, {'action': path('main'), 'attr': {'class': 'js-findProjectsForm pb-2'}}) }}
+    {{ form_start(searchPackageForm, {'action': path('main'), 'attr': {'class': 'js-findProjectsForm mb-5'}}) }}
         {{ form_errors(searchPackageForm) }}
-        <div class="form-row">
+        <div class="form-row pb-2">
             {{ form_label(searchPackageForm.package) }}
             {{ form_widget(searchPackageForm.package, {'attr': {'class': 'js-packageSelect form-control col-md-6 offset-md-3'}}) }}
             {{ form_errors(searchPackageForm.package) }}
         </div>
-        <div class="form-row">
+        <div class="form-row pb-2">
             {{ form_label(searchPackageForm.versionConstraintOperator) }}
             {{ form_widget(searchPackageForm.versionConstraintOperator, {'attr': {'class': 'js-versionConstraintOperatorSelect form-control col-md-6 offset-md-3'}}) }}
             {{ form_errors(searchPackageForm.versionConstraintOperator) }}
         </div>
-        <div class="form-row">
+        <div class="form-row pb-2">
             {{ form_label(searchPackageForm.versionConstraintValue) }}
             {{ form_widget(searchPackageForm.versionConstraintValue, {'attr': {'class': 'js-versionConstraintValueSelect form-control col-md-6 offset-md-3'}}) }}
             {{ form_errors(searchPackageForm.versionConstraintValue) }}
@@ -42,6 +42,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2>Tracked Projects</h2>
+            <p class="text-right"><a href="{{ path("import-repositories") }}">Add projects</a></p>
             <ul class="list-group">
                 {% for project in projects %}
                     <li class="list-group-item"><a href="{{ path('projectDetail', {'slug': project.slug, 'id': project.id}) }}">{{ project.name }}</a></li>

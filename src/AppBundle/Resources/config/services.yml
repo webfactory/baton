@@ -5,6 +5,12 @@ services:
             $projectRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Project')"
             $formFactory: "@form.factory"
 
+    app.controller.importRepositories:
+        class: AppBundle\Controller\ImportRepositoriesController
+        arguments:
+            $formFactory: "@form.factory"
+            $importProjectTask: "@app.task.import_project"
+
     app.controller.webhook:
         class: AppBundle\Controller\WebhookController
         arguments:

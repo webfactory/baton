@@ -1,0 +1,29 @@
+{# projects AppBundle:Project[] #}
+{% extends '@App/Base/base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 pb-2">
+            <h2>Import Project Repositories</h2>
+            <p>Enter a comma separated list of repository URLs from GitHub or Kiln in the textarea below and submit the form to start the import.</p>
+        </div>
+    </div>
+    {{ form_start(importProjectsForm, {'action': path("import-repositories"), 'attr': {'class': 'col-md-6 offset-md-3 pb-2'}}) }}
+        {{ form_errors(importProjectsForm) }}
+        <div class="form-group">
+            {{ form_label(importProjectsForm.repositoryUrls) }}
+            {{ form_widget(importProjectsForm.repositoryUrls, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(importProjectsForm.repositoryUrls) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Import repositories</button>
+    {{ form_end(importProjectsForm) }}
+    <div class="row">
+        <div class="col-md-6 offset-md-3 pb-2">
+            {% for import in imports %}
+                {% if loop.first %}<p>Imported {% endif %}
+                    {{ import }},
+                {% if loop.last %}<p>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock%}
