@@ -1,16 +1,52 @@
-{# projects Project[] #}
+{# projects AppBundle:Project[] #}
 {% extends '@App/Base/base.html.twig' %}
 
-{% block body %}
-    <header>
-        <h1>Baton - Composer Dependency Analytics Tool</h1>
-    </header>
-    <main>
-        <h2>Tracked Projects</h2>
-        <ul>
-            {% for project in projects %}
-                <li>{{ project.name }}</li>
-            {% endfor %}
-        </ul>
-    </main>
-{% endblock body %}
+{% form_theme searchPackageForm _self %}
+
+{% block datalist_widget %}
+    <input {{ block('widget_attributes') }} list="{{ form.vars.id }}_list" placeholder="{{ form.vars.placeholder }}"/>
+    <datalist id="{{ form.vars.id }}_list">
+        {% for choice in choices %}
+            <option value="{{ choice.value }}">{{ choice.label }}</option>
+        {% endfor %}
+    </datalist>
+{% endblock %}
+
+{% block main %}
+    {{ form_start(searchPackageForm, {'action': path('main'), 'attr': {'class': 'js-findProjectsForm pb-2'}}) }}
+        {{ form_errors(searchPackageForm) }}
+        <div class="form-row">
+            {{ form_label(searchPackageForm.package) }}
+            {{ form_widget(searchPackageForm.package, {'attr': {'class': 'js-packageSelect form-control col-md-6 offset-md-3'}}) }}
+            {{ form_errors(searchPackageForm.package) }}
+        </div>
+        <div class="form-row">
+            {{ form_label(searchPackageForm.versionConstraintOperator) }}
+            {{ form_widget(searchPackageForm.versionConstraintOperator, {'attr': {'class': 'js-versionConstraintOperatorSelect form-control col-md-6 offset-md-3'}}) }}
+            {{ form_errors(searchPackageForm.versionConstraintOperator) }}
+        </div>
+        <div class="form-row">
+            {{ form_label(searchPackageForm.versionConstraintValue) }}
+            {{ form_widget(searchPackageForm.versionConstraintValue, {'attr': {'class': 'js-versionConstraintValueSelect form-control col-md-6 offset-md-3'}}) }}
+            {{ form_errors(searchPackageForm.versionConstraintValue) }}
+        </div>
+        <div class="form-row">
+            <button type="submit" class="btn btn-primary col-md-6 offset-md-3">Find projects</button>
+        </div>
+    {{ form_end(searchPackageForm) }}
+
+    <div class="row">
+        <div id="results" class="col-md-6 offset-md-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Tracked Projects</h2>
+            <ul class="list-group">
+                {% for project in projects %}
+                    <li class="list-group-item"><a href="{{ path('projectDetail', {'slug': project.slug, 'id': project.id}) }}">{{ project.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock%}

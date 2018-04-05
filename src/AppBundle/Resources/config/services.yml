@@ -1,7 +1,9 @@
 services:
-    AppBundle\Controller\MainController:
+    app.controller.main:
+        class: AppBundle\Controller\MainController
         arguments:
             $projectRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Project')"
+            $formFactory: "@form.factory"
 
     AppBundle\DataFixtures\AppFixtures:
         tags: ['doctrine.fixture.orm']
