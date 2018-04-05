@@ -12,7 +12,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $project = new Project(
                 uniqid('', false),
                 uniqid('vcs@vcshub.com:', false)
