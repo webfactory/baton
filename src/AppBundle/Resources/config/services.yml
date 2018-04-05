@@ -21,3 +21,8 @@ services:
             $importProjectTask: "@app.task.import_project"
         tags:
             - { name: "console.command" }
+
+    app.form.type.datalist_type:
+        class: AppBundle\Form\Type\DatalistType
+        tags:
+            -  { name: form.type, alias: datalist }
