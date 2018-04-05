@@ -1,4 +1,3 @@
 imports:
     - { resource: config.yml }
-    - { resource: ../vendor/webfactory/symfony-default-config/config_production.yml }
     - { resource: ../vendor/webfactory/doctrine-bundle-default-config/config_production.yml }
