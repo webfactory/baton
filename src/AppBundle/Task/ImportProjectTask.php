@@ -61,12 +61,12 @@ class ImportProjectTask
 
         $this->project = $this->projectRepository->findOneBy(['name' => $this->getProjectNameFromUrl($vcsUrl)]);
         if ($this->project !== null) {
-            echo "Exisitng repository found, removing current usages\n";
+            $this->io->write(["Exisitng repository found, removing current usages"]);
             foreach ($this->project->getUsages() as $usage) {
                 $this->project->removeUsage($usage);
             }
         } else {
-            echo "Importing new project\n";
+            $this->io->write(["Importing new project"]);
             $this->project = new Project($this->getProjectNameFromUrl($vcsUrl), $vcsUrl);
         }
 
@@ -79,16 +79,15 @@ class ImportProjectTask
             return false;
         }
 
-        echo "\nAdding Usages:\n";
+        $this->io->write(["Adding Usages:"]);
         foreach ($completeComposerPackages->getPackages() as $composerPackage) {
             $package = $this->packageRepository->findOneBy(['name' => $composerPackage->getName()]);
             if ($package === null) {
                 $package = new Package($composerPackage->getName());
             }
             $this->project->addUsage(new PackageVersion($composerPackage->getPrettyVersion(), $package));
-            echo $composerPackage->getName().", ";
+            $this->io->write($composerPackage->getName().", ");
         }
-        echo "\n\n";
 
         $this->entityManager->persist($this->project);
         $this->entityManager->flush();
