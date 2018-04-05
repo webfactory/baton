@@ -2,6 +2,13 @@
 
 Das Magnum Opus von @xkons für sein Abschlussprojekt im Rahmen der Ausbildung
 
+## Aktuelles
+
+Aktuell untersützen wir nur GitHub und Kiln beim Importieren Repositories.
+
+Das liegt daran, dass die Authentifizierung für das Verarbeiten von privaten Repositories für jede Plattform
+extra konfiguriert werden muss und wir bei firmenintern nur GitHub und Kiln verwenden.
+
 ## Kurzbeschreibung
 
 Für die webfactory GmbH soll eine Webanwendung entwickelt werden, die für PHP-Projekte, welche Composer als Paketmanager nutzen, automatisch einen Abhängigkeitsbaum der installierten Pakete visualisieren kann, aber auch umgekehrt Auskunft geben kann, welche Projekte ein spezielles Composer-Paket einbinden.
