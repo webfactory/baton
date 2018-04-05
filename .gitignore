@@ -15,6 +15,7 @@ www/bower_components/
 www/webassets/
 vendor/
 var/cache
+cache/
 phpunit.xml
 .idea/workspace.xml
 .idea/encodings.xml
