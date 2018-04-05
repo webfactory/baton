@@ -5,9 +5,17 @@ services:
 
     AppBundle\DataFixtures\AppFixtures:
         tags: ['doctrine.fixture.orm']
+
     app.task.import_project:
         class: AppBundle\Task\ImportProjectTask
         arguments:
             $entityManager: "@doctrine.orm.entity_manager"
             $githubOAuthToken: "%app.github.token%"
             $kilnOAuthToken: "%app.kiln.token%"
+
+    app.command.import_project:
+        class: AppBundle\Command\ImportProjectCommand
+        arguments:
+            $importProjectTask: "@app.task.import_project"
+        tags:
+            - { name: "console.command" }
