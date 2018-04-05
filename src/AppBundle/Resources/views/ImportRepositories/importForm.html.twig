@@ -12,7 +12,7 @@
         {{ form_errors(importProjectsForm) }}
         <div class="form-group">
             {{ form_label(importProjectsForm.repositoryUrls) }}
-            {{ form_widget(importProjectsForm.repositoryUrls, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(importProjectsForm.repositoryUrls, {'attr': {'class': 'form-control', 'placeholder': 'https://github.com/webfactory/slug-validation-bundle,https://github.com/webfactory/slimdump'}}) }}
             {{ form_errors(importProjectsForm.repositoryUrls) }}
         </div>
         <button type="submit" class="btn btn-primary">Import repositories</button>
