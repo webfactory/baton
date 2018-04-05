@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Composer\Semver\VersionParser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -85,6 +86,14 @@ final class PackageVersion
     }
 
     /**
+     * @return string
+     */
+    public function getNormalizedVersion()
+    {
+        return (new VersionParser())->normalize($this->getVersion());
+    }
+
+    /**
      * @return Package
      */
     public function getPackage()
@@ -99,6 +108,5 @@ final class PackageVersion
     {
         return $this->projects;
     }
-
 
 }
