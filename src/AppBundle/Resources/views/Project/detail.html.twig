@@ -1,0 +1,21 @@
+{# project AppBundle:Project #}
+{# usage AppBundle:PackageVersion #}
+{% extends '@App/Base/base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Project {{ project.name }}</h2>
+            <h3>Dependencies</h3>
+            <ul class="list-group">
+                {% for usage in project.usages %}
+                    <li class="list-group-item">
+                        <a href="{{ path('packageDetail', {'slug': usage.package.slug, 'id': usage.package.id}) }}">
+                            {{ usage.package.name }}
+                        </a> with {{ usage.version }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
