@@ -20,7 +20,11 @@
         <header>
             {% block header %}
                 <div class="mb-5 mt-5 text-center">
-                    <h1><a href="/">Baton</a></h1>
+                    <h1>
+                        {% if app.request.pathinfo != "/" %}<a href="/">{% endif %}
+                            Baton
+                        {% if app.request.pathinfo != "/" %}</a>{% endif %}
+                    </h1>
                     <p>Composer Dependency Analytics Tool</p>
                 </div>
             {% endblock %}
