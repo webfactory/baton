@@ -21,9 +21,9 @@ var config = {
 
     "javascripts": {
         "files": {
-            // Alle Pfade relativ zu www/, *nicht* mit ../.. aus www ausbrechen!
-            // "js/first.js": [ 'js/foo.js', 'bundles/xx/js/cool.js' ],
-            // "js/second.js": [ 'js/bar.js', 'bundles/xx/js/baz.js' ]
+            "js/scripts.js": [
+                'bundles/app/js/searchProjectsWithPackageVersionForm.js'
+            ]
         },
         "watch": ['{vendor,src,www}/**/*.js', '!www/js/**']
     },
