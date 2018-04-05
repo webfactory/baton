@@ -5,7 +5,13 @@ services:
             $projectRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Project')"
             $formFactory: "@form.factory"
 
-    AppBundle\DataFixtures\AppFixtures:
+    app.controller.webhook:
+        class: AppBundle\Controller\WebhookController
+        arguments:
+            $importProjectTask: "@app.task.import_project"
+
+    app.fixtures:
+        class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
 
     app.task.import_project:
