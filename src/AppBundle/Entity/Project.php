@@ -62,6 +62,15 @@ class Project
         $this->usages[] = $package;
     }
 
+    public function removeUsage(PackageVersion $usage)
+    {
+        if (!$this->usages->contains($usage)) {
+            return;
+        }
+        $this->usages->removeElement($usage);
+        $usage->removeProject($this);
+    }
+
     /**
      * @return int
      */
