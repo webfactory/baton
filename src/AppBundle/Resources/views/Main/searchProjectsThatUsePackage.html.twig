@@ -1,0 +1,10 @@
+{% extends '@App/Base/base.html.twig' %}
+
+{% block main %}
+    <h2>Projects using {{ package.name }} in version {{ versionConstraint }}</h2>
+    <ul class="list-group">
+        {% for project in projects %}
+            <li class="list-group-item"><a href="{{ path('projectDetail', {'slug': project.slug, 'id': project.id}) }}">{{ project.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock%}
