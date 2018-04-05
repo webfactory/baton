@@ -46,6 +46,7 @@ class ImportProjectTask
         $this->packageRepository = $entityManager->getRepository(Package::class);
         $this->githubOAuthToken = $githubOAuthToken;
         $this->kilnOAuthToken = $kilnOAuthToken;
+        //TODO: logging
     }
 
     /**
