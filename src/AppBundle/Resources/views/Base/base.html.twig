@@ -10,15 +10,32 @@
         <meta name="application-name" content="Baton" />
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/screen.css') }}" media="all" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {% endblock %}
     <title>{%- block title %}Baton{% endblock %}</title>
 </head>
 
 <body class="{% block bodyClass %}{% endblock %}">
-{% block body %}{% endblock %}
-
-{% block javascript %}
-{% endblock %}
+    <div class="container">
+        <header>
+            {% block header %}
+                <div class="mb-5 mt-5 text-center">
+                    <h1><a href="/">Baton</a></h1>
+                    <p>Composer Dependency Analytics Tool</p>
+                </div>
+            {% endblock %}
+        </header>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </div>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    {% block javascript %}
+    {% endblock %}
 </body>
 </html>
