@@ -10,6 +10,13 @@ use Composer\IO\IOInterface;
 use Composer\Repository\Vcs\GitDriver;
 use Composer\Repository\Vcs\VcsDriver;
 
+/**
+ * Class KilnDriver
+ *
+ * Enables the processing of Kiln repostiories using the Kiln API.
+ *
+ * @package AppBundle\Driver
+ */
 class KilnDriver extends VcsDriver
 {
     /** @var Cache */
