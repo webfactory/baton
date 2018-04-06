@@ -23,7 +23,7 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCompletePackagesFromLockFileReturnsArrayRepositoryOfCompletePackage()
     {
-        $completePackages = $this->importProjectTask->getCompletePackagesFromLockFile(file_get_contents(getcwd() . '/composer.lock'));
+        $completePackages = $this->importProjectTask->getCompletePackagesFromLockFile(file_get_contents(__DIR__ . '/composer_test.lock'));
 
         $this->assertInstanceOf(ArrayRepository::class, $completePackages);
         $this->assertTrue(count($completePackages->getPackages()) > 0);
@@ -65,7 +65,7 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
         $vcsDriverMock = $this->getMockBuilder(VcsDriver::class)
           ->disableOriginalConstructor()
           ->getMock();
-        $vcsDriverMock->method('getFileContent')->willReturn(file_get_contents(getcwd() . '/composer.lock'));
+        $vcsDriverMock->method('getFileContent')->willReturn(file_get_contents(__DIR__ . '/composer_test.lock'));
 
         $vcsDriverFactoryMock = $this->getMockBuilder(VcsDriverFactory::class)
           ->disableOriginalConstructor()
