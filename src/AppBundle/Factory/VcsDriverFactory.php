@@ -39,7 +39,15 @@ class VcsDriverFactory
             $io,
             Factory::createConfig(),
             null,
-            ['github' => 'Composer\Repository\Vcs\GitHubDriver', 'kiln' => 'AppBundle\Driver\KilnDriver',  'git' => 'Composer\Repository\Vcs\GitDriver']
+            [
+                'github' => 'Composer\Repository\Vcs\GitHubDriver',
+                'kiln' => 'AppBundle\Driver\KilnDriver',
+                'gitlab' => 'Composer\Repository\Vcs\GitLabDriver',
+                'git-bitbucket' => 'Composer\Repository\Vcs\GitBitbucketDriver',
+                'hg-bitbucket' => 'Composer\Repository\Vcs\HgBitbucketDriver',
+                'git' => 'Composer\Repository\Vcs\GitDriver',
+                'hg' => 'Composer\Repository\Vcs\HgDriver'
+            ]
         );
 
         return $vcsRepository->getDriver();
