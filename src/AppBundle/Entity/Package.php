@@ -87,51 +87,6 @@ class Package implements SluggableInterface
     }
 
     /**
-     * @param string $operator (<|<=|>|>=|==|all)
-     * @param string $versionString e.g. 1.0.0
-     * @return PackageVersion[]|array
-     */
-    public function getVersionsThatMatchVersionConstraint($operator, $versionString)
-    {
-        $matchingVersions = [];
-
-        foreach($this->getVersions() as $version) {
-            switch($operator){
-                case "<":
-                    if ($version->getNormalizedVersion() < $versionString) {
-                        $matchingVersions[] = $version;
-                    }
-                    break;
-                case "<=":
-                    if ($version->getNormalizedVersion() <= $versionString) {
-                        $matchingVersions[] = $version;
-                    }
-                    break;
-
-                case ">":
-                    if ($version->getNormalizedVersion() > $versionString) {
-                        $matchingVersions[] = $version;
-                    }
-                    break;
-                case ">=":
-                    if ($version->getNormalizedVersion() >= $versionString) {
-                        $matchingVersions[] = $version;
-                    }
-                    break;
-                case "==":
-                    if ($version->getNormalizedVersion() == $versionString) {
-                        $matchingVersions[] = $version;
-                    }
-                    break;
-                case "all":
-                    $matchingVersions[] = $version;
-                    break;
-            }
-        }
-        return $matchingVersions;
-    }
-
-    /**
      * Returns the slug for the entity.
      *
      * @return string|null

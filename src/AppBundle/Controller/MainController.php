@@ -46,18 +46,33 @@ class MainController
     }
 
     /**
-     * @Route("/package/{packageSlug}.{id}/{operator}/{versionString}", name="searchProjectsThatUsePackage")
+     * @Route(
+     *     "/package/{packageSlug}.{id}/{operator}/{versionString}",
+     *     name="searchProjectsThatUsePackage",
+     *     defaults={"operator": "all", "versionString": "1.0.0"},
+     *     requirements={
+     *         "operator": "(==|>=|<=|>|<|all)"
+     *     }
+     * )
      * @ParamConverter("package", class="AppBundle:Package")
      * @Template()
      */
     public function searchProjectsThatUsePackageAction(Package $package, $operator, $versionString)
     {
         $projects = [];
-        foreach($package->getVersionsThatMatchVersionConstraint($operator, $versionString) as $packageVersion) {
-            foreach($packageVersion->getProjects() as $project) {
-                $projects[] = $project;
+        $versionConstraint = new VersionConstraint($operator, $versionString);
+
+        foreach($package->getVersions() as $packageVersion) {
+            if($versionConstraint->matches($packageVersion)) {
+                if(count($projects = $packageVersion->getProjects()) === 0) {
+                    continue;
+                }
+                foreach($projects as $project) {
+                    $projects[] = $project;
+                }
             }
         }
+
         return [
             'package' => $package,
             'versionConstraint' => $operator . ' ' . $versionString,
