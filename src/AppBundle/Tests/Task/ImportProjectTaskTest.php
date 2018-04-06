@@ -29,7 +29,11 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($completePackages->getPackages()) > 0);
     }
 
-    public function testRun()
+    /**
+     * Getting the composer.lock from the repository url is mocked away.
+     * What is being tested here is the logic for importing the project without checking the persisted project.
+     */
+    public function testRunTask()
     {
         $this->assertTrue($this->importProjectTask->run("https://foo.git"));
     }
