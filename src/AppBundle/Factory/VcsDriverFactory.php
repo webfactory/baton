@@ -36,7 +36,7 @@ class VcsDriverFactory
             $io,
             Factory::createConfig(),
             null,
-            ['github' => 'Composer\Repository\Vcs\GitHubDriver', 'kiln' => 'AppBundle\Driver\KilnDriver']
+            ['github' => 'Composer\Repository\Vcs\GitHubDriver', 'kiln' => 'AppBundle\Driver\KilnDriver',  'git' => 'Composer\Repository\Vcs\GitDriver']
         );
 
         return $vcsRepository->getDriver();
