@@ -55,7 +55,7 @@ class MainController
 
     /**
      * @Route(
-     *     "/package/{packageSlug}.{id}/{operator}/{versionString}",
+     *     "/findprojects/{packageSlug}.{id}/{operator}/{versionString}",
      *     name="searchProjectsThatUsePackage",
      *     defaults={"operator": "all", "versionString": "1.0.0"},
      *     requirements={
