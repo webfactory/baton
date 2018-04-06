@@ -25,6 +25,7 @@ services:
         class: AppBundle\Task\ImportProjectTask
         arguments:
             $entityManager: "@doctrine.orm.entity_manager"
+            $vcsDriverFactory: "@app.factory.vcs_driver_factory"
 
     app.factory.vcs_driver_factory:
         class: AppBundle\Factory\VcsDriverFactory

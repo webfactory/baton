@@ -5,14 +5,13 @@ namespace AppBundle\Task;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
-use Composer\Factory;
+use AppBundle\Factory\VcsDriverFactory;
 use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Package\CompletePackage;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Repository\ArrayRepository;
-use Composer\Repository\VcsRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -27,11 +26,8 @@ class ImportProjectTask
     /** @var ObjectRepository */
     private $packageRepository;
 
-    /** @var string */
-    private $githubOAuthToken;
-
-    /** @var string */
-    private $kilnOAuthToken;
+    /** @var VcsDriverFactory */
+    private $vcsDriverFactory;
 
     /** @var IOInterface|null */
     private $io;
@@ -39,13 +35,12 @@ class ImportProjectTask
     /** @var Project */
     private $project;
 
-    public function __construct(EntityManagerInterface $entityManager, $githubOAuthToken, $kilnOAuthToken)
+    public function __construct(EntityManagerInterface $entityManager, VcsDriverFactory $vcsDriverFactory)
     {
         $this->entityManager = $entityManager;
         $this->projectRepository = $entityManager->getRepository(Project::class);
         $this->packageRepository = $entityManager->getRepository(Package::class);
-        $this->githubOAuthToken = $githubOAuthToken;
-        $this->kilnOAuthToken = $kilnOAuthToken;
+        $this->vcsDriverFactory = $vcsDriverFactory;
         //TODO: logging
     }
 
@@ -57,7 +52,6 @@ class ImportProjectTask
     public function run($vcsUrl, IOInterface $io = null)
     {
         $io !== null ? $this->io = $io : $this->io = new NullIO();
-        $this->io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
 
         $this->project = $this->projectRepository->findOneBy(['name' => $this->getProjectNameFromUrl($vcsUrl)]);
         if ($this->project !== null) {
@@ -72,12 +66,12 @@ class ImportProjectTask
 
         $lockFileContents = $this->getLockFileContent($this->project);
 
-        $completeComposerPackages = $this->getCompletePackagesFromLockFile($lockFileContents);
-        if ($completeComposerPackages->count() === 0) {
-            $this->io->writeError('The project '.$this->project->getName().' does not contain any lock information for dependencies. Please track the composer.lock file in its repository to import it.');
-
+        if($lockFileContents === null) {
+            $this->io->writeError('The project '.$this->project->getName().' does not contain a composer.lock file. Please track the composer.lock file in its repository to import it.');
             return false;
         }
+
+        $completeComposerPackages = $this->getCompletePackagesFromLockFile($lockFileContents);
 
         $this->io->write(["Adding Usages:"]);
         foreach ($completeComposerPackages->getPackages() as $composerPackage) {
@@ -123,20 +117,9 @@ class ImportProjectTask
 
     private function getLockFileContent(Project $project)
     {
-        putenv('COMPOSER_HOME=/var/www/baton');
+        $vcsDriver = $this->vcsDriverFactory->getDriver($project);
 
-        $composerConfig = Factory::createConfig($this->io);
-
-        /** @var VcsRepository $vcsRepository */
-        $vcsRepository = new VcsRepository(
-            ['url' => $project->getVcsUrl(), 'kiln-token' => $this->kilnOAuthToken],
-            $this->io,
-            $composerConfig,
-            null,
-            ['github' => 'Composer\Repository\Vcs\GitHubDriver', 'kiln' => 'AppBundle\Driver\KilnDriver']
-        );
-
-        return $vcsRepository->getDriver()->getFileContent('composer.lock', 'master');
+        return $vcsDriver->getFileContent('composer.lock', 'master');
     }
 
     /**
