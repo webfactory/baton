@@ -26,22 +26,34 @@ class ApiController
     }
 
     /**
-     * @Route("/api/projects/{packageSlug}.{id}/{operator}/{versionString}", name="api-projects-with-package-version")
+     * @Route(
+     *     "/api/projects/{packageSlug}.{id}/{operator}/{versionString}",
+     *     name="api-projects-with-package-version",
+     *     defaults={"operator": "all", "versionString": "1.0.0"},
+     *     requirements={
+     *         "operator": "(==|>=|<=|>|<|all)"
+     *     }
+     * )
      * @ParamConverter("package", class="AppBundle:Package")
      * @return JsonResponse
      */
     public function apiProjectsWithPackageVersionAction(Package $package, $operator, $versionString)
     {
+        /** @var Project[] $matchedProjects */
         $matchedProjects = [];
         $projectVersions = [];
-        foreach($package->getVersionsThatMatchVersionConstraint($operator, $versionString) as $packageVersion) {
-            if(count($projects = $packageVersion->getProjects()) === 0) {
-                continue;
+        $versionConstraint = new VersionConstraint($operator, $versionString);
+
+        foreach($package->getVersions() as $packageVersion) {
+            if($versionConstraint->matches($packageVersion)) {
+                if(count($projects = $packageVersion->getProjects()) === 0) {
+                    continue;
+                }
+                foreach($projects as $project) {
+                    $projectVersions[$project->getId()] = $packageVersion->getVersion();
+                    $matchedProjects[] = $project;
+                }
             }
-            foreach($projects as $project) {
-                $projectVersions[$project->getId()] = $packageVersion->getVersion();
-            }
-            $matchedProjects = array_merge($projects->toArray(), $matchedProjects);
         }
 
         $projectsJson = '{"package": {"name": "' . $package->getName() . '", "id": "' . $package->getId() . '"}, "projects": [';
