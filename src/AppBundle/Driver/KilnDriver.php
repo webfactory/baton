@@ -45,7 +45,7 @@ class KilnDriver extends VcsDriver
      */
     public function initialize()
     {
-        preg_match('/^(?:https:\/\/webfactory.kilnhg.com\/(.*)\/(.*?)\.)/', $this->url, $match);
+        preg_match('/^(?:https:\/\/webfactory.kilnhg.com\/(.*)\/(.*?)(?:$|\.))/', $this->url, $match);
         $this->owner = $match[1];
         $this->repository = $match[2];
         $this->originUrl = 'webfactory.kilnhg.com';
