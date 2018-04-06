@@ -117,7 +117,7 @@ class ImportProjectTask
 
     private function getLockFileContent(Project $project)
     {
-        $vcsDriver = $this->vcsDriverFactory->getDriver($project);
+        $vcsDriver = $this->vcsDriverFactory->getDriver($project->getVcsUrl());
 
         return $vcsDriver->getFileContent('composer.lock', 'master');
     }

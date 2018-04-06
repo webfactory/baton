@@ -23,16 +23,19 @@ class VcsDriverFactory
     }
 
     /**
+     * @param string $vcsUrl
      * @return VcsDriverInterface
      */
-    public function getDriver(Project $project){
+    public function getDriver($vcsUrl){
         putenv('COMPOSER_HOME=/var/www/baton');
         $io = new NullIO();
-        $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
+        if($this->githubOAuthToken !== null) {
+            $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
+        }
 
         /** @var VcsRepository $vcsRepository */
         $vcsRepository = new VcsRepository(
-            ['url' => $project->getVcsUrl(), 'kiln-token' => $this->kilnOAuthToken],
+            ['url' => $vcsUrl, 'kiln-token' => $this->kilnOAuthToken],
             $io,
             Factory::createConfig(),
             null,
