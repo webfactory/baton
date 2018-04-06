@@ -25,6 +25,10 @@ services:
         class: AppBundle\Task\ImportProjectTask
         arguments:
             $entityManager: "@doctrine.orm.entity_manager"
+
+    app.factory.vcs_driver_factory:
+        class: AppBundle\Factory\VcsDriverFactory
+        arguments:
             $githubOAuthToken: "%app.github.token%"
             $kilnOAuthToken: "%app.kiln.token%"
 
