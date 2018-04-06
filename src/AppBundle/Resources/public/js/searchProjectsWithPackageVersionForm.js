@@ -1,3 +1,6 @@
+/**
+ * Displays a list of projects matching the criteria in the submitted search form.
+ */
 $('.js-findProjectsForm').on('submit', function(event) {
     event.preventDefault();
 
@@ -20,6 +23,9 @@ $('.js-findProjectsForm').on('submit', function(event) {
     });
 });
 
+/**
+ * Updates the version select options with available versions of this package.
+ */
 $('.js-packageSelect').on('change', function() {
     $.ajax({
         url: "/api/package/" + this.value + "/versions",
