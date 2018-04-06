@@ -5,13 +5,16 @@ $('.js-findProjectsForm').on('submit', function(event) {
         url: "/api/projects/slug." + $('.js-packageSelect').val() + "/" + $('.js-versionConstraintOperatorSelect').val() + "/" + $('.js-versionConstraintValueSelect').val(),
         dataType: "json",
         success: function(data) {
-            var list = $("<ul>").addClass('list-group');
-            // Load the new options
+            var list = $("<ul>").addClass('list-group mb-5');
+
             var package = data.package;
-            var projects = data.projects; // Or whatever source information you're working with
+            var projects = data.projects;
             projects.forEach( function (project) {
                 list.append("<li class='list-group-item'><a href='/project/" + slugify(project["name"]) + '.' + project["id"] + "'>" + project["name"] + "</a> with version " + project['packageVersion'] + "</li>");
             });
+            if(projects.length === 0) {
+                list = "<p>No results.</p>";
+            }
             $("#results").html(list).prepend("<h2>Matching Projects</h2><p>Using <a href='/package/" + slugify(package["name"]) + "." + package["id"] + "'>" + package["name"] + "</a></p>");
         }
     });
@@ -25,10 +28,9 @@ $('.js-packageSelect').on('change', function() {
             var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
             var $versionConstraintOperatorSelect = $('.js-versionConstraintOperatorSelect');
 
-            if($versionConstraintOperatorSelect.val() !== 'all') {
-                $versionConstraintValueSelect.prop('disabled', false);
-            }
+            $versionConstraintOperatorSelect.val('all');
             $versionConstraintOperatorSelect.prop('disabled', false);
+            $versionConstraintValueSelect.prop('disabled', false);
 
             // Clear the old options
             $versionConstraintValueSelect.find('option').remove();
@@ -39,14 +41,6 @@ $('.js-packageSelect').on('change', function() {
             }
         }
     });
-});
-
-$('.js-versionConstraintOperatorSelect').on('change', function() {
-    if(this.value === 'all') {
-        $('.js-versionConstraintValueSelect').prop('disabled', true);
-    } else {
-        $('.js-versionConstraintValueSelect').prop('disabled', false);
-    }
 });
 
 function slugify(text) {
