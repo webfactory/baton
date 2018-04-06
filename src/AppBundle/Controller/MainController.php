@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Package;
+use AppBundle\Entity\VersionConstraint;
 use AppBundle\Form\Type\SearchPackageType;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,13 +22,19 @@ class MainController
     private $projectRepo;
 
     /**
+     * @var ObjectRepository
+     */
+    private $packageRepo;
+
+    /**
      * @var FormFactory
      */
     private $formFactory;
 
-    public function __construct(ObjectRepository $projectRepository, FormFactory $formFactory)
+    public function __construct(ObjectRepository $projectRepository, ObjectRepository $packageRepository, FormFactory $formFactory)
     {
         $this->projectRepo = $projectRepository;
+        $this->packageRepo = $packageRepository;
         $this->formFactory = $formFactory;
     }
 
@@ -41,7 +48,8 @@ class MainController
 
         return [
             'projects' => $this->projectRepo->findAll(),
-            'searchPackageForm' => $searchPackageForm->createView(),
+            'packages' => $this->packageRepo->findAll(),
+            'searchPackageForm' => $searchPackageForm->createView()
         ];
     }
 
