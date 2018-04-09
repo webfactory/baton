@@ -26,6 +26,7 @@ class VcsDriverFactory
      * @return VcsDriverInterface
      */
     public function getDriver($vcsUrl){
+        //TODO: don't depend on/support platforms such as GitHub or Kiln but use VCS level Drivers like GitDriver/HgDriver
         $io = new NullIO();
         if($this->githubOAuthToken !== null) {
             $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
