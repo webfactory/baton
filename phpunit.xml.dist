@@ -31,6 +31,7 @@
 
     <php>
         <server name="KERNEL_CLASS" value="AppKernel" />
+        <env name="COMPOSER_HOME" value="/var/www/baton" />
     </php>
 
 </phpunit>
