@@ -32,6 +32,11 @@ services:
         arguments:
             $projectRepository: "@app.project.repository"
 
+    app.package.provider:
+        class: AppBundle\ProjectImport\DoctrinePackageProvider
+        arguments:
+            $packageRepository: "@app.package.repository"
+
     app.fixtures:
         class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
