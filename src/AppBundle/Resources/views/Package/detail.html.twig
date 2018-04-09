@@ -6,18 +6,14 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2>Package {{ package.name }}</h2>
-            <h3>Tracked Versions</h3>
-            <ul class="list-group">
+            <ul class="list-group mb-5">
                 {% for version in package.versions %}
                     <li class="list-group-item">
-                        <strong>{{ version.version }}</strong><br/>
+                        <strong>Version {{ version.prettyVersion }}</strong><br/>
                         {% if version.projects|length > 0 %}
                             Used by:
                             {% for project in version.projects %}
-                                <a href="{{ path('projectDetail', {'slug': project.slug, 'id': project.id}) }}">
-                                    {{ project.name }}
-                                </a>
-                                {% if not loop.last %}, {% endif %}
+                                <a href="{{ path('projectDetail', {'slug': project.slug, 'id': project.id}) }}">{{ project.name }}</a>{% if not loop.last %}, {% endif %}
                             {% endfor %}
                         {% endif %}
                     </li>
