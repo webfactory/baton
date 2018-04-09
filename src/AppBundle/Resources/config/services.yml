@@ -17,6 +17,11 @@ services:
         arguments:
             $importProjectTask: "@app.task.import_project"
 
+    app.project.repository:
+        class: AppBundle\Entity\Repository\ProjectRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: ['AppBundle\Entity\Project']
+
     app.fixtures:
         class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
