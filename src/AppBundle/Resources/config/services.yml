@@ -42,6 +42,11 @@ services:
         arguments:
             $vcsDriverFactory: "@app.factory.vcs_driver_factory"
 
+    app.composer_package.fetcher:
+        class: AppBundle\ProjectImport\ComposerPackageFetcher
+        arguments:
+            $lockFileFetcher: "@app.lockfile.fetcher"
+
     app.fixtures:
         class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
