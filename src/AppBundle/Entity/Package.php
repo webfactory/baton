@@ -9,7 +9,7 @@ use Webfactory\SlugValidationBundle\Bridge\SluggableInterface;
 /**
  * Describes the mapping for Composer Packages that are used in projects.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PackageRepository")
  */
 class Package implements SluggableInterface
 {
