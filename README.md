@@ -2,12 +2,15 @@
 
 Das Magnum Opus von @xkons für sein Abschlussprojekt im Rahmen der Ausbildung
 
-## Aktuelles
+## Roadmap
 
-Aktuell untersützen wir nur GitHub und Kiln beim Importieren Repositories.
+Aktuell untersützen wir nur GitHub und Kiln für das Importieren.
 
 Das liegt daran, dass die Authentifizierung für das Verarbeiten von privaten Repositories für jede Plattform
 extra konfiguriert werden muss und wir bei firmenintern nur GitHub und Kiln verwenden.
+
+Die Verwendung von ssh URLs und dem plattform-agnositschen Composer\GitDriver zum Holen der composer.lock Datei
+kann hier Abhilfe schaffen.
 
 ## Kurzbeschreibung
 
