@@ -19,7 +19,7 @@ class VersionConstraintTest extends \PHPUnit_Framework_TestCase
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
         $this->assertCount(1, $matches);
-        $this->assertSame('1.0.0', $matches[0]->getVersion());
+        $this->assertSame('1.0.0', $matches[0]->getPrettyVersion());
     }
 
     public function testVersionConstraintWithSmallerEqualsOperatorMatchesPackageVersionsWithSmallerEqualVersionThanTheVersionConstraintsVersion()
@@ -34,8 +34,8 @@ class VersionConstraintTest extends \PHPUnit_Framework_TestCase
       $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
       $this->assertCount(2, $matches);
-      $this->assertSame('1.0.0', $matches[0]->getVersion());
-      $this->assertSame('2.0.0', $matches[1]->getVersion());
+      $this->assertSame('1.0.0', $matches[0]->getPrettyVersion());
+      $this->assertSame('2.0.0', $matches[1]->getPrettyVersion());
     }
 
     public function testVersionConstraintWithLargerThanOperatorMatchesPackageVersionsWithLargerVersionThanTheVersionConstraintsVersion()
@@ -49,7 +49,7 @@ class VersionConstraintTest extends \PHPUnit_Framework_TestCase
       $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
       $this->assertCount(1, $matches);
-      $this->assertSame('3.0.0', $matches[0]->getVersion());
+      $this->assertSame('3.0.0', $matches[0]->getPrettyVersion());
     }
 
     public function testVersionConstraintWithLargerEqualsOperatorMatchesPackageVersionsWithLargerEqualVersionThanTheVersionConstraintsVersion()
@@ -64,8 +64,8 @@ class VersionConstraintTest extends \PHPUnit_Framework_TestCase
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
         $this->assertCount(2, $matches);
-        $this->assertSame('2.0.0', $matches[0]->getVersion());
-        $this->assertSame('3.0.0', $matches[1]->getVersion());
+        $this->assertSame('2.0.0', $matches[0]->getPrettyVersion());
+        $this->assertSame('3.0.0', $matches[1]->getPrettyVersion());
     }
 
     public function testVersionConstraintWithEqualsOperatorMatchesPackageVersionsWithEqualVersionAsTheVersionConstraintsVersion()
@@ -79,7 +79,7 @@ class VersionConstraintTest extends \PHPUnit_Framework_TestCase
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
         $this->assertCount(1, $matches);
-        $this->assertSame('2.0.0', $matches[0]->getVersion());
+        $this->assertSame('2.0.0', $matches[0]->getPrettyVersion());
     }
 
     public function testVersionConstraintWithAllOperatorMatchesAllPackagesVersions()
