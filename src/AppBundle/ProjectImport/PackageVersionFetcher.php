@@ -2,7 +2,6 @@
 
 namespace AppBundle\ProjectImport;
 
-
 use AppBundle\Entity\PackageVersion;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -32,6 +31,10 @@ class PackageVersionFetcher
             $usages->add(
                 $package->getVersion($composerPackage->getPrettyVersion())
             );
+        }
+
+        if ($usages->count() === 0) {
+            throw new ProjectHasNoComposerPackageUsageInfoException();
         }
 
         return $usages;
