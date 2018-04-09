@@ -82,7 +82,12 @@ class Package implements SluggableInterface
     }
 
     /**
-     * @return PackageVersion[]
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
     /**
      * @param VersionConstraint $versionConstraint
