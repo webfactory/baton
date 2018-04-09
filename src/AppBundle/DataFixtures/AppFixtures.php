@@ -6,6 +6,7 @@ use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
@@ -14,14 +15,15 @@ class AppFixtures extends Fixture
     {
         for ($i = 0; $i < 3; $i++) {
             $project = new Project(
-                uniqid('', false),
-                uniqid('vcs@vcshub.com:', false)
+                uniqid('', false)
             );
 
-            $project->addUsage(
-                new PackageVersion(
-                    '1.0.0',
-                    new Package(uniqid('webfactory/', false))
+            $project->setUsedPackageVersions(
+                new ArrayCollection(
+                    new PackageVersion(
+                        '1.0.0',
+                        new Package(uniqid('webfactory/', false))
+                    )
                 )
             );
 
