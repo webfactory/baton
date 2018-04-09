@@ -59,12 +59,16 @@ final class PackageVersion
         $this->projects = new ArrayCollection();
     }
 
-    public function addProject(Project $project)
+    public function addUsingProject(Project $project)
     {
-        $this->projects[] = $project;
+        if ($this->projects->contains($project)) {
+            return;
+        }
+        $this->projects->add($project);
+        $project->addUsage($this);
     }
 
-    public function removeProject(Project $project)
+    public function removeUsingProject(Project $project)
     {
         if (!$this->projects->contains($project)) {
             return;
