@@ -41,6 +41,7 @@ class Package implements SluggableInterface
      * )
      *
      * @var PackageVersion[]
+     * @var Collection|PackageVersion[]
      */
     private $versions;
 
@@ -52,6 +53,7 @@ class Package implements SluggableInterface
     {
       $this->name = $name;
       $this->description = $description;
+      $this->versions = new ArrayCollection();
     }
 
     /**
@@ -80,6 +82,20 @@ class Package implements SluggableInterface
 
     /**
      * @return PackageVersion[]
+
+    /**
+     * @param VersionConstraint $versionConstraint
+     * @return Collection|PackageVersion[]
+     */
+    public function getMatchingVersionsWithProjects(VersionConstraint $versionConstraint)
+    {
+        return $this->versions->filter(
+            function($packageVersion) use ($versionConstraint) {
+                /** @var PackageVersion $packageVersion */
+                return $versionConstraint->matches($packageVersion) && $packageVersion->getProjects()->count() !== 0;
+            }
+        );
+    }
      */
     public function getVersions()
     {
