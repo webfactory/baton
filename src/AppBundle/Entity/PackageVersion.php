@@ -24,7 +24,7 @@ final class PackageVersion
      * @ORM\Column(type="string")
      * @var string
      */
-    private $version;
+    private $prettyVersion;
 
     /**
      * @ORM\ManyToOne(
@@ -46,13 +46,14 @@ final class PackageVersion
     private $projects;
 
     /**
-     * @param string $version
+     * @param string $prettyVersion
      * @param Package $package
      */
-    public function __construct($version, Package $package)
+    public function __construct($prettyVersion, Package $package)
     {
-        $this->version = $version;
+        $this->prettyVersion = $prettyVersion;
         $this->package = $package;
+        $this->projects = new ArrayCollection();
     }
 
     public function addProject(Project $project)
@@ -80,9 +81,9 @@ final class PackageVersion
     /**
      * @return string
      */
-    public function getVersion()
+    public function getPrettyVersion()
     {
-        return $this->version;
+        return $this->prettyVersion;
     }
 
     /**
@@ -90,7 +91,7 @@ final class PackageVersion
      */
     public function getNormalizedVersion()
     {
-        return (new VersionParser())->normalize($this->getVersion());
+        return (new VersionParser())->normalize($this->getPrettyVersion());
     }
 
     /**
