@@ -5,20 +5,28 @@ $('.js-findProjectsForm').on('submit', function(event) {
     event.preventDefault();
 
     $.ajax({
-        url: "/api/projects/slug." + $('.js-packageSelect').val() + "/" + $('.js-versionConstraintOperatorSelect').val() + "/" + $('.js-versionConstraintValueSelect').val(),
+        url: "/project/search/json/slug." + $('.js-packageSelect').val() + "/" + $('.js-versionConstraintOperatorSelect').val() + "/" + $('.js-versionConstraintValueSelect').val(),
         dataType: "json",
         success: function(data) {
             var list = $("<ul>").addClass('list-group mb-5');
 
             var package = data.package;
-            var projects = data.projects;
-            projects.forEach( function (project) {
-                list.append("<li class='list-group-item'><a href='/project/" + slugify(project["name"]) + '.' + project["id"] + "'>" + project["name"] + "</a> with version " + project['packageVersion'] + "</li>");
+            var versions = package.versions;
+            versions.forEach( function (version) {
+                var listItem = "<li class='list-group-item'><strong>Version " + version.prettyVersion + "</strong><br/>Used by: ";
+
+                version.projects.forEach( function (project, index) {
+                    listItem += "<a href='/project/" + slugify(project.name) + '.' + project.id + "'>" + project.name + "</a>";
+                    index !== version.projects.length - 1 ? listItem += ", " : listItem += "";
+                });
+
+                listItem += "</li>";
+                list.append(listItem);
             });
-            if(projects.length === 0) {
+            if(versions.length === 0) {
                 list = "<p>No results.</p>";
             }
-            $("#results").html(list).prepend("<h2>Matching Projects</h2><p>Using <a href='/package/" + slugify(package["name"]) + "." + package["id"] + "'>" + package["name"] + "</a></p>");
+            $("#results").html(list).prepend("<h2>Matching Projects</h2><p>Using <a href='/package/" + slugify(package["name"]) + "." + package.id + "'>" + package.name + "</a></p>");
         }
     });
 });

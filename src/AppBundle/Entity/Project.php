@@ -45,7 +45,7 @@ class Project implements SluggableInterface
      *      mappedBy="projects",
      *      cascade="persist"
      * )
-     * @var PackageVersion[]
+     * @var Collection|PackageVersion[]
      */
     private $usages;
 
@@ -107,7 +107,7 @@ class Project implements SluggableInterface
     }
 
     /**
-     * @return PackageVersion[]
+     * @return Collection|PackageVersion[]
      */
     public function getUsages()
     {
