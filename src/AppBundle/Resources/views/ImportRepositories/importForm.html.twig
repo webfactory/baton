@@ -19,9 +19,14 @@
     {{ form_end(importProjectsForm) }}
     <div class="row">
         <div class="col-md-6 offset-md-3 pb-2">
-            {% for import in imports %}
-                {% if loop.first %}<p>Imported {% endif %}
-                    {{ import }},
+            {% for import in imports["success"] %}
+                {% if loop.first %}<p>Successful imports: {% endif %}
+                    {{ import }}{% if not loop.last %},{% endif %}
+                {% if loop.last %}<p>{% endif %}
+            {% endfor %}
+            {% for import in imports["fail"] %}
+                {% if loop.first %}<p>Failed imports: {% endif %}
+                    {{ import }}{% if not loop.last %},{% endif %}
                 {% if loop.last %}<p>{% endif %}
             {% endfor %}
         </div>

@@ -38,7 +38,7 @@ class ImportRepositoriesController
     public function importFormAction(Request $request)
     {
         $projectImportForm = $this->getProjectImportForm();
-        $imports = [];
+        $imports = ["success" => [], "fail" => []];
 
         $projectImportForm->handleRequest($request);
         if ($projectImportForm->isSubmitted()) {
@@ -48,7 +48,9 @@ class ImportRepositoriesController
 
             foreach($repositoryUrls as $repositoryUrl) {
                 if($this->importProjectTask->run($repositoryUrl)) {
-                    $imports[] = $repositoryUrl;
+                    $imports['success'][] = $repositoryUrl;
+                } else {
+                    $imports['fail'][] = $repositoryUrl;
                 }
             }
         }
