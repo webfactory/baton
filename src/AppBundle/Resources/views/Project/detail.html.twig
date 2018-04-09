@@ -7,12 +7,12 @@
         <div class="col-md-6 offset-md-3">
             <h2>Project {{ project.name }}</h2>
             <h3>Dependencies</h3>
-            <ul class="list-group">
+            <ul class="list-group mb-5">
                 {% for usage in project.usages %}
                     <li class="list-group-item">
                         <a href="{{ path('packageDetail', {'slug': usage.package.slug, 'id': usage.package.id}) }}">
                             {{ usage.package.name }}
-                        </a> with {{ usage.version }}
+                        </a> with {{ usage.prettyVersion }}
                     </li>
                 {% endfor %}
             </ul>
