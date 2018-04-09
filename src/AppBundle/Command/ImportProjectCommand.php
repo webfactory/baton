@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\Task\ImportProjectTask;
+use AppBundle\ProjectImport\ImportProjectTask;
 use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -33,10 +33,7 @@ class ImportProjectCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $vcsUrl = $input->getArgument('vcsUrl');
-        $importSucess = $this->importProjectTask->run(
-            $vcsUrl,
-            new ConsoleIO($input, $output, new HelperSet())
-        );
+        $importSucess = $this->importProjectTask->run($vcsUrl);
 
         if ($importSucess) {
             return $output->writeln('Successfully imported '.$vcsUrl);

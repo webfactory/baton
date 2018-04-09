@@ -58,10 +58,12 @@ services:
         tags: ['doctrine.fixture.orm']
 
     app.task.import_project:
-        class: AppBundle\Task\ImportProjectTask
+        class: AppBundle\ProjectImport\ImportProjectTask
         arguments:
             $entityManager: "@doctrine.orm.entity_manager"
-            $vcsDriverFactory: "@app.factory.vcs_driver_factory"
+            $projectProvider: "@app.project.provider"
+            $packageVersionFetcher: "@app.package_version.fetcher"
+            $logger: "@logger"
 
     app.factory.vcs_driver_factory:
         class: AppBundle\Factory\VcsDriverFactory
