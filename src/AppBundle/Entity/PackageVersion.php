@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Describes a Composer package used in a specific version number.
  *
  * @ORM\Entity
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="uniq_package_version", columns={"package_id", "prettyVersion"})})
  */
 final class PackageVersion
 {
