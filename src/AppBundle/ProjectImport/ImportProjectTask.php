@@ -45,7 +45,7 @@ class ImportProjectTask
         try {
             $project->setUsedPackageVersions($this->packageVersionFetcher->fetch($vcsUrl));
         } catch (ProjectHasNoComposerPackageUsageInfoException $exception) {
-            $this->logger->warning("No composer package usages found in Project " . $project->getName() . ". Import failed.");
+            $this->logger->error("No composer package usages found in Project " . $project->getName() . ". Import failed.");
 
             return false;
         }
