@@ -47,6 +47,12 @@ services:
         arguments:
             $lockFileFetcher: "@app.lockfile.fetcher"
 
+    app.package_version.fetcher:
+        class: 'AppBundle\ProjectImport\PackageVersionFetcher'
+        arguments:
+            $packageProvider: "@app.package.provider"
+            $composerPackageFetcher: "@app.composer_package.fetcher"
+
     app.fixtures:
         class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
