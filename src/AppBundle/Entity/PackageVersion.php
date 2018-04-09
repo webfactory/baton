@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Composer\Semver\VersionParser;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,7 +44,7 @@ final class PackageVersion
      *      targetEntity="Project",
      *      inversedBy="usages"
      * )
-     * @var Project[]
+     * @var Collection|Project[]
      */
     private $projects;
 
@@ -104,7 +106,7 @@ final class PackageVersion
     }
 
     /**
-     * @return Project[]
+     * @return Collection|Project[]
      */
     public function getProjects()
     {
