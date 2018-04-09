@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Package;
-use AppBundle\Entity\VersionConstraint;
+use AppBundle\Entity\Repository\PackageRepository;
+use AppBundle\Entity\Repository\ProjectRepository;
 use AppBundle\Form\Type\SearchPackageType;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormFactory;
@@ -17,12 +15,12 @@ use Symfony\Component\Form\FormFactory;
 class MainController
 {
     /**
-     * @var ObjectRepository
+     * @var ProjectRepository
      */
     private $projectRepo;
 
     /**
-     * @var ObjectRepository
+     * @var PackageRepository
      */
     private $packageRepo;
 
@@ -31,7 +29,7 @@ class MainController
      */
     private $formFactory;
 
-    public function __construct(ObjectRepository $projectRepository, ObjectRepository $packageRepository, FormFactory $formFactory)
+    public function __construct(ProjectRepository $projectRepository, PackageRepository $packageRepository, FormFactory $formFactory)
     {
         $this->projectRepo = $projectRepository;
         $this->packageRepo = $packageRepository;

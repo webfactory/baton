@@ -2,8 +2,8 @@ services:
     app.controller.main:
         class: AppBundle\Controller\MainController
         arguments:
-            $projectRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Project')"
-            $packageRepository: "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Package')"
+            $projectRepository: "@app.project.repository"
+            $packageRepository: "@app.package.repository"
             $formFactory: "@form.factory"
 
     app.controller.importRepositories:
