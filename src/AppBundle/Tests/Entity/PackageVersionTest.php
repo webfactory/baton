@@ -5,6 +5,7 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class PackageVersionTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,14 +23,14 @@ class PackageVersionTest extends \PHPUnit_Framework_TestCase
 
     public function testAddProjectAddsProject()
     {
-        $this->packageVersion->addProject(new Project('bar', 'vcs@vcshub.com:bar/foo.vcs'));
+        $this->packageVersion->addUsingProject(new Project('bar'));
 
         $this->assertTrue(count($this->packageVersion->getProjects()) > 0);
     }
 
     public function testGetVersionReturnsVersion()
     {
-        $this->assertSame(self::version, $this->packageVersion->getVersion());
+        $this->assertSame(self::version, $this->packageVersion->getPrettyVersion());
     }
 
     public function testGetPackageReturnsAssociatedPackage()
@@ -41,8 +42,8 @@ class PackageVersionTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProjectsReturnsArrayOfProjects()
     {
-        $this->packageVersion->addProject(new Project('bar', 'vcs@vcshub.com:bar/foo.vcs'));
+        $this->packageVersion->addUsingProject(new Project('bar'));
 
-        $this->assertInternalType('array', $this->packageVersion->getProjects());
+        $this->assertInstanceOf(ArrayCollection::class, $this->packageVersion->getProjects());
     }
 }
