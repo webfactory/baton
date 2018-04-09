@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Webfactory\SlugValidationBundle\Bridge\SluggableInterface;
 
@@ -37,10 +39,9 @@ class Package implements SluggableInterface
      * @ORM\OneToMany(
      *      targetEntity="PackageVersion",
      *      mappedBy="package",
-     *      cascade="persist"
+     *      cascade={"persist", "remove"}
      * )
-     *
-     * @var PackageVersion[]
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Collection|PackageVersion[]
      */
     private $versions;
@@ -96,6 +97,9 @@ class Package implements SluggableInterface
             }
         );
     }
+
+    /**
+     * @return Collection|PackageVersion[]
      */
     public function getVersions()
     {
