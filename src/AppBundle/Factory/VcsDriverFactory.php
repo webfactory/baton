@@ -2,7 +2,6 @@
 
 namespace AppBundle\Factory;
 
-use AppBundle\Entity\Project;
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Composer\Repository\Vcs\VcsDriverInterface;
@@ -27,7 +26,6 @@ class VcsDriverFactory
      * @return VcsDriverInterface
      */
     public function getDriver($vcsUrl){
-        putenv('COMPOSER_HOME=/var/www/baton');
         $io = new NullIO();
         if($this->githubOAuthToken !== null) {
             $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
