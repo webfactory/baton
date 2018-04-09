@@ -74,6 +74,15 @@ final class PackageVersion
     }
 
     /**
+     * @param PackageVersion $packageVersion
+     * @return bool
+     */
+    public function equals(PackageVersion $packageVersion)
+    {
+        return ($this === $packageVersion) || ($this->getId() === $packageVersion->getId());
+    }
+
+    /**
      * @return int
      */
     public function getId()
