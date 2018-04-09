@@ -4,5 +4,5 @@ imports:
     - { resource: ../vendor/webfactory/doctrine-bundle-default-config/config.yml }
 
 parameters:
-    app.kiln.token: 
-    app.github.token: 
+    app.kiln.token:
+    app.github.token:
