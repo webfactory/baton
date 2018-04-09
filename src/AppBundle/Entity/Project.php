@@ -3,13 +3,14 @@
 namespace AppBundle\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Webfactory\SlugValidationBundle\Bridge\SluggableInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ProjectRepository")
  */
 class Project implements SluggableInterface
 {
@@ -22,13 +23,13 @@ class Project implements SluggableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @var string
      */
     private $vcsUrl;
@@ -51,27 +52,11 @@ class Project implements SluggableInterface
 
     /**
      * @param string $name
-     * @param string $vcsUrl
      */
-    public function __construct($name, $vcsUrl)
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->vcsUrl = $vcsUrl;
-    }
-
-    public function addUsage(PackageVersion $package)
-    {
-        $package->addProject($this); // synchronously updating inverse side
-        $this->usages[] = $package;
-    }
-
-    public function removeUsage(PackageVersion $usage)
-    {
-        if (!$this->usages->contains($usage)) {
-            return;
-        }
-        $this->usages->removeElement($usage);
-        $usage->removeProject($this);
+        $this->usages = new ArrayCollection();
     }
 
     /**
@@ -123,5 +108,42 @@ class Project implements SluggableInterface
     {
         $slugify = new Slugify();
         return $slugify->slugify($this->getName());
+    }
+
+    /**
+     * @param string $vcsUrl
+     */
+    public function setVcsUrl($vcsUrl)
+    {
+        $this->vcsUrl = $vcsUrl;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
+    public function addUsage(PackageVersion $packageVersion)
+    {
+        // TODO: remove addUsage, then also remove from PackageVersion::addUsingProject()?
+        if ($this->usages->contains($packageVersion)) {
+            return;
+        }
+        $this->usages->add($packageVersion);
+        $packageVersion->addUsingProject($this);
+    }
+
+    public function removeUsage(PackageVersion $usage)
+    {
+        // TODO: remove removeUsage, then also remove from PackageVersion::removeUsingProject()?
+        if (!$this->usages->contains($usage)) {
+            return;
+        }
+        $this->usages->removeElement($usage);
+        $usage->removeUsingProject($this);
     }
 }
