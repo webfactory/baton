@@ -126,6 +126,24 @@ class Project implements SluggableInterface
         $this->description = $description;
     }
 
+    /**
+     * @param ArrayCollection $packageVersions
+     */
+    public function setUsedPackageVersions(ArrayCollection $packageVersions)
+    {
+        foreach($this->usages as $usage) {
+            // TODO: could contains($usage) falsly return false when $packageVersions contains Proxies? See https://github.com/doctrine/doctrine2/issues/6127 Possible fix: PackageVersion::equals($pVersion)
+            if (!$packageVersions->contains($usage)) {
+                $usage->removeUsingProject($this);
+            }
+        }
+
+        $this->usages = $packageVersions;
+
+        foreach($this->usages as $usage) {
+            $usage->addUsingProject($this);
+        }
+    }
 
     public function addUsage(PackageVersion $packageVersion)
     {
