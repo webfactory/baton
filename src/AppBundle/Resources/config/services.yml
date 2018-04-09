@@ -22,6 +22,11 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments: ['AppBundle\Entity\Project']
 
+    app.package.repository:
+        class: AppBundle\Entity\Repository\PackageRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: ['AppBundle\Entity\Package']
+
     app.fixtures:
         class: AppBundle\DataFixtures\AppFixtures
         tags: ['doctrine.fixture.orm']
