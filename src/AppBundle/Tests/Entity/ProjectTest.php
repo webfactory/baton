@@ -9,7 +9,6 @@ use AppBundle\Entity\Project;
 class ProjectTest extends \PHPUnit_Framework_TestCase
 {
     const name = 'foo';
-    const vcsUrl = 'vcs@vcshub.com:bar/foo.vcs';
 
     /**
      * @var Project
@@ -18,18 +17,18 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-      $this->project = new Project(self::name, self::vcsUrl);
+      $this->project = new Project(self::name);
     }
 
     public function testAddUsageAddsUsageToProjectAndProjectToPackageVersion()
     {
-      $packageVersion = new PackageVersion('1.0.0', new Package('webfactory/bar'));
+      $packageVersion = new PackageVersion('1.0.0', new Package('foo'));
       $this->project->addUsage($packageVersion);
 
       $this->assertTrue(count($this->project->getUsages()) > 0);
       $this->assertSame(
-        self::vcsUrl,
-        $this->project->getUsages()[0]->getProjects()[0]->getVcsUrl()
+        self::name,
+        $this->project->getUsages()[0]->getProjects()[0]->getName()
       );
     }
 }
