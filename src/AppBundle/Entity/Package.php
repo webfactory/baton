@@ -104,6 +104,26 @@ class Package implements SluggableInterface
     }
 
     /**
+     * @param string $prettyVersionString
+     * @return PackageVersion
+     */
+    public function getVersion($prettyVersionString)
+    {
+        $packageVersion = $this->versions->filter(
+            function($packageVersion) use ($prettyVersionString) {
+                /** @var PackageVersion $packageVersion */
+                return $packageVersion->getPrettyVersion() === $prettyVersionString;
+            }
+        );
+
+        if ($packageVersion->isEmpty()) {
+            return new PackageVersion($prettyVersionString, $this);
+        }
+
+        return $packageVersion->first();
+    }
+
+    /**
      * @return Collection|PackageVersion[]
      */
     public function getVersions()
