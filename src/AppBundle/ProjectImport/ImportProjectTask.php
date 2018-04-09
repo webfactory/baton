@@ -42,7 +42,13 @@ class ImportProjectTask
         $project = $this->projectProvider->provideProject($this->getProjectNameFromUrl($vcsUrl));
         $project->setVcsUrl($vcsUrl);
 
-        $project->setUsedPackageVersions($this->packageVersionFetcher->fetch($vcsUrl));
+        try {
+            $project->setUsedPackageVersions($this->packageVersionFetcher->fetch($vcsUrl));
+        } catch (ProjectHasNoComposerPackageUsageInfoException $exception) {
+            $this->logger->warning("No composer package usages found in Project " . $project->getName() . ". Import failed.");
+
+            return false;
+        }
 
         $this->entityManager->flush();
 
