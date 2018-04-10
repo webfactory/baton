@@ -2,6 +2,8 @@
 
 namespace AppBundle\ProjectImport;
 
+use AppBundle\Exception\InsufficientVcsAccessException;
+use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -44,9 +46,11 @@ class ImportProjectTask
 
         try {
             $project->setUsedPackageVersions($this->packageVersionFetcher->fetch($vcsUrl));
+        } catch (InsufficientVcsAccessException $exception) {
+            $this->logger->error("Insufficient VCS access for " . $vcsUrl . ". Import failed.", ['exception' => $exception]);
+            return false;
         } catch (ProjectHasNoComposerPackageUsageInfoException $exception) {
-            $this->logger->error("No composer package usages found in Project " . $project->getName() . ". Import failed.");
-
+            $this->logger->error("No composer package usages found in Project " . $project->getName() . ". Import failed.", ['exception' => $exception]);
             return false;
         }
 
