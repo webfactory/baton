@@ -10,7 +10,7 @@
             <ul class="list-group mb-5">
                 {% for usage in project.usages %}
                     <li class="list-group-item">
-                        <a href="{{ path('packageDetail', {'slug': usage.package.slug, 'id': usage.package.id}) }}">
+                        <a href="{{ path('package', {'name': usage.package.name}) }}">
                             {{ usage.package.name }}
                         </a> with {{ usage.prettyVersion }}
                     </li>

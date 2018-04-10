@@ -1,0 +1,7 @@
+{
+    "versions": [
+        {% for packageVersion in packageVersions %}
+        "{{ packageVersion.normalizedVersion }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}

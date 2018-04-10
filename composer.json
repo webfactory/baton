@@ -21,9 +21,7 @@
         "doctrine/migrations": "^1.4.1",
         "webfactory/symfony-default-config": "^2.6.0",
         "webfactory/doctrine-bundle-default-config": "2.0.1",
-        "composer/composer": "^1.6",
-        "webfactory/slug-validation-bundle": "^0.1.0",
-        "cocur/slugify": "^3.1"
+        "composer/composer": "^1.6"
     },
 
     "require-dev": {

@@ -19,8 +19,9 @@ class SearchPackageType extends AbstractType
                 'label' => 'Package name',
                 'class' => Package::class,
                 'choice_label' => 'name',
-                'choice_value' => 'id',
+                'choice_value' => 'name',
                 'placeholder' => 'First choose a package',
+                'choice_translation_domain' => false,
                 'label_attr' => ['class' => 'sr-only'],
                 'constraints' => [new NotBlank()]
             ])
@@ -28,8 +29,8 @@ class SearchPackageType extends AbstractType
                 'label' => 'Version constraint operator',
                 'label_attr' => ['class' => 'sr-only'],
                 'choices' => ['<' => '<', '<=' => '<=', '>' => '>', '>=' => '>=', '==' => '==', 'all' => 'all'],
-                'choices_as_values' => true,
                 'mapped' => false,
+                'choice_translation_domain' => false,
                 'placeholder' => 'Version constraint operator',
                 'disabled' => true
             ])
@@ -37,6 +38,7 @@ class SearchPackageType extends AbstractType
                 'label' => 'Version constraint value',
                 'label_attr' => ['class' => 'sr-only'],
                 'placeholder' => 'Version constraint value',
+                'choice_translation_domain' => false,
                 'choices' => [],
                 'mapped' => false,
                 'disabled' => true,
