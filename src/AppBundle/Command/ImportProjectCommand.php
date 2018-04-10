@@ -3,9 +3,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\ProjectImport\ImportProjectTask;
-use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,9 +34,9 @@ class ImportProjectCommand extends Command
         $importSucess = $this->importProjectTask->run($vcsUrl);
 
         if ($importSucess) {
-            return $output->writeln('Successfully imported '.$vcsUrl);
+            $output->writeln('Successfully imported '.$vcsUrl);
         }
 
-        return $output->writeln('Import failed for '.$vcsUrl);
+        $output->writeln('Import failed for ' .$vcsUrl . '. Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.');
       }
 }

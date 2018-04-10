@@ -27,7 +27,7 @@
             {% for import in imports["fail"] %}
                 {% if loop.first %}<p>Failed imports: {% endif %}
                     {{ import }}{% if not loop.last %},{% endif %}
-                {% if loop.last %}<p>{% endif %}
+                {% if loop.last %}<p><p>Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.</p>{% endif %}
             {% endfor %}
         </div>
     </div>
