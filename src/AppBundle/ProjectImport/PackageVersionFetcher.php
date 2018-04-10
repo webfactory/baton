@@ -3,6 +3,7 @@
 namespace AppBundle\ProjectImport;
 
 use AppBundle\Entity\PackageVersion;
+use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class PackageVersionFetcher
