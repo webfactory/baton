@@ -2,6 +2,7 @@
 
 namespace AppBundle\Driver;
 
+use AppBundle\Exception\InsufficientVcsAccessException;
 use Composer\Config;
 use Composer\Downloader\TransportException;
 use Composer\Json\JsonFile;
@@ -50,7 +51,17 @@ class KilnDriver extends VcsDriver
         $this->repository = $match[2];
         $this->originUrl = 'webfactory.kilnhg.com';
         $this->cache = new Cache($this->io, $this->config->get('cache-repo-dir').'/'.$this->originUrl.'/'.$this->owner.'/'.$this->repository);
-        $this->oAuthToken = $this->repoConfig['kiln-token'];
+
+        if ($this->io->hasAuthentication($this->originUrl)) {
+            $auth = $this->io->getAuthentication($this->originUrl);
+            if ('x-oauth-basic' === $auth['password']) {
+                $this->oAuthToken = $auth['username'];
+            }
+        } else {
+            throw new InsufficientVcsAccessException(
+                'You need to configure OAuth authentication to communicate with Kiln. Make sure the KILN_OAUTH_TOKEN environment variable is set correctly.'
+            );
+        }
 
         $allRepos = $this->fetchAvailableRepositories();
 
@@ -195,7 +206,7 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getChangeDate($identifier);
         }
 
-        $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/History/'.urlencode($identifier);
+        $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/History/'.urlencode($identifier) . '?token=' . $this->oAuthToken;
         $commit = JsonFile::parseJson($this->getContents($resource), $resource);
 
         return new \DateTime($commit['commit']['committer']['date']);
@@ -211,7 +222,7 @@ class KilnDriver extends VcsDriver
         }
         if (null === $this->tags) {
             $this->tags = array();
-            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Tags';
+            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Tags?token=' . $this->oAuthToken;
 
             do {
                 $tagsData = JsonFile::parseJson($this->getContents($resource), $resource);
@@ -234,7 +245,7 @@ class KilnDriver extends VcsDriver
         }
         if (null === $this->branches) {
             $this->branches = array();
-            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/NamedBranches';
+            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/NamedBranches?token=' . $this->oAuthToken;
 
             $branchBlacklist = array('gh-pages');
 
