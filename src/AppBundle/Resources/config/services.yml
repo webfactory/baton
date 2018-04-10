@@ -11,6 +11,7 @@ services:
         arguments:
             $formFactory: "@form.factory"
             $importProjectTask: "@app.task.import_project"
+            $demoMode: "%demo_mode%"
 
     app.controller.webhook:
         class: AppBundle\Controller\WebhookController
