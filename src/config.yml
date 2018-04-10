@@ -5,4 +5,6 @@ imports:
 
 parameters:
     app.kiln.token: '%env(KILN_OAUTH_TOKEN)%'
+    env(KILN_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with repositories on Kiln
     app.github.token: '%env(GITHUB_OAUTH_TOKEN)%'
+    env(GITHUB_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with private repositories on GitHub
