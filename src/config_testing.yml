@@ -1,3 +1,4 @@
 imports:
     - { resource: config_production.yml }
     - { resource: ../vendor/webfactory/doctrine-bundle-default-config/config_testing.yml }
+    - { resource: ../vendor/webfactory/monolog-bundle-default-config/config_testing.yml }

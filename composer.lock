@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3532351f7e82b7f3c82eb023000f07b1",
+    "content-hash": "780d16ac704ae831ce8d742136eaa580",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -64,16 +64,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.6.3",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "88a69fda0f2187ad8714cedffd7a8872dceaa4c2"
+                "reference": "86ad51e8a3c64c9782446aae740a61fc6faa2522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/88a69fda0f2187ad8714cedffd7a8872dceaa4c2",
-                "reference": "88a69fda0f2187ad8714cedffd7a8872dceaa4c2",
+                "url": "https://api.github.com/repos/composer/composer/zipball/86ad51e8a3c64c9782446aae740a61fc6faa2522",
+                "reference": "86ad51e8a3c64c9782446aae740a61fc6faa2522",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-01-31T15:28:18+00:00"
+            "time": "2018-04-13T10:04:24+00:00"
         },
         {
             "name": "composer/semver",
@@ -2496,16 +2496,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.7",
+            "version": "v3.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "eb07b0eab0bda8441fbf94d06ad1f9896e0552cc"
+                "reference": "5304a36c5efbb01af7efe2bb5b1953dbaeebc293"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/eb07b0eab0bda8441fbf94d06ad1f9896e0552cc",
-                "reference": "eb07b0eab0bda8441fbf94d06ad1f9896e0552cc",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5304a36c5efbb01af7efe2bb5b1953dbaeebc293",
+                "reference": "5304a36c5efbb01af7efe2bb5b1953dbaeebc293",
                 "shasum": ""
             },
             "require": {
@@ -2646,7 +2646,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2018-04-03T05:50:03+00:00"
+            "time": "2018-04-06T15:20:04+00:00"
         },
         {
             "name": "twig/twig",
@@ -2726,6 +2726,41 @@
             },
             "type": "library",
             "time": "2016-04-28T15:03:33+00:00"
+        },
+        {
+            "name": "webfactory/monolog-bundle-default-config",
+            "version": "dev-symfony3support",
+            "source": {
+                "type": "git",
+                "url": "ssh://webfactory@webfactory.kilnhg.com/webfactory/default-config/monolog-bundle-default-config",
+                "reference": "89c265c00b763b3353da81e99e53c2a7a4491644"
+            },
+            "require": {
+                "monolog/monolog": "^1.7",
+                "symfony/http-kernel": "^3.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7",
+                "symfony/http-kernel": "~3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Webfactory\\Logging": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Matthias Molitor",
+                    "email": "mmo@webfactory.de"
+                },
+                {
+                    "name": "Matthias Pigulla",
+                    "email": "mp@webfactory.de"
+                }
+            ],
+            "description": "Configures logging for Symfony applications.",
+            "time": "2018-04-13T19:34:01+00:00"
         },
         {
             "name": "webfactory/symfony-default-config",
@@ -3982,7 +4017,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "webfactory/monolog-bundle-default-config": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
