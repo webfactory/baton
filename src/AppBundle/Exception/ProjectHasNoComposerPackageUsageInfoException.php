@@ -1,7 +1,6 @@
 <?php
 
-namespace AppBundle\ProjectImport;
+namespace AppBundle\Exception;
 
 class ProjectHasNoComposerPackageUsageInfoException extends \RuntimeException {
-
 }
