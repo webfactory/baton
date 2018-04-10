@@ -6,11 +6,7 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>src/*/*Bundle/Tests</directory>
-            <directory>src/*/Bundle/*Bundle/Tests</directory>
-        </testsuite>
-        <testsuite name="Application Test Suite">
-            <directory>vendor/webfactory/symfony-application-tests/src/Webfactory/Tests/</directory>
+            <directory>src/AppBundle/Tests</directory>
         </testsuite>
     </testsuites>
 
