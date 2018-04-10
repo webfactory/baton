@@ -25,10 +25,16 @@ class ImportRepositoriesController
      */
     private $importProjectTask;
 
-    public function __construct(FormFactory $formFactory, ImportProjectTask $importProjectTask)
+    /**
+     * @var bool
+     */
+    private $demoMode;
+
+    public function __construct(FormFactory $formFactory, ImportProjectTask $importProjectTask, $demoMode)
     {
         $this->formFactory = $formFactory;
         $this->importProjectTask = $importProjectTask;
+        $this->demoMode = $demoMode;
     }
 
     /**
@@ -41,7 +47,7 @@ class ImportRepositoriesController
         $imports = ["success" => [], "fail" => []];
 
         $projectImportForm->handleRequest($request);
-        if ($projectImportForm->isSubmitted()) {
+        if (!$this->demoMode && $projectImportForm->isSubmitted()) {
             $formData = $projectImportForm->getData();
             $repositoryUrlsSeparatedByComma = preg_replace('/\s+/', '', $formData['repositoryUrls']);
             $repositoryUrls = explode(",", $repositoryUrlsSeparatedByComma);
@@ -57,7 +63,8 @@ class ImportRepositoriesController
 
         return [
             'importProjectsForm' => $projectImportForm->createView(),
-            'imports' => $imports
+            'imports' => $imports,
+            'demoMode' => $this->demoMode
         ];
     }
 

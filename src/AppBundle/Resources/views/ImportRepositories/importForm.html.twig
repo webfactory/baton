@@ -29,6 +29,9 @@
                     {{ import }}{% if not loop.last %},{% endif %}
                 {% if loop.last %}<p><p>Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.</p>{% endif %}
             {% endfor %}
+            {% if demoMode %}
+                <p>Importing projects is disabled in demo mode.</p>
+            {% endif %}
         </div>
     </div>
 {% endblock%}
