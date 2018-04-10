@@ -1,0 +1,23 @@
+{
+    "package": {
+        "id": "{{ package.id }}",
+        "name": "{{ package.name }}",
+        "versions": [
+            {% if matchingPackageVersions is defined %}
+                {% for packageVersion in matchingPackageVersions %}
+                    {
+                        "prettyVersion": "{{ packageVersion.prettyVersion }}",
+                        "projects": [
+                            {% for project in packageVersion.projects %}
+                            {
+                                "id": "{{ project.id }}",
+                                "name": "{{ project.name }}"
+                            }{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            {% endif %}
+        ]
+    }
+}

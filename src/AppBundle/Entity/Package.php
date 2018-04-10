@@ -2,18 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Webfactory\SlugValidationBundle\Bridge\SluggableInterface;
 
 /**
  * Describes the mapping for Composer Packages that are used in projects.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PackageRepository")
  */
-class Package implements SluggableInterface
+class Package
 {
     /**
      * @ORM\Id
@@ -129,16 +127,5 @@ class Package implements SluggableInterface
     public function getVersions()
     {
       return $this->versions;
-    }
-
-    /**
-     * Returns the slug for the entity.
-     *
-     * @return string|null
-     */
-    public function getSlug()
-    {
-        $slugify = new Slugify();
-        return $slugify->slugify($this->getName());
     }
 }
