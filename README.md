@@ -2,6 +2,11 @@
 
 Baton is a Composer dependency analytics tool which helps you keep track of the Composer dependencies in your PHP projects.
 
+
+## Demo
+
+Visit [baton.test.webfactory.de](http://baton.test.webfactory.de) to see Baton in action.
+
 ## Installing / Getting started
 
 To get the project up and running you simply need to run these commands:
