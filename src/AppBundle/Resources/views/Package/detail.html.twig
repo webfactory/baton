@@ -26,7 +26,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <h2>Package {{ package.name }}</h2>
+                <h2>Package <a href="https://packagist.org/packages/{{ package.name }}">{{ package.name }}</a></h2>
                 {% if message is defined %}{{ message }}{% endif %}
                 <ul class="list-group mb-5">
                     {% for version in package.versions %}
