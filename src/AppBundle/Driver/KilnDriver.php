@@ -35,7 +35,7 @@ class KilnDriver extends VcsDriver
     /** @var GitDriver */
     protected $gitDriver;
 
-    /** @var string */
+    /** @var int|string|false */
     private $repoId;
 
     /** @var string */
