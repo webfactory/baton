@@ -1,5 +1,9 @@
 # Baton
 
+[![Build Status](https://scrutinizer-ci.com/g/webfactory/baton/badges/build.png?b=master&s=a300eda908a21c2d2dc9ef1aadafcd118bd165f3)](https://scrutinizer-ci.com/g/webfactory/baton/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/webfactory/baton/badges/coverage.png?b=master&s=08865c7d8040b9dba1edb2e66ffc55ff8a32a5fd)](https://scrutinizer-ci.com/g/webfactory/baton/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webfactory/baton/badges/quality-score.png?b=master&s=afdec476fd320d69b87e0c52427ba876c67addc8)](https://scrutinizer-ci.com/g/webfactory/baton/?branch=master)
+
 Baton is a Composer dependency analytics tool which helps you keep track of the Composer dependencies in your PHP projects.
 
 
