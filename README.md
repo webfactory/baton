@@ -28,6 +28,14 @@ phlough will install composer dependencies, build assets, serve the project thro
 
 Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.
 
+### Docker
+
+Start a local version via [docker-compose](https://docs.docker.com/compose/):
+
+    git clone git@github.com:webfactory/baton.git
+    cd baton
+    docker-compose up
+
 ## Tests
 
 Baton has Unit-Tests! Execute `bin/phpunit` to run them.
