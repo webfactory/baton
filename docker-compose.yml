@@ -8,16 +8,25 @@ services:
     restart: on-failure
     environment:
       MYSQL_DATABASE: "baton"
-      MYSQL_USER: "baton"
-      MYSQL_PASSWORD: "baton"
-      MYSQL_ROOT_PASSWORD: "baton"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: ""
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+
 
   baton:
     build: "docker/container/baton"
-    command: "dockerize -wait tcp://database:3306 bash -c 'composer install && php -v'"
+    command: "dockerize -wait tcp://database:3306 bash -c 'composer install && php -v && npm install && gulp compile && bin/console doctrine:database:create --if-not-exists && bin/console doctrine:schema:up && printf \"ACTUALLY the server will be running on http://127.0.0.1:8080\" && bin/console server:run 0.0.0.0:8080 --docroot=www'"
     volumes:
       - .:/usr/app/baton
     restart: on-failure
+    environment:
+      APP_DEBUG: "1"
+      MYSQL_HOST: "database"
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: "baton"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: ""
     depends_on:
       - database
     ports:
