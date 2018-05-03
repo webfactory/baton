@@ -13,19 +13,6 @@ Visit [baton.test.webfactory.de](http://baton.test.webfactory.de) to see Baton i
 
 ## Installing / Getting started
 
-To get the project up and running you simply need to run these commands:
-
-```shell
-composer install
-npm install
-gulp compile
-bin/console doctrine:database:create
-bin/console doctrine:schema:create
-bin/console server:run --docroot=www
-```
-
-Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.
-
 ### Docker
 
 Start a local version via [docker-compose](https://docs.docker.com/compose/):
@@ -33,6 +20,22 @@ Start a local version via [docker-compose](https://docs.docker.com/compose/):
     git clone git@github.com:webfactory/baton.git
     cd baton
     docker-compose up
+
+### Without Docker
+
+To get the project up and running you simply need to run these commands:
+
+    git clone git@github.com:webfactory/baton.git
+    cd baton
+    composer install
+    npm install
+    gulp compile
+    bin/console doctrine:database:create
+    bin/console doctrine:schema:create
+    bin/console server:run --docroot=www
+
+
+Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.
 
 ## Tests
 
