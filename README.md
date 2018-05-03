@@ -16,15 +16,13 @@ Visit [baton.test.webfactory.de](http://baton.test.webfactory.de) to see Baton i
 To get the project up and running you simply need to run these commands:
 
 ```shell
-phlough install
+composer install
+npm install
+gulp compile
 bin/console doctrine:database:create
 bin/console doctrine:schema:create
+bin/console server:run --docroot=www
 ```
-
-Currently Baton uses a webfactory internal tool called phlough for automating a lot of things such as the Apache server config,
-setting environment variables, database connections etc.
-
-phlough will install composer dependencies, build assets, serve the project through apache and do other handy stuff.
 
 Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.
 
@@ -42,15 +40,25 @@ The same goes for Kiln repositories. Store your Kiln OAuth token in the `KILN_OA
 
 ## Features
 
-* Show project with list of Composer dependencies and their locked versions
-* Show Composer Package with list of using projects grouped by versions
-* Import projects by repository URL via the Symfony Command `app:import-project` or a form at `/import-repositories`
-* Webhook route to import/update repositories on push events (tested GitHub and Kiln support)
-* Search form for finding projects that use a Composer package matching in a specified version range
+### Import Projects
 
-The search form simply fetches the JSON data with matching projects from `/package/{packageName};json?operator={(==|>=|<=|>|<|all)}&versionString={versionString}`
+Import projects by repository URL via the Symfony Command `app:import-project` or a form at `/import-repositories`
+
+Use the webhook route `/webhook` to import/update repositories on push events (GitHub and Kiln supported)
+
+### Search Package Usages
+
+Use the search form to find projects that use a Composer package matching a specific version range.
+
+The search form simply fetches JSON data with matching projects from `/package/{packageName};json?operator={(==|>=|<=|>|<|all)}&versionString={versionString}`
 
 Use `/package/{packageName}?operator={(==|>=|<=|>|<|all)}&versionString={versionString}` to get results in HTML.
+
+### Other Views
+
+Show project with list of Composer dependencies and their locked versions
+
+Show Composer Package with list of using projects grouped by versions
 
 ## Roadmap
 

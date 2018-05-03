@@ -1,5 +1,38 @@
 imports:
     - { resource: config.yml }
-    - { resource: ../vendor/webfactory/symfony-default-config/config_development.yml }
-    - { resource: ../vendor/webfactory/doctrine-bundle-default-config/config_development.yml }
-    - { resource: ../vendor/webfactory/monolog-bundle-default-config/config_development.yml }
+
+framework:
+    router:   { resource: "%kernel.root_dir%/routing_development.yml" }
+    profiler:
+        enabled: "%kernel.debug%"
+
+web_profiler:
+    toolbar: "%kernel.debug%"
+
+parameters:
+    # Linebreaks for better readbility
+    app.logging.allow_inline_line_breaks: true
+
+    # a lot of whitespace for better readability
+    app.logging.default_line_format: "[%%datetime%%] [%%extra.unique_id%%]\n\n\t%%channel%%.%%level_name%%: %%message%%\n\n\tcontext: %%context%%\n\n\textra: %%extra%%\n\n"
+
+services:
+    # In development, use PsrLogMessageProcessor to expand "{value}" placeholders in log
+    # messages with corresponding values from the log record context.
+    #
+    # This makes log messages easier to read. In production, however, we're not
+    # using this as post-processing in Splunk is easier if we keep the messages and
+    # context values apart.
+    app.logging.psr_log_message_processor:
+        class: Monolog\Processor\PsrLogMessageProcessor
+        tags:
+            - { name: monolog.processor }
+
+monolog:
+    handlers:
+        main:
+            formatter: app.logging.line_formatter
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: [!event]
