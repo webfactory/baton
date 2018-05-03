@@ -14,7 +14,7 @@ services:
 
   baton:
     build: "docker/container/baton"
-    command: "dockerize -wait tcp://database:3306 php -v"
+    command: "dockerize -wait tcp://database:3306 bash -c 'composer install && php -v'"
     volumes:
       - .:/usr/app/baton
     restart: on-failure
