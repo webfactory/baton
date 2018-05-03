@@ -2,12 +2,6 @@
     "name": "webfactory/baton",
     "type": "project",
     "description": "Composer Dependency Tracking",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://composer.webfactory.de"
-        }
-    ],
 
     "require": {
         "php": ">=5.5.9",
@@ -19,15 +13,13 @@
         "doctrine/doctrine-bundle": "^1.8.1",
         "doctrine/doctrine-migrations-bundle": "^1.3.1",
         "doctrine/migrations": "^1.4.1",
-        "webfactory/symfony-default-config": "^2.6.0",
-        "webfactory/doctrine-bundle-default-config": "2.0.1",
         "composer/composer": "^1.6",
-        "webfactory/monolog-bundle-default-config": "dev-symfony3support"
     },
 
     "require-dev": {
         "phpunit/phpunit": "^4.8.36",
-        "doctrine/doctrine-fixtures-bundle": "^3.0"
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "symfony/web-server-bundle": "^4.0"
     },
 
     "autoload": {

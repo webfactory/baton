@@ -1,6 +1,5 @@
 /*global require:false */
 
-var phlough = require("./conf/phlough-configuration.json");
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')(); /// lädt alle gulp-*-Module in $.*
 var mergeStream = require('merge-stream');
@@ -22,17 +21,15 @@ var config = {
     "javascripts": {
         "files": {
             "js/scripts.js": [
-                'bundles/app/js/searchProjectsWithPackageVersionForm.js'
+                '../src/AppBundle/Resources/public/js/searchProjectsWithPackageVersionForm.js'
             ]
         },
         "watch": ['{vendor,src,www}/**/*.js', '!www/js/**']
     },
 
-    "development": ($.util.env.e || $.util.env.env || phlough['symfony.kernel.environment']) === 'development',
-    "webdir": phlough["project.webdir"],
-    "libdir": phlough["project.libdir"],
-    "bowerdir": phlough["bower.components_dir"],
-    "tempdir": phlough["project.tempdir"]
+    "webdir": 'www',
+    "libdir": 'vendor',
+    "tempdir": 'var'
 };
 
 gulp.task('compile-stylesheets', function () {
@@ -44,7 +41,6 @@ gulp.task('compile-stylesheets', function () {
         cwd: config.webdir,
         pipeStdout: true,
         libdir: config.libdir,
-        bowerdir: config.bowerdir,
         sassCacheDir: config.tempdir + '/.sass-cache',
         sassOutputStyle: 'nested',
         maxBuffer: 500 * 1024    // 500 KB Puffergröße für Ausgabe SASS -> CSS-Rebase
@@ -57,17 +53,17 @@ gulp.task('compile-stylesheets', function () {
 
         merger.add(
             gulp.src(config.stylesheets.files[key], { cwd: config.webdir, read: false })
-                .pipe($.exec('sass --cache-location <%= options.sassCacheDir %> --scss --style <%= options.sassOutputStyle %> --load-path <%= options.libdir %> --load-path <%= options.bowerdir %> <%= file.path %>', execOptions))
+                .pipe($.exec('sass --cache-location <%= options.sassCacheDir %> --scss --style <%= options.sassOutputStyle %> --load-path <%= options.libdir %> <%= file.path %>', execOptions))
                 .on('error', function(err) { $.util.log(err.message); })
                 .pipe($.cssUrlRebase({ root: path.dirname(key) }))
-                .pipe(config.development ? $.sourcemaps.init() : $.util.noop())
+                .pipe($.sourcemaps.init())
                 .pipe($.postcss([autoprefixer({ browsers: ['last 5 version'] })]))
                 .pipe($.concat(key))
                 .pipe($.cleanCss({
                     compatibility: 'ie7',
                     rebase: false   // URL rebasing wird besser von cssUrlRebase gehandhabt
                 }))
-                .pipe(config.development ? $.sourcemaps.write() : $.util.noop())
+                .pipe($.sourcemaps.write())
                 .pipe(gulp.dest(config.webdir))
         );
     }
@@ -86,12 +82,12 @@ gulp.task('compile-javascripts', function() {
 
         merger.add(
             gulp.src(config.javascripts.files[key], { cwd: config.webdir })
-                .pipe(config.development ? $.sourcemaps.init() : $.util.noop())
+                .pipe($.sourcemaps.init())
                 .pipe($.uglify({
                     output: { comments: saveLicense }
                 }))
                 .pipe($.concat(key))
-                .pipe(config.development ? $.sourcemaps.write() : $.util.noop())
+                .pipe($.sourcemaps.write())
                 .pipe(gulp.dest(config.webdir))
         );
     }
