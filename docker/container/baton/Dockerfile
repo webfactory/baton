@@ -16,6 +16,14 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 # Install Composer and required extensions.
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN apt-get install -y git zlib1g-dev \
-    && docker-php-ext-install zip
+    && docker-php-ext-install pdo pdo_mysql zip
+
+# install npm from nodesource using apt-get
+RUN apt-get install -my wget gnupg \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -yq nodejs build-essential
+
+RUN npm install -g npm && npm install -g gulp
+
 
 WORKDIR /usr/app/baton
