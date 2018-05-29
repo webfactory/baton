@@ -44,7 +44,7 @@ framework:
 twig:
     strict_variables: "%kernel.debug%"
     form_themes:
-        - 'form/fields.html.twig'
+        - 'AppBundle:Form:fields.html.twig'
 
 doctrine:
     dbal:
