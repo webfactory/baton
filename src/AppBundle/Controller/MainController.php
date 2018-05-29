@@ -45,8 +45,8 @@ class MainController
         $searchPackageForm = $this->formFactory->create(SearchPackageType::class, null, ['method' => 'POST']);
 
         return [
-            'projects' => $this->projectRepo->findAll(),
-            'packages' => $this->packageRepo->findAll(),
+            'projects' => $this->projectRepo->findBy([], ['name' => 'ASC']),
+            'packages' => $this->packageRepo->findBy([], ['name' => 'ASC']),
             'searchPackageForm' => $searchPackageForm->createView()
         ];
     }

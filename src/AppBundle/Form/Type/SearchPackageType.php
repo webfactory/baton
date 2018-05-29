@@ -3,11 +3,10 @@
 namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Package;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SearchPackageType extends AbstractType
@@ -20,6 +19,10 @@ class SearchPackageType extends AbstractType
                 'class' => Package::class,
                 'choice_label' => 'name',
                 'choice_value' => 'name',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('p')
+                        ->orderBy('p.name', 'ASC');
+                },
                 'placeholder' => 'First choose a package',
                 'choice_translation_domain' => false,
                 'label_attr' => ['class' => 'sr-only'],
