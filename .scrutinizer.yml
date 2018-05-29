@@ -1,6 +1,6 @@
 build:
     environment:
-        php: '5.5.9'
+        php: '7.1.15'
         timezone: 'Europe/Berlin'
         postgresql: false
         node: false
