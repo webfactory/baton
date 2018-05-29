@@ -6,8 +6,8 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2>Project {{ project.name }}</h2>
-            {% if 'https://github.com' in project.vcsUrl %}
-                <p><a href="{{ project.vcsUrl }}">View on GitHub</a></p>
+            {% if 'https://' in project.vcsUrl or 'http://' in project.vcsUrl %}
+                <p><a href="{{ project.vcsUrl }}">View source</a></p>
             {% endif %}
             <h3>Dependencies</h3>
             <ul class="list-group mb-5">
