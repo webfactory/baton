@@ -2,6 +2,7 @@
 
 namespace AppBundle\ProjectImport;
 
+use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use Composer\Package\Package;
 
 class ComposerPackageFetcher
@@ -25,7 +26,7 @@ class ComposerPackageFetcher
         $lockContents = $this->lockFileFetcher->getLockContents($vcsUrl);
 
         if ($lockContents === null) {
-            return [];
+            throw new ProjectHasNoComposerPackageUsageInfoException();
         }
 
         return LockFileParser::getPackages($lockContents);
