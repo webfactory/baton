@@ -9,6 +9,9 @@ framework:
 web_profiler:
     toolbar: "%kernel.debug%"
 
+twig:
+    cache: false
+
 parameters:
     # Linebreaks for better readbility
     app.logging.allow_inline_line_breaks: true
