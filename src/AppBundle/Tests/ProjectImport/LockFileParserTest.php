@@ -2,7 +2,7 @@
 
 namespace AppBundle\Tests\ProjectImport;
 
-
+use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use AppBundle\ProjectImport\LockFileParser;
 use Composer\Package\Package;
 
@@ -25,5 +25,19 @@ class LockFileParserTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $packages);
         $this->assertInstanceOf(Package::class, $packages[0]);
         $this->assertTrue(count($packages) > 0);
+    }
+
+    public function testThrowsExceptionIfArrayKeyPackagesDoesntExist()
+    {
+        $this->setExpectedException(ProjectHasNoComposerPackageUsageInfoException::class);
+
+        LockFileParser::getPackages('{"_readme": ["bar"],"content-hash": "foo","aliases": []}');
+    }
+
+    public function testThrowsExceptionIfPackagesArrayInLockContentsIsEmpty()
+    {
+        $this->setExpectedException(ProjectHasNoComposerPackageUsageInfoException::class);
+
+        LockFileParser::getPackages('{"_readme": ["bar"],"content-hash": "foo","packages": [],"aliases": []}');
     }
 }
