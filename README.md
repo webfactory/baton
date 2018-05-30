@@ -88,7 +88,7 @@ Baton was created by [@xkons](https://github.com/xkons) as graduation project fo
 
 The total implementation time was limited to 32 hours by the Industrie Handelskammer Bonn, the main entity for apprenticeships in its area, which also grades the apprentices.
 
-This is the final commit from the initial implementation in the given timeframe: [a812a21](https://github.com/webfactory/baton/commit/)
+This is the final commit from the initial implementation in the given timeframe: [a812a21](https://github.com/webfactory/baton/commit/a812a21)
 
 ## Credits, Copyright and License
 
