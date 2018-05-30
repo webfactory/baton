@@ -179,22 +179,17 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getFileContent($file, $identifier);
         }
 
-        $notFoundRetries = 2;
-        while ($notFoundRetries) {
-            try {
-                $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/File/' . bin2hex($file) . '?token=' . $this->oAuthToken;
+        try {
+            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/File/' . bin2hex($file) . '?token=' . $this->oAuthToken;
 
-                return $this->getContents($resource);
-            } catch (TransportException $e) {
-                if (404 !== $e->getCode()) {
-                    throw $e;
-                }
-
-                return null;
+            return $this->getContents($resource);
+        } catch (TransportException $e) {
+            if (404 !== $e->getCode()) {
+                throw $e;
             }
-        }
 
-        return null;
+            return null;
+        }
     }
 
     /**
