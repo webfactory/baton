@@ -1,6 +1,0 @@
-# Minute, Stunde, Tag des Monats, Monat, Wochentag. @see https://en.wikipedia.org/wiki/Cron
-# 0 * * * * www-admin cd {{ project.property('project.basedir') }} && {{ project.property('symfony.console') }} foo:bar
-
-# Beachte: In bin/console steht jetzt ein relativer statt absoluter Pfad zu PHP, so dass Aufrufe nur noch aus dem Basedir heraus funktionieren.
-
-# Cronjobs aktivieren: have.cron = true in eine phlough.ini und cron.deploy = 1 in der .phlough/phlough.ini des jeweiligen Servers.
