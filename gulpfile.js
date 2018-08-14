@@ -1,7 +1,5 @@
-/*global require:false */
-
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')(); /// lädt alle gulp-*-Module in $.*
+var $ = require('gulp-load-plugins')(); /// loads all gulp plugins in $.*
 var mergeStream = require('merge-stream');
 var path = require('path');
 var saveLicense = require('uglify-save-license');
@@ -11,9 +9,9 @@ var config = {
 
     "stylesheets": {
         "files": {
-            // Alle Pfade relativ zu www/, *nicht* mit ../.. aus www ausbrechen!
-            // "css/target1.css": [ 'bundles/xx/scss/one.scss', 'bower_components/yy/yy.css' ],
-            // "css/target2.css": [ 'bundles/xx/scss/two.scss', 'bower_components/zz/zz.css' ]
+            "css/styles.css": [
+                '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+            ],
         },
         "watch": ['{vendor,src,www}/**/*.{css,scss}', '!www/css/**']
     },
@@ -21,6 +19,8 @@ var config = {
     "javascripts": {
         "files": {
             "js/scripts.js": [
+                '../node_modules/jquery/dist/jquery.min.js',
+                '../node_modules/bootstrap/dist/js/bootstrap.min.js',
                 '../src/AppBundle/Resources/public/js/searchProjectsWithPackageVersionForm.js'
             ]
         },
@@ -43,7 +43,7 @@ gulp.task('compile-stylesheets', function () {
         libdir: config.libdir,
         sassCacheDir: config.tempdir + '/.sass-cache',
         sassOutputStyle: 'nested',
-        maxBuffer: 500 * 1024    // 500 KB Puffergröße für Ausgabe SASS -> CSS-Rebase
+        maxBuffer: 500 * 1024    // 500 KB buffer size for SASS -> CSS-Rebase output
     };
 
     for (var key in config.stylesheets.files) {
@@ -61,7 +61,7 @@ gulp.task('compile-stylesheets', function () {
                 .pipe($.concat(key))
                 .pipe($.cleanCss({
                     compatibility: 'ie7',
-                    rebase: false   // URL rebasing wird besser von cssUrlRebase gehandhabt
+                    rebase: false   // URL is better handled by cssUrlRebase
                 }))
                 .pipe($.sourcemaps.write())
                 .pipe(gulp.dest(config.webdir))
