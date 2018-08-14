@@ -53,23 +53,22 @@ The same goes for Kiln repositories. Store your Kiln OAuth token in the `KILN_OA
 
 ### Import Projects
 
-Import projects by repository URL via the Symfony Command `app:import-project` or a form at `/import-repositories`
+Use the webhook route `/webhook` to import/update repositories on push events (tested with GitHub and Kiln).
 
-Use the webhook route `/webhook` to import/update repositories on push events (GitHub and Kiln supported)
+You can also import projects by repository URL through the Symfony Command `app:import-project` or the form at `/import-repositories`.
 
 ### Search Package Usages
 
 Use the search form to find projects that use a Composer package matching a specific version range.
 
-The search form simply fetches JSON data with matching projects from `/package/{packageName};json?operator={(==|>=|<=|>|<|all)}&versionString={versionString}`
-
-Use `/package/{packageName}?operator={(==|>=|<=|>|<|all)}&versionString={versionString}` to get results in HTML.
+The search form fetches the results from `/usage-search/{package};{_format}/{operator}/{versionString}`,
+while `_format` can be `json` or `html`.
 
 ### Other Views
 
-Show project with list of Composer dependencies and their locked versions
+Show project with list of Composer dependencies and their locked versions.
 
-Show Composer Package with list of using projects grouped by versions
+Show Composer Package with list of using projects grouped by version.
 
 ## Roadmap
 
