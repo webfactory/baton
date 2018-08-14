@@ -4,29 +4,15 @@
 $('.js-findProjectsForm').on('submit', function(event) {
     event.preventDefault();
 
+    var submittedPackage = $('.js-packageSelect').val();
+    var submittedOperator = $('.js-versionConstraintOperatorSelect').val();
+    var submittedVersionString = $('.js-versionConstraintValueSelect').val();
+
     $.ajax({
-        url: "/package/" + $('.js-packageSelect').val() + ";json?operator=" + $('.js-versionConstraintOperatorSelect').val() + "&versionString=" + $('.js-versionConstraintValueSelect').val(),
-        dataType: "json",
-        success: function(data) {
-            var list = $("<ul>").addClass('list-group mb-5');
-
-            var package = data.package;
-            var versions = package.versions;
-            versions.forEach( function (version) {
-                var listItem = "<li class='list-group-item'><strong>Version " + version.prettyVersion + "</strong><br/>Used by: ";
-
-                version.projects.forEach( function (project, index) {
-                    listItem += "<a href='/project/" + project.name + "'>" + project.name + "</a>";
-                    index !== version.projects.length - 1 ? listItem += ", " : listItem += "";
-                });
-
-                listItem += "</li>";
-                list.append(listItem);
-            });
-            if(versions.length === 0) {
-                list = "<p>No results.</p>";
-            }
-            $("#results").html(list).prepend("<h2>Matching Projects</h2><p>Using <a href='/package/" + package.name + "'>" + package.name + "</a></p>");
+        url: "/usage-search/" + submittedPackage + ";html/" + submittedOperator + "/" + submittedVersionString,
+        dataType: "html",
+        success: function(resultsHtml) {
+            $("#results").html(resultsHtml);
         }
     });
 });

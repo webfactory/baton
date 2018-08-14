@@ -5,44 +5,21 @@
 {% block main %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            {% if matchingPackageVersions is defined %}
-                <h2>Matching Projects</h2>
-                <p>Using <a href="{{ path('package', {'name': package.name}) }}">{{ package.name }}</a> with version constraint {{ versionConstraint }}</p>
-                {% if matchingPackageVersions|length == 0 %}<p>No results.</p>{% endif %}
-                <ul class="list-group mb-5">
-                    {% for version in matchingPackageVersions %}
-                        <li class="list-group-item">
-                            <strong>Version {{ version.prettyVersion }}</strong><br/>
-                            {% if version.projects|length > 0 %}
-                                Used by:
-                                {% for project in version.projects %}
-                                    <a href="{{ path('project', {'name': project.name}) }}">
-                                        {{ project.name }}
-                                    </a>
-                                    {% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <h2>Package {{ package.name }}</h2>
-                <p><a href="https://packagist.org/packages/{{ package.name }}">View on packagist</a></p>
-                {% if message is defined %}{{ message }}{% endif %}
-                <ul class="list-group mb-5">
-                    {% for version in package.versions %}
-                        <li class="list-group-item">
-                            <strong>Version {{ version.prettyVersion }}</strong><br/>
-                            {% if version.projects|length > 0 %}
-                                Used by:
-                                {% for project in version.projects %}
-                                    <a href="{{ path('project', {'name': project.name}) }}">{{ project.name }}</a>{% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            <h2>Package {{ package.name }}</h2>
+            <p><a href="https://packagist.org/packages/{{ package.name }}">View on packagist</a></p>
+            <ul class="list-group mb-5">
+                {% for version in package.versions %}
+                    <li class="list-group-item">
+                        <strong>Version {{ version.prettyVersion }}</strong><br/>
+                        {% if version.projects|length > 0 %}
+                            Used by:
+                            {% for project in version.projects %}
+                                <a href="{{ path('project', {'name': project.name}) }}">{{ project.name }}</a>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

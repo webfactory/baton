@@ -18,6 +18,11 @@ services:
         arguments:
             $importProjectTask: "@app.task.import_project"
 
+    app.controller.usageSearch:
+        class: AppBundle\Controller\UsageSearchController
+        arguments:
+            $twigEnvironment: "@twig"
+
     app.project.repository:
         class: AppBundle\Entity\Repository\ProjectRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]

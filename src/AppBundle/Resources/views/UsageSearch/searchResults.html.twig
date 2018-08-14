@@ -1,0 +1,24 @@
+<h2>Matching Projects</h2>
+<p>Using <a href="{{ path('package', {'name': package.name}) }}">{{ package.name }}</a></p>
+
+{% if matchingPackageVersions|length == 0 %}
+    <p>No results.</p>
+{% else %}
+    <ul class="list-group mb-3">
+        {% for version in matchingPackageVersions %}
+            <li class="list-group-item">
+                <strong>Version {{ version.prettyVersion }}</strong><br/>
+                {% if version.projects|length > 0 %}
+                    Used by:
+                    {% for project in version.projects %}
+                        <a href="{{ path('project', {'name': project.name}) }}">
+                            {{ project.name }}
+                        </a>
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{{ path('search-usages', {'package': package.name, 'operator': operator, 'versionString': versionString, 'sharing': true}) }}">Share this search</a></p>
+{% endif %}
