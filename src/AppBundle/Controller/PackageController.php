@@ -26,7 +26,7 @@ class PackageController
 
     /**
      * @Route(
-     *     "/package/{name};versions.{_format}",
+     *     "/package-versions/{name};{_format}",
      *     name="package-versions",
      *     requirements={"name"="[^;]*"},
      *     defaults={"_format"="json"}

@@ -52,7 +52,7 @@ function setVersionSelectOptions(versions) {
 
 function fetchAvailableVersionsForPackage(name, callback) {
     $.ajax({
-        url: "/package/" + name + ";versions",
+        url: "/package-versions/" + name,
         dataType: "json",
         success: function(data) {
             callback(data.versions);
