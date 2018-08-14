@@ -4,10 +4,10 @@ imports:
 framework:
     router:   { resource: "%kernel.root_dir%/routing_development.yml" }
     profiler:
-        enabled: "%kernel.debug%"
+        enabled: true
 
 web_profiler:
-    toolbar: "%kernel.debug%"
+    toolbar: true
 
 twig:
     cache: false
