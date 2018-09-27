@@ -53,8 +53,7 @@ gulp.task('compile-stylesheets', function () {
 
         merger.add(
             gulp.src(config.stylesheets.files[key], { cwd: config.webdir, read: false })
-                .pipe($.exec('sass --cache-location <%= options.sassCacheDir %> --scss --style <%= options.sassOutputStyle %> --load-path <%= options.libdir %> <%= file.path %>', execOptions))
-                .on('error', function(err) { $.util.log(err.message); })
+                .pipe($.exec('LC_ALL=en_GB.utf8 sass --cache-location <%= options.sassCacheDir %> --scss --style <%= options.sassOutputStyle %> --load-path <%= options.libdir %> <%= file.path %>', execOptions))
                 .pipe($.cssUrlRebase({ root: path.dirname(key) }))
                 .pipe($.sourcemaps.init())
                 .pipe($.postcss([autoprefixer({ browsers: ['last 5 version'] })]))
