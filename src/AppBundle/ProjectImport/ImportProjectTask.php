@@ -47,7 +47,7 @@ class ImportProjectTask
      */
     public function run($vcsUrl)
     {
-        $this->logger->warning('Importing Repository '.$vcsUrl);
+        $this->logger->notice('Importing Repository '.$vcsUrl);
 
         $project = $this->projectProvider->provideProject($this->getProjectNameFromUrl($vcsUrl));
         $project->setVcsUrl($vcsUrl);
@@ -77,7 +77,7 @@ class ImportProjectTask
 
         $this->entityManager->flush();
 
-        $this->logger->warning('Imported Project '.$project->getName());
+        $this->logger->notice('Imported Project '.$project->getName());
 
         return true;
     }
