@@ -16,3 +16,6 @@ phpunit.xml
 .php-cs-fixer.cache
 data
 .env
+webhookpassword
+authpasswords
+

@@ -40,6 +40,10 @@ class PackageController
         $operator = $request->query->get('operator');
         $versionString = $request->query->get('versionString');
 
+	if ($operator === null || $versionString === null) {
+            return ['package' => $package];
+        }
+
         if (null !== $operator && 'html' === $_format) {
             // an older version of Baton used this URL to render search results. To keep the URLs intact, we redirect
             $url = $this->urlGenerator->generate('main', MainController::getUrlParametersForSearchSubmitPage(
