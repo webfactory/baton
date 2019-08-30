@@ -1,14 +1,15 @@
 parameters:
+    env(MYSQL_HOST): '127.0.0.1'
+    env(MYSQL_USER): 'root'
+    env(MYSQL_PASSWORD): ''
+    env(MYSQL_DATABASE): 'baton'
+    env(MYSQL_PORT): '3306'
+
     mysql.host: '%env(MYSQL_HOST)%'
     mysql.user: '%env(MYSQL_USER)%'
     mysql.password: '%env(MYSQL_PASSWORD)%'
     mysql.db: '%env(MYSQL_DATABASE)%'
     mysql.port: '%env(MYSQL_PORT)%'
-    env(MYSQL_HOST): '10.20.30.40'
-    env(MYSQL_USER): 'root'
-    env(MYSQL_PASSWORD): ''
-    env(MYSQL_DATABASE): 'baton'
-    env(MYSQL_PORT): '3306'
 
     framework.trusted_hosts: ['127.0.0.1']
 
