@@ -59,8 +59,7 @@ class ImportProjectTask
 
             return false;
         } catch (ProjectHasNoComposerPackageUsageInfoException $exception) {
-            $this->logger->error('No composer package usages found in Project '.$project->getName().'. Import failed.', ['exception' => $exception]);
-
+            $this->logger->notice('No composer package usages found in Project '.$project->getName().'. Import failed.', ['exception' => $exception]);
             return false;
         }
 
