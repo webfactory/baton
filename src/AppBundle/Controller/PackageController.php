@@ -40,7 +40,7 @@ class PackageController
         $operator = $request->query->get('operator');
         $versionString = $request->query->get('versionString');
 
-	if ($operator === null || $versionString === null) {
+        if (!$operator || !$versionString) {
             return ['package' => $package];
         }
 
