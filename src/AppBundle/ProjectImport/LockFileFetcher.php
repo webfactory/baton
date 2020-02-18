@@ -3,6 +3,7 @@
 namespace AppBundle\ProjectImport;
 
 use AppBundle\Factory\VcsDriverFactory;
+use Composer\Downloader\TransportException;
 
 class LockFileFetcher
 {
@@ -19,8 +20,16 @@ class LockFileFetcher
      */
     public function getLockContents($vcsUrl)
     {
-        $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);
+        try {
+            $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);
 
-        return $vcsDriver->getFileContent('composer.lock', 'master');
+            return $vcsDriver->getFileContent('composer.lock', 'master');
+        } catch (TransportException $exception) {
+            if ($exception->getStatusCode() === 404) {
+                return null;
+            }
+
+            throw $exception;
+        }
     }
 }
