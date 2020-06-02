@@ -2,7 +2,6 @@
     "name": "webfactory/baton",
     "type": "project",
     "description": "Composer Dependency Tracking",
-
     "require": {
         "symfony/symfony": "~3.4",
         "symfony/monolog-bundle": "^3.2.0",
@@ -11,21 +10,24 @@
         "doctrine/doctrine-bundle": "^1.8.1",
         "composer/composer": "^1.6"
     },
-
     "require-dev": {
         "phpunit/phpunit": "^4.8.36",
         "doctrine/doctrine-fixtures-bundle": "^3.0"
     },
-
     "autoload": {
         "psr-4": {
             "": "src/"
         }
     },
-
     "autoload-dev": {
         "psr-4": {
             "": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2.24"
         }
     }
 }
