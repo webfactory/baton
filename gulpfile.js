@@ -1,115 +1,34 @@
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')(); /// loads all gulp plugins in $.*
-var mergeStream = require('merge-stream');
-var path = require('path');
-var saveLicense = require('uglify-save-license');
-var autoprefixer = require('autoprefixer');
+const gulp = require('gulp');
+const $ = require('./node_modules/webfactory-gulp-preset/plugins')(); // loads all gulp-* modules in $.* for easy reference
 
-var config = {
+const config = require('./gulp-config');
 
-    "stylesheets": {
-        "files": {
-            "css/styles.css": [
-                '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-            ],
-        },
-        "watch": ['{vendor,src,www}/**/*.{css,scss}', '!www/css/**']
-    },
+// Explicitly declare the Sass compiler – node-sass is the current default compiler in gulp-sass,
+// but we want to be future-compatible in case this changes;
+// fyi: the new canonical Sass Implementation is dart-sass (https://github.com/sass/dart-sass)
+$.sass.compiler = require('node-sass');
 
-    "javascripts": {
-        "files": {
-            "js/scripts.js": [
-                '../node_modules/jquery/dist/jquery.min.js',
-                '../node_modules/bootstrap/dist/js/bootstrap.min.js',
-                '../src/AppBundle/Resources/public/js/searchProjectsWithPackageVersionForm.js'
-            ]
-        },
-        "watch": ['{vendor,src,www}/**/*.js', '!www/js/**']
-    },
+const { scripts } = require('./node_modules/webfactory-gulp-preset/tasks/scripts');
+const { styles } = require('./node_modules/webfactory-gulp-preset/tasks/styles');
+const { browsersync } = require('./node_modules/webfactory-gulp-preset/tasks/browsersync');
 
-    "webdir": 'www',
-    "libdir": 'vendor',
-    "tempdir": 'var'
-};
+function js(cb) {
+    scripts(gulp, $, config);
+    cb();
+}
 
-gulp.task('compile-stylesheets', function () {
-    'use strict';
+function css(cb) {
+    styles(gulp, $, config);
+    cb();
+}
 
-    var merger = mergeStream();
+function serve(cb) {
+    browsersync(gulp, $, config, css, js);
+    cb();
+}
 
-    var execOptions = {
-        cwd: config.webdir,
-        pipeStdout: true,
-        libdir: config.libdir,
-        sassCacheDir: config.tempdir + '/.sass-cache',
-        sassOutputStyle: 'nested',
-        maxBuffer: 500 * 1024    // 500 KB buffer size for SASS -> CSS-Rebase output
-    };
-
-    for (var key in config.stylesheets.files) {
-        var destPath = config.webdir + "/" + key;
-
-        $.util.log("Compile " + key + ": [" + (config.stylesheets.files[key].join(", ")) + "]");
-
-        merger.add(
-            gulp.src(config.stylesheets.files[key], { cwd: config.webdir, read: false })
-                .pipe($.exec('LC_ALL=en_GB.utf8 sass --cache-location <%= options.sassCacheDir %> --scss --style <%= options.sassOutputStyle %> --load-path <%= options.libdir %> <%= file.path %>', execOptions))
-                .pipe($.cssUrlRebase({ root: path.dirname(key) }))
-                .pipe($.sourcemaps.init())
-                .pipe($.postcss([autoprefixer({ browsers: ['last 5 version'] })]))
-                .pipe($.concat(key))
-                .pipe($.cleanCss({
-                    compatibility: 'ie7',
-                    rebase: false   // URL is better handled by cssUrlRebase
-                }))
-                .pipe($.sourcemaps.write())
-                .pipe(gulp.dest(config.webdir))
-        );
-    }
-
-    merger.pipe($.livereload({ auto: false }));
-    return merger;
-});
-
-gulp.task('compile-javascripts', function() {
-    'use strict';
-
-    var merger = mergeStream();
-
-    for (var key in config.javascripts.files) {
-        $.util.log("Compile " + key + ": [" + (config.javascripts.files[key].join(", ")) + "]");
-
-        merger.add(
-            gulp.src(config.javascripts.files[key], { cwd: config.webdir })
-                .pipe($.sourcemaps.init())
-                .pipe($.uglify({
-                    output: { comments: saveLicense }
-                }))
-                .pipe($.concat(key))
-                .pipe($.sourcemaps.write())
-                .pipe(gulp.dest(config.webdir))
-        );
-    }
-
-    merger.pipe($.livereload({ auto: false }));
-    return merger;
-
-});
-
-gulp.task('watch-with-livereload', function () {
-    'use strict';
-
-    $.livereload.listen();
-    gulp.watch(config.stylesheets.watch, $.batch({ timeout: 20 }, function (done) {
-        gulp.start('compile-stylesheets');
-        done();
-    }));
-
-    gulp.watch(config.javascripts.watch, $.batch({ timeout: 20 }, function (done) {
-        gulp.start('compile-javascripts');
-        done();
-    }));
-});
-
-gulp.task('default', ['watch-with-livereload']);
-gulp.task('compile', ['compile-stylesheets', 'compile-javascripts']);
+exports.js = js;
+exports.css = css;
+exports.serve = serve;
+exports.compile = gulp.parallel(css, js);
+exports.default = gulp.series(gulp.parallel(css, js), serve);
