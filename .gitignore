@@ -1,5 +1,5 @@
-logs/
-sessions/
+logs
+sessions
 node_modules/
 www/.htaccess
 www/bundles/
