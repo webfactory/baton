@@ -7,11 +7,12 @@ use Symfony\Component\Form\AbstractType;
 
 /**
  * Wrapper for the EntityType to use it with HTML datalist tag
- * see AppBundle/Resources/views/form/fields.html.twig
+ * see AppBundle/Resources/views/form/fields.html.twig.
  */
 class DatalistType extends AbstractType
 {
-    public function getParent() {
+    public function getParent()
+    {
         return EntityType::class;
     }
 }

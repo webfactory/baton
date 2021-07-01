@@ -38,5 +38,5 @@ class ImportProjectCommand extends Command
         } else {
             $output->writeln('Import failed for '.$vcsUrl.'. Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.');
         }
-      }
+    }
 }

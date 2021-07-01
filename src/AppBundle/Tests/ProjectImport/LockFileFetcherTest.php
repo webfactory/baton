@@ -5,8 +5,10 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Factory\VcsDriverFactory;
 use AppBundle\ProjectImport\LockFileFetcher;
 use Composer\Repository\Vcs\VcsDriver;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 
-class LockFileFetcherTest extends \PHPUnit_Framework_TestCase
+class LockFileFetcherTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var LockFileFetcher
@@ -15,12 +17,15 @@ class LockFileFetcherTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->lockFileFetcher= new LockFileFetcher($this->getVcsDriverFactoryMock());
+        $this->lockFileFetcher = new LockFileFetcher($this->getVcsDriverFactoryMock());
     }
 
-    public function testGetLockContentsReturnsComposerLockContentsAsString()
+    /**
+     * @test
+     */
+    public function getLockContentsReturnsComposerLockContentsAsString()
     {
-        $contents = $this->lockFileFetcher->getLockContents("https://foo.git");
+        $contents = $this->lockFileFetcher->getLockContents('https://foo.git');
         $composerLockHashFromTestFile = '00ff294db3665b98a4e585c174e10928';
 
         $this->assertContains($composerLockHashFromTestFile, $contents);
@@ -28,7 +33,7 @@ class LockFileFetcherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return VcsDriverFactory|\PHPUnit_Framework_MockObject_MockObject $vcsDriverFactory
+     * @return VcsDriverFactory|PHPUnit_Framework_MockObject_MockObject $vcsDriverFactory
      */
     private function getVcsDriverFactoryMock()
     {
@@ -37,7 +42,7 @@ class LockFileFetcherTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $vcsDriverMock->expects($this->once())
             ->method('getFileContent')
-            ->willReturn(file_get_contents(__DIR__ . '/composer_test.lock'));
+            ->willReturn(file_get_contents(__DIR__.'/composer_test.lock'));
 
         $vcsDriverFactoryMock = $this->getMockBuilder(VcsDriverFactory::class)
             ->disableOriginalConstructor()

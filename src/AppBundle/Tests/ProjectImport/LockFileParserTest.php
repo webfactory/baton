@@ -5,8 +5,9 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use AppBundle\ProjectImport\LockFileParser;
 use Composer\Package\Package;
+use PHPUnit_Framework_TestCase;
 
-class LockFileParserTest extends \PHPUnit_Framework_TestCase
+class LockFileParserTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string JSON
@@ -15,10 +16,13 @@ class LockFileParserTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->lockFileContents = file_get_contents(__DIR__ . '/composer_test.lock');
+        $this->lockFileContents = file_get_contents(__DIR__.'/composer_test.lock');
     }
 
-    public function testGetPackagesReturnsArrayOfComposerPackages()
+    /**
+     * @test
+     */
+    public function getPackagesReturnsArrayOfComposerPackages()
     {
         $packages = LockFileParser::getPackages($this->lockFileContents);
 
@@ -27,14 +31,20 @@ class LockFileParserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($packages) > 0);
     }
 
-    public function testThrowsExceptionIfArrayKeyPackagesDoesntExist()
+    /**
+     * @test
+     */
+    public function throwsExceptionIfArrayKeyPackagesDoesntExist()
     {
         $this->setExpectedException(ProjectHasNoComposerPackageUsageInfoException::class);
 
         LockFileParser::getPackages('{"_readme": ["bar"],"content-hash": "foo","aliases": []}');
     }
 
-    public function testThrowsExceptionIfPackagesArrayInLockContentsIsEmpty()
+    /**
+     * @test
+     */
+    public function throwsExceptionIfPackagesArrayInLockContentsIsEmpty()
     {
         $this->setExpectedException(ProjectHasNoComposerPackageUsageInfoException::class);
 

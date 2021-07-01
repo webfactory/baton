@@ -19,12 +19,14 @@ class PackageVersion
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $prettyVersion;
@@ -35,6 +37,7 @@ class PackageVersion
      *      inversedBy="versions",
      *      cascade="persist"
      * )
+     *
      * @var Package
      */
     private $package;
@@ -44,13 +47,13 @@ class PackageVersion
      *      targetEntity="Project",
      *      inversedBy="usages"
      * )
+     *
      * @var Collection|Project[]
      */
     private $projects;
 
     /**
      * @param string $prettyVersion
-     * @param Package $package
      */
     public function __construct($prettyVersion, Package $package)
     {
@@ -78,7 +81,6 @@ class PackageVersion
     }
 
     /**
-     * @param PackageVersion $packageVersion
      * @return bool
      */
     public function equals(PackageVersion $packageVersion)
@@ -125,5 +127,4 @@ class PackageVersion
     {
         return $this->projects;
     }
-
 }

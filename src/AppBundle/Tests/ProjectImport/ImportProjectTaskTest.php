@@ -8,9 +8,11 @@ use AppBundle\ProjectImport\PackageVersionFetcher;
 use AppBundle\ProjectImport\ProjectProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Psr\Log\NullLogger;
 
-class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
+class ImportProjectTaskTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var ImportProjectTask
@@ -27,13 +29,16 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testImport()
+    /**
+     * @test
+     */
+    public function import()
     {
-        $this->assertTrue($this->importProjectTask->run("https://foo.git"));
+        $this->assertTrue($this->importProjectTask->run('https://foo.git'));
     }
 
     /**
-     * @return EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return EntityManagerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private function getEntityManagerMock()
     {
@@ -46,7 +51,7 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProjectProviderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ProjectProviderInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private function getProjectProviderMock()
     {
@@ -59,7 +64,7 @@ class ImportProjectTaskTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PackageVersionFetcher|\PHPUnit_Framework_MockObject_MockObject
+     * @return PackageVersionFetcher|PHPUnit_Framework_MockObject_MockObject
      */
     private function getPackageVersionFetcherMock()
     {

@@ -5,11 +5,13 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Repository\ProjectRepository;
 use AppBundle\ProjectImport\DoctrineProjectProvider;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 
-class DoctrineProjectProviderTest extends \PHPUnit_Framework_TestCase
+class DoctrineProjectProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var ProjectRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var ProjectRepository|PHPUnit_Framework_MockObject_MockObject
      */
     private $projectRepository;
 
@@ -18,7 +20,10 @@ class DoctrineProjectProviderTest extends \PHPUnit_Framework_TestCase
         $this->projectRepository = $this->getMock(ProjectRepository::class, [], [], '', false);
     }
 
-    public function testProvideProjectReturnsNewProjectObjectIfNoneFound()
+    /**
+     * @test
+     */
+    public function provideProjectReturnsNewProjectObjectIfNoneFound()
     {
         $this->projectRepository
             ->expects($this->once())
@@ -26,33 +31,39 @@ class DoctrineProjectProviderTest extends \PHPUnit_Framework_TestCase
             ->willReturn(null);
         $doctrineProjectProvider = new DoctrineProjectProvider($this->projectRepository);
 
-        $package = $doctrineProjectProvider->provideProject("Foo");
+        $package = $doctrineProjectProvider->provideProject('Foo');
 
         $this->assertInstanceOf(Project::class, $package);
-        $this->assertSame("Foo", $package->getName());
+        $this->assertSame('Foo', $package->getName());
     }
 
-    public function testProvideProjectReturnsExistingProjectObjectIfFound()
+    /**
+     * @test
+     */
+    public function provideProjectReturnsExistingProjectObjectIfFound()
     {
         $this->projectRepository
             ->expects($this->once())
             ->method('findOneBy')
-            ->willReturn(new Project("Bar"));
+            ->willReturn(new Project('Bar'));
         $doctrineProjectProvider = new DoctrineProjectProvider($this->projectRepository);
 
-        $project = $doctrineProjectProvider->provideProject("Bar");
+        $project = $doctrineProjectProvider->provideProject('Bar');
 
         $this->assertInstanceOf(Project::class, $project);
-        $this->assertSame("Bar", $project->getName());
+        $this->assertSame('Bar', $project->getName());
     }
 
-    public function testProvideProjectTellsEntityManagerToPersistProvidedProjectObject()
+    /**
+     * @test
+     */
+    public function provideProjectTellsEntityManagerToPersistProvidedProjectObject()
     {
         $this->projectRepository
             ->expects($this->once())
             ->method('add');
         $doctrineProjectProvider = new DoctrineProjectProvider($this->projectRepository);
 
-        $doctrineProjectProvider->provideProject("Baz");
+        $doctrineProjectProvider->provideProject('Baz');
     }
 }

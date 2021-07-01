@@ -4,12 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Package;
 use AppBundle\Entity\VersionConstraint;
+use Composer\Semver\VersionParser;
+use InvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Composer\Semver\VersionParser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 
 /**
  * @Route(service="app.controller.usageSearch")
@@ -17,11 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 class UsageSearchController
 {
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     private $twigEnvironment;
 
-    public function __construct(\Twig_Environment $twigEnvironment)
+    public function __construct(Twig_Environment $twigEnvironment)
     {
         $this->twigEnvironment = $twigEnvironment;
     }
@@ -39,7 +41,7 @@ class UsageSearchController
     public function searchResultsAction(Request $request, Package $package, $operator, $versionString)
     {
         if (!preg_match(VersionConstraint::VALID_OPERATORS, $operator)) {
-            throw new \InvalidArgumentException('Operator query parameter must match ' . VersionConstraint::VALID_OPERATORS);
+            throw new InvalidArgumentException('Operator query parameter must match '.VersionConstraint::VALID_OPERATORS);
         }
 
         $normalizedVersionString = (new VersionParser())->normalize($versionString);
@@ -54,7 +56,7 @@ class UsageSearchController
                         'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),
                         'package' => $package,
                         'operator' => $operator,
-                        'versionString' => $versionString
+                        'versionString' => $versionString,
                     ]
                 )
             );
@@ -64,7 +66,7 @@ class UsageSearchController
             'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),
             'package' => $package,
             'operator' => $operator,
-            'versionString' => $versionString
+            'versionString' => $versionString,
         ];
     }
 }

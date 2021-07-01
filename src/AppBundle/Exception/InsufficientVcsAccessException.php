@@ -2,5 +2,8 @@
 
 namespace AppBundle\Exception;
 
-class InsufficientVcsAccessException extends \RuntimeException {
+use RuntimeException;
+
+class InsufficientVcsAccessException extends RuntimeException
+{
 }

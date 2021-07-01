@@ -14,8 +14,10 @@ class LockFileFetcher
     {
         $this->vcsDriverFactory = $vcsDriverFactory;
     }
+
     /**
      * @param $vcsUrl
+     *
      * @return string|null
      */
     public function getLockContents($vcsUrl)
@@ -25,7 +27,7 @@ class LockFileFetcher
 
             return $vcsDriver->getFileContent('composer.lock', 'master');
         } catch (TransportException $exception) {
-            if ($exception->getStatusCode() === 404) {
+            if (404 === $exception->getStatusCode()) {
                 return null;
             }
 

@@ -2,16 +2,16 @@
 
 namespace AppBundle\ProjectImport;
 
-
 use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use Composer\Json\JsonFile;
-use Composer\Package\Package;
 use Composer\Package\Loader\ArrayLoader;
+use Composer\Package\Package;
 
 class LockFileParser
 {
     /**
      * @param string $lockContents JSON string
+     *
      * @return Package[]
      */
     public static function getPackages($lockContents)

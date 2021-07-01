@@ -19,13 +19,14 @@ class ComposerPackageFetcher
 
     /**
      * @param string $vcsUrl
+     *
      * @return Package[]
      */
     public function fetchPackages($vcsUrl)
     {
         $lockContents = $this->lockFileFetcher->getLockContents($vcsUrl);
 
-        if ($lockContents === null) {
+        if (null === $lockContents) {
             throw new ProjectHasNoComposerPackageUsageInfoException();
         }
 

@@ -13,7 +13,7 @@ class PackageVersionFetcher
     /** @var ComposerPackageFetcher */
     private $composerPackageFetcher;
 
-    public function __construct(PackageProviderInterface $packageProvider,ComposerPackageFetcher $composerPackageFetcher)
+    public function __construct(PackageProviderInterface $packageProvider, ComposerPackageFetcher $composerPackageFetcher)
     {
         $this->packageProvider = $packageProvider;
         $this->composerPackageFetcher = $composerPackageFetcher;
@@ -21,6 +21,7 @@ class PackageVersionFetcher
 
     /**
      * @param string $vcsUrl
+     *
      * @return ArrayCollection|PackageVersion[]
      */
     public function fetch($vcsUrl)

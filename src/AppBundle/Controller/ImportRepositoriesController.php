@@ -44,16 +44,16 @@ class ImportRepositoriesController
     public function importFormAction(Request $request)
     {
         $projectImportForm = $this->getProjectImportForm();
-        $imports = ["success" => [], "fail" => []];
+        $imports = ['success' => [], 'fail' => []];
 
         $projectImportForm->handleRequest($request);
         if (!$this->demoMode && $projectImportForm->isSubmitted()) {
             $formData = $projectImportForm->getData();
             $repositoryUrlsSeparatedByComma = preg_replace('/\s+/', '', $formData['repositoryUrls']);
-            $repositoryUrls = explode(",", $repositoryUrlsSeparatedByComma);
+            $repositoryUrls = explode(',', $repositoryUrlsSeparatedByComma);
 
-            foreach($repositoryUrls as $repositoryUrl) {
-                if($this->importProjectTask->run($repositoryUrl)) {
+            foreach ($repositoryUrls as $repositoryUrl) {
+                if ($this->importProjectTask->run($repositoryUrl)) {
                     $imports['success'][] = $repositoryUrl;
                 } else {
                     $imports['fail'][] = $repositoryUrl;
@@ -64,7 +64,7 @@ class ImportRepositoriesController
         return [
             'importProjectsForm' => $projectImportForm->createView(),
             'imports' => $imports,
-            'demoMode' => $this->demoMode
+            'demoMode' => $this->demoMode,
         ];
     }
 

@@ -5,11 +5,13 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\Repository\PackageRepository;
 use AppBundle\ProjectImport\DoctrinePackageProvider;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 
-class DoctrinePackageProviderTest extends \PHPUnit_Framework_TestCase
+class DoctrinePackageProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var PackageRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var PackageRepository|PHPUnit_Framework_MockObject_MockObject
      */
     private $packageRepository;
 
@@ -18,7 +20,10 @@ class DoctrinePackageProviderTest extends \PHPUnit_Framework_TestCase
         $this->packageRepository = $this->getMock(PackageRepository::class, [], [], '', false);
     }
 
-    public function testProvidePackageReturnsNewPackageObjectIfNoneFound()
+    /**
+     * @test
+     */
+    public function providePackageReturnsNewPackageObjectIfNoneFound()
     {
         $this->packageRepository
             ->expects($this->once())
@@ -26,23 +31,26 @@ class DoctrinePackageProviderTest extends \PHPUnit_Framework_TestCase
             ->willReturn(null);
         $doctrinePackageProvider = new DoctrinePackageProvider($this->packageRepository);
 
-        $package = $doctrinePackageProvider->providePackage("Foo");
+        $package = $doctrinePackageProvider->providePackage('Foo');
 
         $this->assertInstanceOf(Package::class, $package);
-        $this->assertSame("Foo", $package->getName());
+        $this->assertSame('Foo', $package->getName());
     }
 
-    public function testProvidePackageReturnsExistingPackageObjectIfFound()
+    /**
+     * @test
+     */
+    public function providePackageReturnsExistingPackageObjectIfFound()
     {
         $this->packageRepository
             ->expects($this->once())
             ->method('findOneBy')
-            ->willReturn(new Package("Bar"));
+            ->willReturn(new Package('Bar'));
         $doctrinePackageProvider = new DoctrinePackageProvider($this->packageRepository);
 
-        $package = $doctrinePackageProvider->providePackage("Bar");
+        $package = $doctrinePackageProvider->providePackage('Bar');
 
         $this->assertInstanceOf(Package::class, $package);
-        $this->assertSame("Bar", $package->getName());
+        $this->assertSame('Bar', $package->getName());
     }
 }

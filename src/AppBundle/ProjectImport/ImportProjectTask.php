@@ -35,11 +35,12 @@ class ImportProjectTask
 
     /**
      * @param string $vcsUrl
+     *
      * @return bool indicates import success|failure
      */
     public function run($vcsUrl)
     {
-        $this->logger->warning("Importing Repository " . $vcsUrl);
+        $this->logger->warning('Importing Repository '.$vcsUrl);
 
         $project = $this->projectProvider->provideProject($this->getProjectNameFromUrl($vcsUrl));
         $project->setVcsUrl($vcsUrl);
@@ -47,22 +48,25 @@ class ImportProjectTask
         try {
             $project->setUsedPackageVersions($this->packageVersionFetcher->fetch($vcsUrl));
         } catch (InsufficientVcsAccessException $exception) {
-            $this->logger->error("Insufficient VCS access for " . $vcsUrl . ". Import failed.", ['exception' => $exception]);
+            $this->logger->error('Insufficient VCS access for '.$vcsUrl.'. Import failed.', ['exception' => $exception]);
+
             return false;
         } catch (ProjectHasNoComposerPackageUsageInfoException $exception) {
-            $this->logger->error("No composer package usages found in Project " . $project->getName() . ". Import failed.", ['exception' => $exception]);
+            $this->logger->error('No composer package usages found in Project '.$project->getName().'. Import failed.', ['exception' => $exception]);
+
             return false;
         }
 
         $this->entityManager->flush();
 
-        $this->logger->warning('Imported Project ' . $project->getName());
+        $this->logger->warning('Imported Project '.$project->getName());
 
         return true;
     }
 
     /**
      * @param string $vcsUrl
+     *
      * @return string
      */
     private function getProjectNameFromUrl($vcsUrl)

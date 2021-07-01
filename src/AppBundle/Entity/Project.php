@@ -15,24 +15,28 @@ class Project
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $vcsUrl;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string|null
      */
     private $description;
@@ -43,6 +47,7 @@ class Project
      *      mappedBy="projects",
      *      cascade="persist"
      * )
+     *
      * @var Collection|PackageVersion[]
      */
     private $usages;
@@ -81,7 +86,7 @@ class Project
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -112,12 +117,9 @@ class Project
         $this->description = $description;
     }
 
-    /**
-     * @param ArrayCollection $packageVersions
-     */
     public function setUsedPackageVersions(ArrayCollection $packageVersions)
     {
-        foreach($this->usages as $usage) {
+        foreach ($this->usages as $usage) {
             // TODO: could contains($usage) falsly return false when $packageVersions contains Proxies? See https://github.com/doctrine/doctrine2/issues/6127 Possible fix: PackageVersion::equals($pVersion)
             if (!$packageVersions->contains($usage)) {
                 $usage->removeUsingProject($this);
@@ -126,7 +128,7 @@ class Project
 
         $this->usages = $packageVersions;
 
-        foreach($this->usages as $usage) {
+        foreach ($this->usages as $usage) {
             $usage->addUsingProject($this);
         }
     }

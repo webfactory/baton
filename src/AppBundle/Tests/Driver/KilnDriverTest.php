@@ -6,13 +6,16 @@ use AppBundle\Driver\KilnDriver;
 use AppBundle\Exception\InsufficientVcsAccessException;
 use Composer\Factory;
 use Composer\IO\NullIO;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
+use RuntimeException;
 
-class KilnDriverTest extends \PHPUnit_Framework_TestCase
+class KilnDriverTest extends PHPUnit_Framework_TestCase
 {
     const REPO_URL = 'https://webfactory.kilnhg.com/foo/bar';
 
     /**
-     * @var KilnDriver|\PHPUnit_Framework_MockObject_MockObject
+     * @var KilnDriver|PHPUnit_Framework_MockObject_MockObject
      */
     private $driver = null;
 
@@ -40,7 +43,10 @@ class KilnDriverTest extends \PHPUnit_Framework_TestCase
         parent::tearDown();
     }
 
-    public function testInitializeThrowsExceptionIfIoHasNoAuthentication()
+    /**
+     * @test
+     */
+    public function initializeThrowsExceptionIfIoHasNoAuthentication()
     {
         $driver = $this->buildKilnDriverMock(self::REPO_URL, [1 => self::REPO_URL], false);
 
@@ -49,51 +55,70 @@ class KilnDriverTest extends \PHPUnit_Framework_TestCase
         $driver->initialize();
     }
 
-    public function testInitializeThrowsExceptionIfRepositoryNotInAvailableRepositories()
+    /**
+     * @test
+     */
+    public function initializeThrowsExceptionIfRepositoryNotInAvailableRepositories()
     {
         $driver = $this->buildKilnDriverMock(self::REPO_URL, [1 => 'foo']);
 
-        $this->setExpectedException(\RuntimeException::class);
+        $this->setExpectedException(RuntimeException::class);
 
         $driver->initialize();
     }
 
-    public function testGetRepositoryUrl()
+    /**
+     * @test
+     */
+    public function getRepositoryUrl()
     {
         $this->assertSame(self::REPO_URL, $this->driver->getRepositoryUrl());
     }
 
-    public function testGetUrl()
+    /**
+     * @test
+     */
+    public function getUrl()
     {
-        $this->assertSame(self::REPO_URL . '.git', $this->driver->getUrl());
+        $this->assertSame(self::REPO_URL.'.git', $this->driver->getUrl());
     }
 
-    public function testGetFileContentTriesToGetFileFromKilnApi()
+    /**
+     * @test
+     */
+    public function getFileContentTriesToGetFileFromKilnApi()
     {
         $fileName = 'foo';
         $this->driver->expects($this->once())->method('getContents')
-            ->with('https://webfactory.kilnhg.com/Api/1.0/Repo/1/Raw/File/' . bin2hex($fileName) . '?token=baz');
+            ->with('https://webfactory.kilnhg.com/Api/1.0/Repo/1/Raw/File/'.bin2hex($fileName).'?token=baz');
 
         $this->driver->getFileContent($fileName, 'master');
     }
 
-    public function testSupportsReturnsTrueForKilnUrls()
+    /**
+     * @test
+     */
+    public function supportsReturnsTrueForKilnUrls()
     {
         $this->assertTrue(KilnDriver::supports(new NullIO(), Factory::createConfig(), self::REPO_URL));
     }
 
-    public function testSupportsReturnsFalseForNonKilnUrls()
+    /**
+     * @test
+     */
+    public function supportsReturnsFalseForNonKilnUrls()
     {
         $this->assertFalse(KilnDriver::supports(new NullIO(), Factory::createConfig(), 'https://github.com/foo'));
     }
 
     /**
      * @param string $repositoryUrl
-     * @param array $availableRepositories [repoId => url, ...]
-     * @param bool $hasAuthentication
-     * @return KilnDriver|\PHPUnit_Framework_MockObject_MockObject
+     * @param array  $availableRepositories [repoId => url, ...]
+     * @param bool   $hasAuthentication
+     *
+     * @return KilnDriver|PHPUnit_Framework_MockObject_MockObject
      */
-    private function buildKilnDriverMock($repositoryUrl , $availableRepositories, $hasAuthentication = true)
+    private function buildKilnDriverMock($repositoryUrl, $availableRepositories, $hasAuthentication = true)
     {
         $io = new NullIO();
         if ($hasAuthentication) {
