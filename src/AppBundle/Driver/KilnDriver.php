@@ -3,20 +3,20 @@
 namespace AppBundle\Driver;
 
 use AppBundle\Exception\InsufficientVcsAccessException;
+use Composer\Cache;
 use Composer\Config;
 use Composer\Downloader\TransportException;
-use Composer\Json\JsonFile;
-use Composer\Cache;
 use Composer\IO\IOInterface;
+use Composer\Json\JsonFile;
 use Composer\Repository\Vcs\GitDriver;
 use Composer\Repository\Vcs\VcsDriver;
+use DateTime;
+use RuntimeException;
 
 /**
- * Class KilnDriver
+ * Class KilnDriver.
  *
  * Enables the processing of Kiln repostiories using the Kiln API.
- *
- * @package AppBundle\Driver
  */
 class KilnDriver extends VcsDriver
 {
@@ -29,7 +29,7 @@ class KilnDriver extends VcsDriver
     protected $rootIdentifier;
     protected $repoData;
     protected $hasIssues;
-    protected $infoCache = array();
+    protected $infoCache = [];
     protected $isPrivate = false;
 
     /** @var GitDriver */
@@ -58,9 +58,7 @@ class KilnDriver extends VcsDriver
                 $this->oAuthToken = $auth['username'];
             }
         } else {
-            throw new InsufficientVcsAccessException(
-                'You need to configure OAuth authentication to communicate with Kiln. Make sure the KILN_OAUTH_TOKEN environment variable is set correctly.'
-            );
+            throw new InsufficientVcsAccessException('You need to configure OAuth authentication to communicate with Kiln. Make sure the KILN_OAUTH_TOKEN environment variable is set correctly.');
         }
 
         $allRepos = $this->fetchAvailableRepositories();
@@ -68,7 +66,7 @@ class KilnDriver extends VcsDriver
         $this->repoId = array_search($this->getRepositoryUrl(), $allRepos);
 
         if (!$this->repoId) {
-            throw new \RuntimeException("Unknown repository URL " . $this->getRepositoryUrl());
+            throw new RuntimeException('Unknown repository URL '.$this->getRepositoryUrl());
         }
 
         if (isset($this->repoConfig['no-api']) && $this->repoConfig['no-api']) {
@@ -104,18 +102,19 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getUrl();
         }
 
-        return 'https://' . $this->originUrl . '/'.$this->owner.'/'.$this->repository.'.git';
+        return 'https://'.$this->originUrl.'/'.$this->owner.'/'.$this->repository.'.git';
     }
 
     /**
      * {@inheritDoc}
+     *
      * @param string $operation
-     * e.g. listing all Projects $operation = 'Project'
-     * e.g. getting file content $operation = 'Repo/{repoId}/Raw/File/{$filePath}
+     *                          e.g. listing all Projects $operation = 'Project'
+     *                          e.g. getting file content $operation = 'Repo/{repoId}/Raw/File/{$filePath}
      */
     protected function getApiUrl()
     {
-        return 'https://' . $this->originUrl . '/Api/1.0/';
+        return 'https://'.$this->originUrl.'/Api/1.0/';
     }
 
     /**
@@ -127,16 +126,17 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getSource($identifier);
         }
 
-        return array('type' => 'git', 'url' => $this->getUrl(), 'reference' => $identifier);
+        return ['type' => 'git', 'url' => $this->getUrl(), 'reference' => $identifier];
     }
 
     /**
      * {@inheritDoc}
-     * @throws \RuntimeException
+     *
+     * @throws RuntimeException
      */
     public function getDist($identifier)
     {
-        throw new \RuntimeException('Zip downloads are not supported by the Kiln API');
+        throw new RuntimeException('Zip downloads are not supported by the Kiln API');
     }
 
     /**
@@ -180,7 +180,7 @@ class KilnDriver extends VcsDriver
         }
 
         try {
-            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/File/' . bin2hex($file) . '?token=' . $this->oAuthToken;
+            $resource = $this->getApiUrl().'Repo/'.$this->repoId.'/Raw/File/'.bin2hex($file).'?token='.$this->oAuthToken;
 
             return $this->getContents($resource);
         } catch (TransportException $e) {
@@ -201,10 +201,10 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getChangeDate($identifier);
         }
 
-        $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Raw/History/'.urlencode($identifier) . '?token=' . $this->oAuthToken;
+        $resource = $this->getApiUrl().'Repo/'.$this->repoId.'/Raw/History/'.urlencode($identifier).'?token='.$this->oAuthToken;
         $commit = JsonFile::parseJson($this->getContents($resource), $resource);
 
-        return new \DateTime($commit['commit']['committer']['date']);
+        return new DateTime($commit['commit']['committer']['date']);
     }
 
     /**
@@ -216,8 +216,8 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getTags();
         }
         if (null === $this->tags) {
-            $this->tags = array();
-            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/Tags?token=' . $this->oAuthToken;
+            $this->tags = [];
+            $resource = $this->getApiUrl().'Repo/'.$this->repoId.'/Tags?token='.$this->oAuthToken;
 
             do {
                 $tagsData = JsonFile::parseJson($this->getContents($resource), $resource);
@@ -239,10 +239,10 @@ class KilnDriver extends VcsDriver
             return $this->gitDriver->getBranches();
         }
         if (null === $this->branches) {
-            $this->branches = array();
-            $resource = $this->getApiUrl() . 'Repo/'.$this->repoId.'/NamedBranches?token=' . $this->oAuthToken;
+            $this->branches = [];
+            $resource = $this->getApiUrl().'Repo/'.$this->repoId.'/NamedBranches?token='.$this->oAuthToken;
 
-            $branchBlacklist = array('gh-pages');
+            $branchBlacklist = ['gh-pages'];
 
             do {
                 $branchData = JsonFile::parseJson($this->getContents($resource), $resource);
@@ -263,17 +263,17 @@ class KilnDriver extends VcsDriver
      */
     public static function supports(IOInterface $io, Config $config, $url, $deep = false)
     {
-        return strpos($url, 'kilnhg') !== false;
+        return false !== strpos($url, 'kilnhg');
     }
 
     /**
-     * Generate an SSH URL
+     * Generate an SSH URL.
      *
      * @return string
      */
     protected function generateSshUrl()
     {
-        return 'ssh://webfactory@' . $this->originUrl . '/'.$this->owner.'/'.$this->repository;
+        return 'ssh://webfactory@'.$this->originUrl.'/'.$this->owner.'/'.$this->repository;
     }
 
     /**
@@ -287,7 +287,7 @@ class KilnDriver extends VcsDriver
             return $contents;
         }
 
-        $this->io->writeError("Kiln-API call failed! HTTP . " . $http_response_header);
+        $this->io->writeError('Kiln-API call failed! HTTP . '.$http_response_header);
 
         return null;
     }
@@ -301,10 +301,10 @@ class KilnDriver extends VcsDriver
      */
     protected function getRateLimit(array $headers)
     {
-        $rateLimit = array(
+        $rateLimit = [
             'limit' => '?',
             'reset' => '?',
-        );
+        ];
 
         foreach ($headers as $header) {
             $header = trim($header);
@@ -337,7 +337,7 @@ class KilnDriver extends VcsDriver
             $this->setupGitDriver($this->generateSshUrl());
 
             return;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->gitDriver = null;
 
             $this->io->writeError('<error>Failed to clone the '.$this->generateSshUrl().' repository, try running in interactive mode so that you can enter your GitHub credentials</error>');
@@ -348,7 +348,7 @@ class KilnDriver extends VcsDriver
     protected function setupGitDriver($url)
     {
         $this->gitDriver = new GitDriver(
-            array('url' => $url),
+            ['url' => $url],
             $this->io,
             $this->config,
             $this->process,
@@ -359,9 +359,9 @@ class KilnDriver extends VcsDriver
 
     public function fetchAvailableRepositories()
     {
-        $list = array();
+        $list = [];
 
-        $data = json_decode($this->getContents($this->getApiUrl() . 'Project?token=' . $this->oAuthToken));
+        $data = json_decode($this->getContents($this->getApiUrl().'Project?token='.$this->oAuthToken));
 
         foreach ($data as $project) {
             foreach ($project->repoGroups as $repoGroup) {

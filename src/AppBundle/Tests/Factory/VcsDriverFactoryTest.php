@@ -4,8 +4,9 @@ namespace AppBundle\Tests\Factory;
 
 use AppBundle\Factory\VcsDriverFactory;
 use Composer\Repository\Vcs\VcsDriverInterface;
+use PHPUnit_Framework_TestCase;
 
-class VcsDriverFactoryTest extends \PHPUnit_Framework_TestCase
+class VcsDriverFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var VcsDriverFactory
@@ -17,9 +18,12 @@ class VcsDriverFactoryTest extends \PHPUnit_Framework_TestCase
         $this->vcsDriverFactory = new VcsDriverFactory(null, 'bar');
     }
 
-    public function testGetDriverReturnsInstanceOfVcsDriverInterface()
+    /**
+     * @test
+     */
+    public function getDriverReturnsInstanceOfVcsDriverInterface()
     {
-        $driver = $this->vcsDriverFactory->getDriver("https://github.com/symfony/symfony");
+        $driver = $this->vcsDriverFactory->getDriver('https://github.com/symfony/symfony');
         $this->assertInstanceOf(VcsDriverInterface::class, $driver);
     }
 }

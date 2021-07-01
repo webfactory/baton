@@ -24,7 +24,7 @@ class DoctrinePackageProvider implements PackageProviderInterface
     public function providePackage($name)
     {
         $package = $this->packageRepository->findOneBy(['name' => $name]);
-        if ($package === null) {
+        if (null === $package) {
             $package = new Package($name);
         }
         $this->packageRepository->add($package);

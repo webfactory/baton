@@ -6,6 +6,7 @@ use AppBundle\Exception\InsufficientVcsAccessException;
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Composer\Repository\Vcs\VcsDriverInterface;
+use RuntimeException;
 
 class VcsDriverFactory
 {
@@ -29,13 +30,15 @@ class VcsDriverFactory
             'git-bitbucket' => 'Composer\Repository\Vcs\GitBitbucketDriver',
             'hg-bitbucket' => 'Composer\Repository\Vcs\HgBitbucketDriver',
             'git' => 'Composer\Repository\Vcs\GitDriver',
-            'hg' => 'Composer\Repository\Vcs\HgDriver'
+            'hg' => 'Composer\Repository\Vcs\HgDriver',
         ];
     }
 
     /**
      * @param string $vcsUrl
+     *
      * @return VcsDriverInterface
+     *
      * @throws InsufficientVcsAccessException
      */
     public function getDriver($vcsUrl)
@@ -49,10 +52,8 @@ class VcsDriverFactory
                 try {
                     $driver = new $driver(['url' => $vcsUrl], $io, $composerConfig);
                     $driver->initialize();
-                } catch (\RuntimeException $exception) {
-                    throw new InsufficientVcsAccessException(
-                        'Failed to communicate with repository. Check that you have sufficient access with your authentication method.', 0, $exception
-                    );
+                } catch (RuntimeException $exception) {
+                    throw new InsufficientVcsAccessException('Failed to communicate with repository. Check that you have sufficient access with your authentication method.', 0, $exception);
                 }
 
                 return $driver;
@@ -66,12 +67,13 @@ class VcsDriverFactory
     private function getIO()
     {
         $io = new NullIO();
-        if($this->githubOAuthToken !== null) {
+        if (null !== $this->githubOAuthToken) {
             $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
         }
-        if($this->kilnOAuthToken !== null) {
+        if (null !== $this->kilnOAuthToken) {
             $io->setAuthentication('webfactory.kilnhg.com', $this->kilnOAuthToken, 'x-oauth-basic');
         }
+
         return $io;
     }
 }

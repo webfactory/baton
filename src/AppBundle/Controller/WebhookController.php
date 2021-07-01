@@ -4,9 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\ProjectImport\ImportProjectTask;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * @Route(service="app.controller.webhook")
@@ -27,7 +27,8 @@ class WebhookController
      * @Route("/webhook", name="webhook")
      * @Method({"POST"})
      */
-    public function updateAction(Request $request) {
+    public function updateAction(Request $request)
+    {
         set_time_limit(500);
 
         // This works for the Kiln webhook API as well as for GitHub webhooks of content-type "application/x-www-form-urlencoded"

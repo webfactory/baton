@@ -2,5 +2,8 @@
 
 namespace AppBundle\Exception;
 
-class ProjectHasNoComposerPackageUsageInfoException extends \RuntimeException {
+use RuntimeException;
+
+class ProjectHasNoComposerPackageUsageInfoException extends RuntimeException
+{
 }

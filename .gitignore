@@ -24,3 +24,4 @@ phpunit.xml
 .idea/*.iml
 .idea/libraries
 .bowerrc
+.php_cs.cache

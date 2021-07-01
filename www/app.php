@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
 
@@ -10,8 +10,8 @@ Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
 $request = Request::createFromGlobals();
 
 $env = getenv('APP_ENV') ?: 'development';
-$debug = getenv('APP_DEBUG') != '0';
-$enableCache = (bool)getenv('SYMFONY_WEBAPP_CACHE_ENABLED');
+$debug = '0' != getenv('APP_DEBUG');
+$enableCache = (bool) getenv('SYMFONY_WEBAPP_CACHE_ENABLED');
 
 if (getenv('SYMFONY_WEBAPP_KERNEL_PARAMETERS_ALLOW_OVERRIDE')) {
     if ($request->cookies->has('SYMFONY_ENV')) {

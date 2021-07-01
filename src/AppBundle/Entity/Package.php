@@ -17,18 +17,21 @@ class Package
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string|null
      */
     private $description;
@@ -40,19 +43,20 @@ class Package
      *      cascade={"persist", "remove"}
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
+     *
      * @var Collection|PackageVersion[]
      */
     private $versions;
 
     /**
-     * @param string $name
+     * @param string      $name
      * @param string|null $description
      */
     public function __construct($name, $description = null)
     {
-      $this->name = $name;
-      $this->description = $description;
-      $this->versions = new ArrayCollection();
+        $this->name = $name;
+        $this->description = $description;
+        $this->versions = new ArrayCollection();
     }
 
     /**
@@ -60,7 +64,7 @@ class Package
      */
     public function getId()
     {
-      return $this->id;
+        return $this->id;
     }
 
     /**
@@ -68,15 +72,15 @@ class Package
      */
     public function getName()
     {
-      return $this->name;
+        return $this->name;
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDescription()
     {
-      return $this->description;
+        return $this->description;
     }
 
     /**
@@ -88,28 +92,28 @@ class Package
     }
 
     /**
-     * @param VersionConstraint $versionConstraint
      * @return Collection|PackageVersion[]
      */
     public function getMatchingVersionsWithProjects(VersionConstraint $versionConstraint)
     {
         return $this->versions->filter(
-            function($packageVersion) use ($versionConstraint) {
-                /** @var PackageVersion $packageVersion */
-                return $versionConstraint->matches($packageVersion) && $packageVersion->getProjects()->count() !== 0;
+            function ($packageVersion) use ($versionConstraint) {
+                /* @var PackageVersion $packageVersion */
+                return $versionConstraint->matches($packageVersion) && 0 !== $packageVersion->getProjects()->count();
             }
         );
     }
 
     /**
      * @param string $prettyVersionString
+     *
      * @return PackageVersion
      */
     public function getVersion($prettyVersionString)
     {
         $packageVersion = $this->versions->filter(
-            function($packageVersion) use ($prettyVersionString) {
-                /** @var PackageVersion $packageVersion */
+            function ($packageVersion) use ($prettyVersionString) {
+                /* @var PackageVersion $packageVersion */
                 return $packageVersion->getPrettyVersion() === $prettyVersionString;
             }
         );
@@ -126,6 +130,6 @@ class Package
      */
     public function getVersions()
     {
-      return $this->versions;
+        return $this->versions;
     }
 }

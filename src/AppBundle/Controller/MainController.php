@@ -47,7 +47,7 @@ class MainController
         return [
             'projects' => $this->projectRepo->findBy([], ['name' => 'ASC']),
             'packages' => $this->packageRepo->findBy([], ['name' => 'ASC']),
-            'searchPackageForm' => $searchPackageForm->createView()
+            'searchPackageForm' => $searchPackageForm->createView(),
         ];
     }
 }

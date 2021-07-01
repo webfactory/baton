@@ -27,7 +27,7 @@ class SearchPackageType extends AbstractType
                 'placeholder' => 'First choose a package',
                 'choice_translation_domain' => false,
                 'label_attr' => ['class' => 'sr-only'],
-                'constraints' => [new NotBlank()]
+                'constraints' => [new NotBlank()],
             ])
             ->add('versionConstraintOperator', ChoiceType::class, [
                 'label' => 'Version constraint operator',
@@ -36,7 +36,7 @@ class SearchPackageType extends AbstractType
                 'mapped' => false,
                 'choice_translation_domain' => false,
                 'placeholder' => 'Version constraint operator',
-                'disabled' => true
+                'disabled' => true,
             ])
             ->add('versionConstraintValue', ChoiceType::class, [
                 'label' => 'Version constraint value',
@@ -46,7 +46,7 @@ class SearchPackageType extends AbstractType
                 'choices' => [],
                 'mapped' => false,
                 'disabled' => true,
-                'required' => false
+                'required' => false,
             ]);
     }
 

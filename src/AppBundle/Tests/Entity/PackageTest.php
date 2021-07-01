@@ -3,8 +3,9 @@
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Package;
+use PHPUnit_Framework_TestCase;
 
-class PackageTest extends \PHPUnit_Framework_TestCase
+class PackageTest extends PHPUnit_Framework_TestCase
 {
     const name = 'webfactory/bar';
     const description = 'foo';
@@ -16,16 +17,22 @@ class PackageTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-      $this->package = new Package(self::name, self::description);
+        $this->package = new Package(self::name, self::description);
     }
 
-    public function testGetNameReturnsName()
+    /**
+     * @test
+     */
+    public function getNameReturnsName()
     {
         $this->assertSame(self::name, $this->package->getName());
     }
 
-    public function testGetDescriptionReturnsDescription()
+    /**
+     * @test
+     */
+    public function getDescriptionReturnsDescription()
     {
-      $this->assertSame(self::description, $this->package->getDescription());
+        $this->assertSame(self::description, $this->package->getDescription());
     }
 }

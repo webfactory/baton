@@ -12,5 +12,3 @@ return [
 
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['development' => true, 'test' => true],
 ];
-
-
