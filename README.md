@@ -13,7 +13,7 @@ Baton is a Composer dependency analytics tool which helps you keep track of the 
 
 ## Demo
 
-Visit [baton.test.webfactory.de](http://baton.test.webfactory.de) to see Baton in action.
+Visit [demo.baton.webfactory.de](https://demo.baton.webfactory.de) to see Baton in action.
 
 ## Installing / Getting started
 
