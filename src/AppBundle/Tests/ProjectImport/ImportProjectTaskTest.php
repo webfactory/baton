@@ -8,18 +8,18 @@ use AppBundle\ProjectImport\PackageVersionFetcher;
 use AppBundle\ProjectImport\ProjectProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
-class ImportProjectTaskTest extends PHPUnit_Framework_TestCase
+class ImportProjectTaskTest extends TestCase
 {
     /**
      * @var ImportProjectTask
      */
     private $importProjectTask;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->importProjectTask = new ImportProjectTask(
             $this->getEntityManagerMock(),
@@ -38,11 +38,11 @@ class ImportProjectTaskTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return EntityManagerInterface|PHPUnit_Framework_MockObject_MockObject
+     * @return EntityManagerInterface|MockObject
      */
     private function getEntityManagerMock()
     {
-        $entityManagerMock = $this->getMock(EntityManagerInterface::class, [], [], '', false);
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class, [], [], '', false);
         $entityManagerMock->expects($this->once())
           ->method('flush')
           ->will($this->returnValue(null));
@@ -51,11 +51,11 @@ class ImportProjectTaskTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProjectProviderInterface|PHPUnit_Framework_MockObject_MockObject
+     * @return ProjectProviderInterface|MockObject
      */
     private function getProjectProviderMock()
     {
-        $projectProviderMock = $this->getMock(ProjectProviderInterface::class, [], [], '', false);
+        $projectProviderMock = $this->createMock(ProjectProviderInterface::class, [], [], '', false);
         $projectProviderMock->expects($this->once())
             ->method('provideProject')
             ->willReturn(new Project('Foo'));
@@ -64,11 +64,11 @@ class ImportProjectTaskTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PackageVersionFetcher|PHPUnit_Framework_MockObject_MockObject
+     * @return PackageVersionFetcher|MockObject
      */
     private function getPackageVersionFetcherMock()
     {
-        $packageVersionFetcherMock = $this->getMock(PackageVersionFetcher::class, [], [], '', false);
+        $packageVersionFetcherMock = $this->createMock(PackageVersionFetcher::class, [], [], '', false);
         $packageVersionFetcherMock->expects($this->once())
             ->method('fetch')
             ->willReturn(new ArrayCollection());

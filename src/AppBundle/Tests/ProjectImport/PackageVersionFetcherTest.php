@@ -7,17 +7,17 @@ use AppBundle\ProjectImport\ComposerPackageFetcher;
 use AppBundle\ProjectImport\PackageProviderInterface;
 use AppBundle\ProjectImport\PackageVersionFetcher;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class PackageVersionFetcherTest extends PHPUnit_Framework_TestCase
+class PackageVersionFetcherTest extends TestCase
 {
     /**
      * @var PackageVersionFetcher
      */
     private $packageVersionFetcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->packageVersionFetcher = new PackageVersionFetcher($this->getPackageProviderMock(), $this->getComposerPackageFetcherMock());
     }
@@ -35,11 +35,11 @@ class PackageVersionFetcherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PackageProviderInterface|PHPUnit_Framework_MockObject_MockObject
+     * @return PackageProviderInterface|MockObject
      */
     private function getPackageProviderMock()
     {
-        $packageProviderMock = $this->getMock(PackageProviderInterface::class, [], [], '', false);
+        $packageProviderMock = $this->createMock(PackageProviderInterface::class, [], [], '', false);
         $packageProviderMock->expects($this->once())
             ->method('providePackage')
             ->willReturn(new Package('Bar'));
@@ -48,11 +48,11 @@ class PackageVersionFetcherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ComposerPackageFetcher|PHPUnit_Framework_MockObject_MockObject
+     * @return ComposerPackageFetcher|MockObject
      */
     private function getComposerPackageFetcherMock()
     {
-        $composerPackageFetcherMock = $this->getMock(ComposerPackageFetcher::class, [], [], '', false);
+        $composerPackageFetcherMock = $this->createMock(ComposerPackageFetcher::class, [], [], '', false);
         $composerPackageFetcherMock->expects($this->once())
             ->method('fetchPackages')
             ->willReturn([new \Composer\Package\Package('Foo', '1.0.0', 'v1.0.0')]);

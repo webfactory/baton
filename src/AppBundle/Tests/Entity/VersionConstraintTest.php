@@ -5,9 +5,9 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\VersionConstraint;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class VersionConstraintTest extends PHPUnit_Framework_TestCase
+class VersionConstraintTest extends TestCase
 {
     /**
      * @test

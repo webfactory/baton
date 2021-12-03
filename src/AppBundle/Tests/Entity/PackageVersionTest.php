@@ -6,9 +6,9 @@ use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PackageVersionTest extends PHPUnit_Framework_TestCase
+class PackageVersionTest extends TestCase
 {
     const version = '1.0.0';
 
@@ -17,7 +17,7 @@ class PackageVersionTest extends PHPUnit_Framework_TestCase
      */
     private $packageVersion;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->packageVersion = new PackageVersion(self::version, new Package('webfactory/foo'));
     }
