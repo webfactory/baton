@@ -8,5 +8,8 @@
   },
   "browserslist": [
     "extends browserslist-config-webfactory/default"
-  ]
+  ],
+  "scripts": {
+    "start": "yarn install && gulp compile"
+  }
 }

@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm-alpine3.13
 
 ARG APCU_VERSION=5.1.21
 ARG XDEBUG_VERSION=3.1.2
@@ -64,15 +64,6 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=symfonycorp/cli /symfony /usr/bin/symfony
 COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/bin/php-cs-fixer
-
-ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache \
-        g++ \
-        make \
-        python3 \
-    && ln -sf python3 /usr/bin/python / \
-    && python3 -m ensurepip \
-    && pip3 install --no-cache --upgrade pip setuptools
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

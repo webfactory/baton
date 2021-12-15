@@ -40,3 +40,15 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+  node:
+    image: "node:12"
+    user: "node"
+    working_dir: /srv/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/srv/app
+    expose:
+      - "8081"
+    command: "npm start"
