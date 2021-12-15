@@ -1,22 +1,11 @@
-ARG PHP_VERSION
-FROM php:${PHP_VERSION}-fpm-alpine
+FROM php:7.4-fpm-alpine
 
-ENV DEBIAN_FRONTEND noninteractive
+ARG APCU_VERSION=5.1.21
+ARG XDEBUG_VERSION=3.1.2
 
 WORKDIR /srv/app
 
-# non-root user
-ARG PUID=1000
-ENV PUID ${PUID}
-ARG PGID=1000
-ENV PGID ${PGID}
-
-RUN addgroup -g ${PGID} docksy && \
-  adduser -G docksy -u ${PUID} --disabled-password docksy
-
-# locales
-ARG LOCALE=POSIX
-ENV LC_ALL ${LOCALE}
+ENV LC_ALL POSIX
 
 RUN apk add --no-cache \
         acl \
@@ -36,9 +25,6 @@ RUN apk add --no-cache \
 # see https://github.com/docker-library/php/issues/240#issuecomment-763112749
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
-# shamelessly nicked from https://github.com/dunglas/symfony-docker
-ARG APCU_VERSION=5.1.21
-ARG XDEBUG_VERSION=3.1.2
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
