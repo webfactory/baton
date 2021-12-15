@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:stable-alpine
     ports:
-      - "8000:80"
+      - "${HTTP_PORT}:80"
     volumes:
       - ${APP_DIR}:/srv/app
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -16,15 +16,17 @@ services:
     build:
       context: ./docker/php
       args:
-        - PHP_VERSION=${PHP_VERSION}
         - PUID=${PUID}
         - PGID=${PGID}
         - LOCALE=${LOCALE}
+        - PHP_VERSION=${PHP_VERSION}
     volumes:
       - ${APP_DIR}:/srv/app
+      - ${HOME}/.gitconfig:/home/docksy/.gitconfig
     environment:
       - XDEBUG_CONFIG=client_host=${XDEBUG_CLIENT_HOST} client_port=${XDEBUG_CLIENT_PORT}
       - XDEBUG_MODE=debug
+      - PHP_IDE_CONFIG=serverName=${PHP_IDE_CONFIG_SERVERNAME}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}

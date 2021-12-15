@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM php:${PHP_VERSION}-fpm
+FROM php:${PHP_VERSION}-fpm-alpine
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -11,42 +11,69 @@ ENV PUID ${PUID}
 ARG PGID=1000
 ENV PGID ${PGID}
 
-RUN addgroup -gid ${PGID} docksy && \
-  adduser -gid 1000 -uid ${PUID} --disabled-password docksy
+RUN addgroup -g ${PGID} docksy && \
+  adduser -G docksy -u ${PUID} --disabled-password docksy
 
 # locales
 ARG LOCALE=POSIX
 ENV LC_ALL ${LOCALE}
 
-# essentials
-RUN apt-get update && pecl channel-update pecl.php.net &&\
-    apt-get install -y \
-        libicu-dev \
-        libzip-dev \
-        libjpeg-dev \
-        libpng-dev \
-        apt-utils \
+RUN apk add --no-cache \
+        acl \
+        fcgi \
+        file \
+        gettext \
         git \
+        gnu-libiconv \
+        nodejs-current \
+        npm \
         vim \
-        zip &&\
-    docker-php-ext-install \
-        intl \
-        opcache \
+        zip \
+    && \
+    npm i -g corepack
+
+# install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
+# see https://github.com/docker-library/php/issues/240#issuecomment-763112749
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
+
+# shamelessly nicked from https://github.com/dunglas/symfony-docker
+ARG APCU_VERSION=5.1.21
+ARG XDEBUG_VERSION=3.1.2
+RUN set -eux; \
+	apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		icu-dev \
+		libzip-dev \
+		zlib-dev \
+	; \
+	\
+	docker-php-ext-configure zip; \
+	docker-php-ext-install -j$(nproc) \
+		intl \
+		zip \
         pdo \
         pdo_mysql \
-        zip
-
-# imagemagick
-RUN apt-get install -y libmagickwand-dev imagemagick && pecl install imagick && docker-php-ext-enable imagick
-
-# apcu
-RUN pecl install apcu && docker-php-ext-enable apcu
-
-# xdebug
-RUN pecl install xdebug-3.0.2 && docker-php-ext-enable xdebug
-
-# node
-RUN curl -sS https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -yqq nodejs
+	; \
+	pecl install \
+		apcu-${APCU_VERSION} \
+        xdebug-${XDEBUG_VERSION} \
+	; \
+	pecl clear-cache; \
+	docker-php-ext-enable \
+		apcu \
+		opcache \
+        xdebug \
+	; \
+	\
+	runDeps="$( \
+		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
+			| tr ',' '\n' \
+			| sort -u \
+			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+	)"; \
+	apk add --no-cache --virtual .phpexts-rundeps $runDeps; \
+	\
+	apk del .build-deps
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
