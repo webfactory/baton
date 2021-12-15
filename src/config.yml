@@ -1,8 +1,8 @@
 parameters:
-    env(MYSQL_HOST): '127.0.0.1'
-    env(MYSQL_USER): 'root'
-    env(MYSQL_PASSWORD): ''
-    env(MYSQL_DATABASE): 'baton'
+    env(MYSQL_HOST): 'mysql'
+    env(MYSQL_USER): 'baton'
+    env(MYSQL_PASSWORD): 'secret'
+    env(MYSQL_DATABASE): 'app'
     env(MYSQL_PORT): '3306'
 
     mysql.host: '%env(MYSQL_HOST)%'
@@ -11,7 +11,7 @@ parameters:
     mysql.db: '%env(MYSQL_DATABASE)%'
     mysql.port: '%env(MYSQL_PORT)%'
 
-    framework.trusted_hosts: ['127.0.0.1']
+    framework.trusted_hosts: ['127.0.0.1', 'localhost']
 
     app.logging.default_time_format: "Y-m-d H:i:s.u T" # with microseconds and timezone, a format also Splunk can understand
     app.logging.allow_inline_line_breaks: false

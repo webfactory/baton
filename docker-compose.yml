@@ -20,6 +20,7 @@ services:
         - PUID=${PUID}
         - PGID=${PGID}
         - LOCALE=${LOCALE}
+    command: 'composer install && bin/console doctrine:schema:up && npm install && gulp compile'
     volumes:
       - ${APP_DIR}:/srv/app
     environment:
