@@ -3,8 +3,6 @@ FROM php:7.4-fpm-alpine
 ARG APCU_VERSION=5.1.21
 ARG XDEBUG_VERSION=3.1.2
 
-WORKDIR /srv/app
-
 ENV LC_ALL POSIX
 
 RUN apk add --no-cache \
@@ -67,4 +65,10 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=symfonycorp/cli /symfony /usr/bin/symfony
 COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/bin/php-cs-fixer
 
-# RUN composer install && bin/console doctrine:database:create --if-not-exists && bin/console doctrine:schema:update && npm install && gulp compile
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["php-fpm"]
+
+WORKDIR /srv/app
