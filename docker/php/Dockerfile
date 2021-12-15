@@ -54,4 +54,4 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=symfonycorp/cli /symfony /usr/bin/symfony
 COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/bin/php-cs-fixer
 
-# RUN composer install && bin/console doctrine:schema:up && npm install && gulp compile
+# RUN composer install && bin/console doctrine:database:create --if-not-exists && bin/console doctrine:schema:update && npm install && gulp compile

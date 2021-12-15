@@ -1,7 +1,7 @@
 parameters:
     env(MYSQL_HOST): 'mysql'
-    env(MYSQL_USER): 'root'
-    env(MYSQL_PASSWORD): 'secret'
+    env(MYSQL_USER): 'baton'
+    env(MYSQL_PASSWORD): 'baton'
     env(MYSQL_DATABASE): 'baton'
     env(MYSQL_PORT): '3306'
 
