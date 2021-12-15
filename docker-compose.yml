@@ -27,6 +27,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:8
