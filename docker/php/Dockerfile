@@ -65,6 +65,9 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=symfonycorp/cli /symfony /usr/bin/symfony
 COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/bin/php-cs-fixer
 
+COPY wait-for /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for
+
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
