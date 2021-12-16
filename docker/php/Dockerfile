@@ -12,12 +12,9 @@ RUN apk add --no-cache \
         gettext \
         git \
         gnu-libiconv \
-        nodejs-current \
         npm \
         vim \
-        zip \
-    && \
-    npm i -g corepack
+        zip
 
 # install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
 # see https://github.com/docker-library/php/issues/240#issuecomment-763112749
