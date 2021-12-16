@@ -5,19 +5,19 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Repository\ProjectRepository;
 use AppBundle\ProjectImport\DoctrineProjectProvider;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class DoctrineProjectProviderTest extends PHPUnit_Framework_TestCase
+class DoctrineProjectProviderTest extends TestCase
 {
     /**
-     * @var ProjectRepository|PHPUnit_Framework_MockObject_MockObject
+     * @var ProjectRepository|MockObject
      */
     private $projectRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->projectRepository = $this->getMock(ProjectRepository::class, [], [], '', false);
+        $this->projectRepository = $this->createMock(ProjectRepository::class, [], [], '', false);
     }
 
     /**

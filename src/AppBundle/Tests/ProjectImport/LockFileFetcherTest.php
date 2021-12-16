@@ -5,17 +5,17 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Factory\VcsDriverFactory;
 use AppBundle\ProjectImport\LockFileFetcher;
 use Composer\Repository\Vcs\VcsDriver;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class LockFileFetcherTest extends PHPUnit_Framework_TestCase
+class LockFileFetcherTest extends TestCase
 {
     /**
      * @var LockFileFetcher
      */
     private $lockFileFetcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->lockFileFetcher = new LockFileFetcher($this->getVcsDriverFactoryMock());
     }
@@ -28,12 +28,12 @@ class LockFileFetcherTest extends PHPUnit_Framework_TestCase
         $contents = $this->lockFileFetcher->getLockContents('https://foo.git');
         $composerLockHashFromTestFile = '00ff294db3665b98a4e585c174e10928';
 
-        $this->assertContains($composerLockHashFromTestFile, $contents);
-        $this->assertInternalType('string', $contents);
+        $this->assertStringContainsString($composerLockHashFromTestFile, $contents);
+        $this->assertIsString($contents);
     }
 
     /**
-     * @return VcsDriverFactory|PHPUnit_Framework_MockObject_MockObject $vcsDriverFactory
+     * @return VcsDriverFactory|MockObject $vcsDriverFactory
      */
     private function getVcsDriverFactoryMock()
     {

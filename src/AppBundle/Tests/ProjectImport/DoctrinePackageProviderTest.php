@@ -5,19 +5,19 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\Repository\PackageRepository;
 use AppBundle\ProjectImport\DoctrinePackageProvider;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class DoctrinePackageProviderTest extends PHPUnit_Framework_TestCase
+class DoctrinePackageProviderTest extends TestCase
 {
     /**
-     * @var PackageRepository|PHPUnit_Framework_MockObject_MockObject
+     * @var PackageRepository|MockObject
      */
     private $packageRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->packageRepository = $this->getMock(PackageRepository::class, [], [], '', false);
+        $this->packageRepository = $this->createMock(PackageRepository::class, [], [], '', false);
     }
 
     /**

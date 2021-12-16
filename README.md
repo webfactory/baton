@@ -1,7 +1,3 @@
-| :warning: This project is not under active development by webfactory |
-|:---------------------------------------------------------------------|
-| This project is currently not actively maintained by webfactory. We use it as an internal tool and keep the source code public according to its license, but it is currently not installable using Docker, and the instructions in this README probably won't work. If you want to make use of this project, please take into account that you might need to invest some time and effort in order to make it work. We'd be happy seeing your investment making its way back to this repo in form of a [Pull Request](https://github.com/webfactory/baton/compare)! |
-
 # Baton
 
 [![Build Status](https://scrutinizer-ci.com/g/webfactory/baton/badges/build.png?b=master&s=a300eda908a21c2d2dc9ef1aadafcd118bd165f3)](https://scrutinizer-ci.com/g/webfactory/baton/build-status/master)
@@ -26,7 +22,11 @@ Clone the project
 
 Start a local version via [docker-compose](https://docs.docker.com/compose/):
 
-    docker-compose up
+    docker-compose up --build
+
+When the docker containers finished building, you can find the project running at http://localhost:8000/
+
+> :warning: The provided Docker configuration is only designed for development - not for any production system!
 
 ### Without Docker
 
@@ -35,10 +35,9 @@ You might need to enter your proper MySQL-credentials in `src/config.yml`.
 To get the project up and running you simply need to run these commands:
 
     composer install
-    npm install
-    gulp compile
-    bin/console doctrine:database:create
-    bin/console doctrine:schema:create
+    npm start
+    bin/console doctrine:database:create --if-not-exists
+    bin/console doctrine:schema:update --force
     bin/console server:run --docroot=www
 
 Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.

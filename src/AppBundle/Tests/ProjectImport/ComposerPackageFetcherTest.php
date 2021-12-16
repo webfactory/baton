@@ -5,10 +5,10 @@ namespace AppBundle\Tests\ProjectImport;
 use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use AppBundle\ProjectImport\ComposerPackageFetcher;
 use AppBundle\ProjectImport\LockFileFetcher;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class ComposerPackageFetcherTest extends PHPUnit_Framework_TestCase
+class ComposerPackageFetcherTest extends TestCase
 {
     /**
      * @test
@@ -22,7 +22,7 @@ class ComposerPackageFetcherTest extends PHPUnit_Framework_TestCase
         $packages = $composerPackageFetcher->fetchPackages('https://foo.git');
 
         $this->assertTrue(count($packages) > 0);
-        $this->assertInternalType('array', $packages);
+        $this->assertIsArray($packages);
     }
 
     /**
@@ -34,7 +34,7 @@ class ComposerPackageFetcherTest extends PHPUnit_Framework_TestCase
             $this->getLockFileFetcherMock(null)
         );
 
-        $this->setExpectedException(ProjectHasNoComposerPackageUsageInfoException::class);
+        $this->expectException(ProjectHasNoComposerPackageUsageInfoException::class);
 
         $composerPackageFetcher->fetchPackages('https://foo.git');
     }
@@ -42,11 +42,11 @@ class ComposerPackageFetcherTest extends PHPUnit_Framework_TestCase
     /**
      * @param string|null $lockContentsToReturn
      *
-     * @return LockFileFetcher|PHPUnit_Framework_MockObject_MockObject
+     * @return LockFileFetcher|MockObject
      */
     private function getLockFileFetcherMock($lockContentsToReturn)
     {
-        $projectProviderMock = $this->getMock(LockFileFetcher::class, [], [], '', false);
+        $projectProviderMock = $this->createMock(LockFileFetcher::class, [], [], '', false);
         $projectProviderMock->expects($this->once())
             ->method('getLockContents')
             ->willReturn($lockContentsToReturn);

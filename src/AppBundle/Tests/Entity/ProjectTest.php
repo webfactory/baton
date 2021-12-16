@@ -5,9 +5,9 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ProjectTest extends PHPUnit_Framework_TestCase
+class ProjectTest extends TestCase
 {
     const name = 'foo';
 
@@ -16,7 +16,7 @@ class ProjectTest extends PHPUnit_Framework_TestCase
      */
     private $project;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->project = new Project(self::name);
     }
