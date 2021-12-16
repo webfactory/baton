@@ -3,9 +3,9 @@
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Package;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PackageTest extends PHPUnit_Framework_TestCase
+class PackageTest extends TestCase
 {
     const name = 'webfactory/bar';
     const description = 'foo';
@@ -15,7 +15,7 @@ class PackageTest extends PHPUnit_Framework_TestCase
      */
     private $package;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->package = new Package(self::name, self::description);
     }

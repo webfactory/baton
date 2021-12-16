@@ -6,23 +6,23 @@ use AppBundle\Driver\KilnDriver;
 use AppBundle\Exception\InsufficientVcsAccessException;
 use Composer\Factory;
 use Composer\IO\NullIO;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-class KilnDriverTest extends PHPUnit_Framework_TestCase
+class KilnDriverTest extends TestCase
 {
     const REPO_URL = 'https://webfactory.kilnhg.com/foo/bar';
 
     /**
-     * @var KilnDriver|PHPUnit_Framework_MockObject_MockObject
+     * @var KilnDriver|MockObject
      */
     private $driver = null;
 
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class KilnDriverTest extends PHPUnit_Framework_TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->driver = null;
         parent::tearDown();
@@ -50,7 +50,7 @@ class KilnDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->buildKilnDriverMock(self::REPO_URL, [1 => self::REPO_URL], false);
 
-        $this->setExpectedException(InsufficientVcsAccessException::class);
+        $this->expectException(InsufficientVcsAccessException::class);
 
         $driver->initialize();
     }
@@ -62,7 +62,7 @@ class KilnDriverTest extends PHPUnit_Framework_TestCase
     {
         $driver = $this->buildKilnDriverMock(self::REPO_URL, [1 => 'foo']);
 
-        $this->setExpectedException(RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $driver->initialize();
     }
@@ -116,7 +116,7 @@ class KilnDriverTest extends PHPUnit_Framework_TestCase
      * @param array  $availableRepositories [repoId => url, ...]
      * @param bool   $hasAuthentication
      *
-     * @return KilnDriver|PHPUnit_Framework_MockObject_MockObject
+     * @return KilnDriver|MockObject
      */
     private function buildKilnDriverMock($repositoryUrl, $availableRepositories, $hasAuthentication = true)
     {

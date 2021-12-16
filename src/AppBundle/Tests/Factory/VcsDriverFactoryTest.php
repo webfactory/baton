@@ -4,16 +4,16 @@ namespace AppBundle\Tests\Factory;
 
 use AppBundle\Factory\VcsDriverFactory;
 use Composer\Repository\Vcs\VcsDriverInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class VcsDriverFactoryTest extends PHPUnit_Framework_TestCase
+class VcsDriverFactoryTest extends TestCase
 {
     /**
      * @var VcsDriverFactory
      */
     private $vcsDriverFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vcsDriverFactory = new VcsDriverFactory(null, 'bar');
     }
