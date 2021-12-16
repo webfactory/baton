@@ -1,6 +1,0 @@
-#!/bin/sh -e
-
-# Wrapper-Skript, das die Ausführung von PHPUnit durch den projekt-lokalen PHP-Wrapper leitet.
-# Damit sind insb. Umgebungsvariablen für XDebug so gesetzt, dass man die Tests einfach debuggen kann.
-
-exec vendor/bin/phpunit "$@"
