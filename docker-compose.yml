@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:stable-alpine
     ports:
-      - "${HTTP_PORT}:80"
+      - "${HTTP_PORT:-8000}:80"
     volumes:
       - ./:/srv/app
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -19,12 +19,12 @@ services:
       - ./:/srv/app
       - ${HOME}/.gitconfig:/home/docksy/.gitconfig
     environment:
-      - XDEBUG_CONFIG=client_host=${XDEBUG_CLIENT_HOST} client_port=${XDEBUG_CLIENT_PORT}
+      - XDEBUG_CONFIG=client_host=${XDEBUG_CLIENT_HOST:-host.docker.internal} client_port=${XDEBUG_CLIENT_PORT:-9003}
       - XDEBUG_MODE=debug
-      - PHP_IDE_CONFIG=serverName=${PHP_IDE_CONFIG_SERVERNAME}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - PHP_IDE_CONFIG=serverName=${PHP_IDE_CONFIG_SERVERNAME:-localhost}
+      - MYSQL_USER=${MYSQL_USER:-baton}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
     depends_on:
@@ -36,10 +36,10 @@ services:
       - ./data/mysql:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-baton}
+      - MYSQL_USER=${MYSQL_USER:-baton}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
 
   node:
     image: "node:12"
