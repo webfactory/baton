@@ -14,7 +14,7 @@ services:
 
   php:
     build:
-      context: ./docker/php
+      context: .
     volumes:
       - ./:/srv/app
       - ${HOME}/.gitconfig:/home/docksy/.gitconfig

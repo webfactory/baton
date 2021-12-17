@@ -62,10 +62,10 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY --from=symfonycorp/cli /symfony /usr/local/bin/symfony
 COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/local/bin/php-cs-fixer
 
-COPY wait-for /usr/local/bin/
+COPY docker/php/wait-for /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for
 
-COPY docker-entrypoint /usr/local/bin/
+COPY docker/php/docker-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 CMD ["php-fpm"]
