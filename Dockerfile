@@ -1,4 +1,16 @@
-FROM php:7.4-fpm-alpine3.13
+FROM node:12-alpine3.12 as node_runner
+
+WORKDIR /srv/app
+
+COPY gulp-config.js .
+COPY gulpfile.js .
+COPY package.json .
+COPY yarn.lock .
+
+ENV NODE_ENV=production
+RUN npm start
+
+FROM php:7.4-fpm-alpine3.13 as symfony_php
 
 ARG APCU_VERSION=5.1.21
 ARG XDEBUG_VERSION=3.1.2
@@ -58,16 +70,36 @@ RUN set -eux; \
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
+WORKDIR /srv/app
+
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-COPY --from=symfonycorp/cli /symfony /usr/local/bin/symfony
-COPY --from=oskarstark/php-cs-fixer-ga /usr/local/bin/php-cs-fixer /usr/local/bin/php-cs-fixer
+COPY . .
+COPY --from=node_runner /srv/app/node_modules .
+
+RUN set -eux; \
+	mkdir -p var/cache logs; \
+    setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var; \
+    setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var; \
+    setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX logs; \
+    setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX logs; \
+	composer install; \
+	chmod +x bin/console; \
+    sync;
 
 COPY docker/php/wait-for /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for
 
 COPY docker/php/docker-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint
+
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 CMD ["php-fpm"]
 
+FROM nginx:stable-alpine as symfony_nginx
+
 WORKDIR /srv/app
+
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=symfony_php /srv/app/www www/
+
+ENV APP_ENV prod
