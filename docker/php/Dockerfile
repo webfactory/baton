@@ -37,6 +37,7 @@ RUN set -eux; \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
+        apcu_bc \
         xdebug-${XDEBUG_VERSION} \
 	; \
 	pecl clear-cache; \
@@ -55,6 +56,8 @@ RUN set -eux; \
 	apk add --no-cache --virtual .phpexts-rundeps $runDeps; \
 	\
 	apk del .build-deps
+
+RUN echo "extension=apc.so" > /usr/local/etc/php/conf.d/z_apc.ini
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
