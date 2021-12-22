@@ -63,7 +63,7 @@ RUN set -eux; \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
-        xdebug-${XDEBUG_VERSION} \
+        apcu_bc-${APCU_BC_VERSION} \
 	; \
 	pecl clear-cache; \
 	docker-php-ext-enable \
