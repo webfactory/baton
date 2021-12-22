@@ -1,4 +1,7 @@
-FROM node:12-alpine3.12 as node_runner
+FROM node:17.3-alpine3.12 as node_runner
+
+ENV NODE_ENV=production
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /srv/app
 
@@ -7,7 +10,15 @@ COPY gulpfile.js .
 COPY package.json .
 COPY yarn.lock .
 
-ENV NODE_ENV=production
+RUN set -eux; \
+    apk add --update --no-cache \
+      g++ \
+      make \
+      python3; \
+    ln -sf python3 /usr/bin/python; \
+    python3 -m ensurepip; \
+    pip3 install --no-cache --upgrade pip setuptools
+
 RUN npm start
 
 FROM php:7.4-fpm-alpine3.13 as symfony_php
