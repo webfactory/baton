@@ -16,6 +16,8 @@ services:
       context: .
       target: symfony_php
     environment:
+      - GITHUB_OAUTH_TOKEN=${GITHUB_OAUTH_TOKEN}
+      - KILN_OAUTH_TOKEN=${KILN_OAUTH_TOKEN}
       - MYSQL_USER=${MYSQL_USER:-baton}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
