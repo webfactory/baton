@@ -13,9 +13,27 @@ RUN npm start
 FROM php:7.4-fpm-alpine3.13 as symfony_php
 
 ARG APCU_VERSION=5.1.21
-ARG XDEBUG_VERSION=3.1.2
+ARG APCU_BC_VERSION=1.0.5
 
 ENV LC_ALL POSIX
+
+# install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
+# see https://github.com/docker-library/php/issues/240#issuecomment-763112749
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
+
+WORKDIR /srv/app
+
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+COPY . .
+COPY --from=node_runner /srv/app/node_modules .
+COPY docker/php/zz-apcu_bc.ini /usr/local/etc/php/conf.d/
+COPY docker/php/wait-for /usr/local/bin/
+COPY docker/php/docker-entrypoint /usr/local/bin/
+
+RUN set -eux; \
+    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini; \
+    chmod +x /usr/local/bin/docker-entrypoint; \
+    chmod +x /usr/local/bin/wait-for
 
 RUN apk add --no-cache \
         acl \
@@ -27,10 +45,6 @@ RUN apk add --no-cache \
         npm \
         vim \
         zip
-
-# install gnu-libiconv and set LD_PRELOAD env to make iconv work fully on Alpine image.
-# see https://github.com/docker-library/php/issues/240#issuecomment-763112749
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
@@ -54,8 +68,6 @@ RUN set -eux; \
 	pecl clear-cache; \
 	docker-php-ext-enable \
 		apcu \
-		opcache \
-        xdebug \
 	; \
 	\
 	runDeps="$( \
@@ -68,14 +80,6 @@ RUN set -eux; \
 	\
 	apk del .build-deps
 
-RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-
-WORKDIR /srv/app
-
-COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-COPY . .
-COPY --from=node_runner /srv/app/node_modules .
-
 RUN set -eux; \
 	mkdir -p var/cache logs; \
     setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var; \
@@ -86,12 +90,6 @@ RUN set -eux; \
 	chmod +x bin/console; \
     sync;
 
-COPY docker/php/wait-for /usr/local/bin/
-RUN chmod +x /usr/local/bin/wait-for
-
-COPY docker/php/docker-entrypoint /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 CMD ["php-fpm"]
 
@@ -101,5 +99,3 @@ WORKDIR /srv/app
 
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=symfony_php /srv/app/www www/
-
-ENV APP_ENV prod

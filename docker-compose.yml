@@ -16,14 +16,12 @@ services:
       context: .
       target: symfony_php
     environment:
-      - XDEBUG_CONFIG=client_host=${XDEBUG_CLIENT_HOST:-host.docker.internal} client_port=${XDEBUG_CLIENT_PORT:-9003}
-      - XDEBUG_MODE=debug
-      - PHP_IDE_CONFIG=serverName=${PHP_IDE_CONFIG_SERVERNAME:-localhost}
       - MYSQL_USER=${MYSQL_USER:-baton}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
+      - APP_ENV=production
     depends_on:
       - mysql
 
