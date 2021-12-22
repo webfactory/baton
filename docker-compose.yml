@@ -1,36 +1,39 @@
-version: '2'
+version: '3.8'
 
 services:
-  database:
-    image: mysql:5.7
-    volumes:
-      - database-content:/var/lib/mysql
-    restart: on-failure
-    environment:
-      MYSQL_DATABASE: "baton"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: ""
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
-
-
-  baton:
-    build: "docker/container/baton"
-    command: "dockerize -wait tcp://database:3306 bash -c 'composer install && php -v && npm install && gulp compile && bin/console doctrine:database:create --if-not-exists && bin/console doctrine:schema:up && printf \"ACTUALLY the server will be running on http://127.0.0.1:8080\" && bin/console server:run 0.0.0.0:8080 --docroot=www'"
-    volumes:
-      - .:/usr/app/baton
-    restart: on-failure
-    environment:
-      APP_DEBUG: "1"
-      MYSQL_HOST: "database"
-      MYSQL_PORT: "3306"
-      MYSQL_DATABASE: "baton"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: ""
-    depends_on:
-      - database
+  nginx:
+    build:
+      context: .
+      target: symfony_nginx
     ports:
-      - "8080:8080"
+      - "${HTTP_PORT:-8000}:80"
+    depends_on:
+      - php
+      - mysql
 
-volumes:
-  database-content:
+  php:
+    build:
+      context: .
+      target: symfony_php
+    environment:
+      - GITHUB_OAUTH_TOKEN=${GITHUB_OAUTH_TOKEN}
+      - KILN_OAUTH_TOKEN=${KILN_OAUTH_TOKEN}
+      - MYSQL_USER=${MYSQL_USER:-baton}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - APP_ENV=production
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-baton}
+      - MYSQL_USER=${MYSQL_USER:-baton}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-baton}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-baton}
