@@ -53,7 +53,6 @@ RUN apk add --no-cache \
         gettext \
         git \
         gnu-libiconv \
-        npm \
         vim \
         zip
 
