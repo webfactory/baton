@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Composer Dependency Tracking",
     "require": {
-        "symfony/symfony": "~3.4",
+        "symfony/symfony": "^3.4.47",
         "symfony/monolog-bundle": "^3.2.0",
         "sensio/framework-extra-bundle": "~3.0",
         "doctrine/orm": "^2.5.14",
