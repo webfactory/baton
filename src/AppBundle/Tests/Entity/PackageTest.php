@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class PackageTest extends TestCase
 {
-    const name = 'webfactory/bar';
-    const description = 'foo';
+    public const name = 'webfactory/bar';
+    public const description = 'foo';
 
     /**
      * @var Package
