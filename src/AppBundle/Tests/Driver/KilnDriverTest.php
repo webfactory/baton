@@ -12,7 +12,7 @@ use RuntimeException;
 
 class KilnDriverTest extends TestCase
 {
-    const REPO_URL = 'https://webfactory.kilnhg.com/foo/bar';
+    public const REPO_URL = 'https://webfactory.kilnhg.com/foo/bar';
 
     /**
      * @var KilnDriver|MockObject

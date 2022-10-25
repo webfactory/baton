@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 class VersionConstraint
 {
-    const VALID_OPERATORS = '(==|>=|<=|>|<|all)';
+    public const VALID_OPERATORS = '(==|>=|<=|>|<|all)';
 
     /**
      * @var string

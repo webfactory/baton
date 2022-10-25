@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProjectTest extends TestCase
 {
-    const name = 'foo';
+    public const name = 'foo';
 
     /**
      * @var Project
@@ -31,8 +31,8 @@ class ProjectTest extends TestCase
 
         $this->assertTrue(count($this->project->getUsages()) > 0);
         $this->assertSame(
-        self::name,
-        $this->project->getUsages()[0]->getProjects()[0]->getName()
-      );
+            self::name,
+            $this->project->getUsages()[0]->getProjects()[0]->getName()
+        );
     }
 }

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class PackageVersionTest extends TestCase
 {
-    const version = '1.0.0';
+    public const version = '1.0.0';
 
     /**
      * @var PackageVersion
