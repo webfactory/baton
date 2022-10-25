@@ -13,6 +13,6 @@ cache/
 phpunit.xml
 .idea/
 .bowerrc
-.php_cs.cache
+.php-cs-fixer.cache
 data
 .env
