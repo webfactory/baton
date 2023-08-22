@@ -5,7 +5,7 @@
     "browserslist-config-webfactory": "^1.1.0",
     "jquery": "^3.3.1",
     "node-sass": "^9.0.0",
-    "webfactory-gulp-preset": "^2.12.0"
+    "webfactory-gulp-preset": "^3.0.0"
   },
   "browserslist": [
     "extends browserslist-config-webfactory/default"
