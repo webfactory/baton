@@ -57,7 +57,7 @@ class Project
      *
      * @var Collection|PackageVersion[]
      */
-    private $usages;
+    private $packageVersions;
 
     /**
      * @param string $name
@@ -65,7 +65,7 @@ class Project
     public function __construct($name)
     {
         $this->name = $name;
-        $this->usages = new ArrayCollection();
+        $this->packageVersions = new ArrayCollection();
     }
 
     /**
@@ -103,9 +103,9 @@ class Project
     /**
      * @return Collection|PackageVersion[]
      */
-    public function getUsages()
+    public function getPackageVersions()
     {
-        return $this->usages;
+        return $this->packageVersions;
     }
 
     /**
@@ -124,18 +124,19 @@ class Project
         $this->description = $description;
     }
 
-    public function setUsedPackageVersions(ArrayCollection $packageVersions)
+
+    public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
-        foreach ($this->usages as $usage) {
+        foreach ($this->packageVersions as $packageVersion) {
             // TODO: could contains($usage) falsly return false when $packageVersions contains Proxies? See https://github.com/doctrine/doctrine2/issues/6127 Possible fix: PackageVersion::equals($pVersion)
-            if (!$packageVersions->contains($usage)) {
-                $usage->removeUsingProject($this);
+            if (!$importedPackageVersions->contains($packageVersion)) {
+                $packageVersion->removeUsingProject($this);
             }
         }
 
-        $this->usages = $packageVersions;
+        $this->packageVersions = $importedPackageVersions;
 
-        foreach ($this->usages as $usage) {
+        foreach ($this->packageVersions as $usage) {
             $usage->addUsingProject($this);
         }
     }
@@ -143,20 +144,20 @@ class Project
     public function addUsage(PackageVersion $packageVersion)
     {
         // TODO: remove addUsage, then also remove from PackageVersion::addUsingProject()?
-        if ($this->usages->contains($packageVersion)) {
+        if ($this->packageVersions->contains($packageVersion)) {
             return;
         }
-        $this->usages->add($packageVersion);
+        $this->packageVersions->add($packageVersion);
         $packageVersion->addUsingProject($this);
     }
 
     public function removeUsage(PackageVersion $usage)
     {
         // TODO: remove removeUsage, then also remove from PackageVersion::removeUsingProject()?
-        if (!$this->usages->contains($usage)) {
+        if (!$this->packageVersions->contains($usage)) {
             return;
         }
-        $this->usages->removeElement($usage);
+        $this->packageVersions->removeElement($usage);
         $usage->removeUsingProject($this);
     }
 }
