@@ -128,8 +128,17 @@ class Project
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
         foreach ($this->packageVersions as $packageVersion) {
-            // TODO: could contains($usage) falsly return false when $packageVersions contains Proxies? See https://github.com/doctrine/doctrine2/issues/6127 Possible fix: PackageVersion::equals($pVersion)
-            if (!$importedPackageVersions->contains($packageVersion)) {
+            $packageVersionIsAlreadyUsed = false;
+
+            foreach ($importedPackageVersions as $importedPackageVersion) {
+                // contains($packageVersion) could falsly return "false" when $packageVersions contains Proxies, See https://github.com/doctrine/doctrine2/issues/6127
+                // use PackageVersion::equals() instead
+                if ($packageVersion->equals($importedPackageVersion)) {
+                    $packageVersionIsAlreadyUsed = true;
+                }
+            }
+
+            if (!$packageVersionIsAlreadyUsed) {
                 $packageVersion->removeUsingProject($this);
             }
         }
