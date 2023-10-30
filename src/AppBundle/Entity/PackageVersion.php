@@ -85,7 +85,8 @@ class PackageVersion
      */
     public function equals(PackageVersion $packageVersion)
     {
-        return ($this === $packageVersion) || ($this->getId() === $packageVersion->getId());
+        return $this->package->getId() === $packageVersion->getPackage()->getId()
+            && $this->prettyVersion === $packageVersion->getPrettyVersion();
     }
 
     /**
