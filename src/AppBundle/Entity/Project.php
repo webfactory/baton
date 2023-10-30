@@ -128,17 +128,15 @@ class Project
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
         foreach ($this->packageVersions as $packageVersion) {
-            $packageVersionIsAlreadyUsed = false;
+            $importedPackageVersionIsAlreadyUsed = false;
 
             foreach ($importedPackageVersions as $importedPackageVersion) {
-                // contains($packageVersion) could falsly return "false" when $packageVersions contains Proxies, See https://github.com/doctrine/doctrine2/issues/6127
-                // use PackageVersion::equals() instead
                 if ($packageVersion->equals($importedPackageVersion)) {
-                    $packageVersionIsAlreadyUsed = true;
+                    $importedPackageVersionIsAlreadyUsed = true;
                 }
             }
 
-            if (!$packageVersionIsAlreadyUsed) {
+            if (!$importedPackageVersionIsAlreadyUsed) {
                 $packageVersion->removeUsingProject($this);
             }
         }
