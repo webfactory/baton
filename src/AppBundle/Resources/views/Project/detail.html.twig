@@ -9,7 +9,7 @@
             <p>Imported from <a href="{{ project.vcsUrl }}">{{ project.vcsUrl }}</a></p>
             <h3>Dependencies</h3>
             <ul class="list-group mb-5">
-                {% for usage in project.usages %}
+                {% for usage in project.packageVersions %}
                     <li class="list-group-item">
                         <a href="{{ path('package', {'name': usage.package.name}) }}">
                             {{ usage.package.name }}
