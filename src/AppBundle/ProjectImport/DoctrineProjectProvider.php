@@ -23,8 +23,8 @@ class DoctrineProjectProvider implements ProjectProviderInterface
         $project = $this->projectRepository->findOneBy(['name' => $name]);
         if (null === $project) {
             $project = new Project($name);
+            $this->projectRepository->add($project);
         }
-        $this->projectRepository->add($project);
 
         return $project;
     }
