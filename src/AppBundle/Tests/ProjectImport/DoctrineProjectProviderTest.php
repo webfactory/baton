@@ -17,7 +17,7 @@ class DoctrineProjectProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->projectRepository = $this->createMock(ProjectRepository::class, [], [], '', false);
+        $this->projectRepository = $this->createMock(ProjectRepository::class);
     }
 
     /**

@@ -15,7 +15,7 @@ class ProjectController
      *     name="project",
      *     requirements={"name"=".+"}
      * )
-     * @ParamConverter("project", class="AppBundle:Project", options={"repository_method" = "findOneByName"})
+     * @ParamConverter("project", class="AppBundle\Entity\Project", options={"repository_method" = "findOneByName"})
      * @Template()
      */
     public function detailAction(Project $project)

@@ -42,8 +42,8 @@ class ImportProjectTaskTest extends TestCase
      */
     private function getEntityManagerMock()
     {
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class, [], [], '', false);
-        $entityManagerMock->expects($this->once())
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+        $entityManagerMock
           ->method('flush')
           ->will($this->returnValue(null));
 
@@ -55,7 +55,7 @@ class ImportProjectTaskTest extends TestCase
      */
     private function getProjectProviderMock()
     {
-        $projectProviderMock = $this->createMock(ProjectProviderInterface::class, [], [], '', false);
+        $projectProviderMock = $this->createMock(ProjectProviderInterface::class);
         $projectProviderMock->expects($this->once())
             ->method('provideProject')
             ->willReturn(new Project('Foo'));
@@ -68,7 +68,7 @@ class ImportProjectTaskTest extends TestCase
      */
     private function getPackageVersionFetcherMock()
     {
-        $packageVersionFetcherMock = $this->createMock(PackageVersionFetcher::class, [], [], '', false);
+        $packageVersionFetcherMock = $this->createMock(PackageVersionFetcher::class);
         $packageVersionFetcherMock->expects($this->once())
             ->method('fetch')
             ->willReturn(new ArrayCollection());

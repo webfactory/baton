@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Describes a Composer package used in a specific version number.
  *
  * @ORM\Entity
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="uniq_package_version", columns={"package_id", "prettyVersion"})})
+ * @ORM\Table(name="PackageVersion", uniqueConstraints={@ORM\UniqueConstraint(name="uniq_package_version", columns={"package_id", "prettyVersion"})})
  */
 class PackageVersion
 {
@@ -25,7 +25,7 @@ class PackageVersion
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="prettyVersion", type="string")
      *
      * @var string
      */
@@ -35,7 +35,7 @@ class PackageVersion
      * @ORM\ManyToOne(
      *      targetEntity="Package",
      *      inversedBy="versions",
-     *      cascade="persist"
+     *      cascade={"persist"}
      * )
      *
      * @var Package
@@ -46,6 +46,10 @@ class PackageVersion
      * @ORM\ManyToMany(
      *      targetEntity="Project",
      *      inversedBy="usages"
+     * )
+     * @ORM\JoinTable(name="packageversion_project",
+     *     joinColumns={@ORM\JoinColumn(name="packageversion_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")}
      * )
      *
      * @var Collection|Project[]

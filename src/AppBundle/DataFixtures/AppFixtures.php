@@ -6,7 +6,7 @@ use AppBundle\Entity\Package;
 use AppBundle\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {

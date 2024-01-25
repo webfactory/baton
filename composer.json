@@ -3,12 +3,16 @@
     "type": "project",
     "description": "Composer Dependency Tracking",
     "require": {
-        "symfony/symfony": "^3.4.47",
-        "symfony/monolog-bundle": "^3.2.0",
-        "sensio/framework-extra-bundle": "~3.0",
+        "php": "^8.1",
+        "composer/composer": "^1.6",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
+        "doctrine/migrations": "^2.0",
         "doctrine/orm": "^2.5.14",
-        "doctrine/doctrine-bundle": "^1.8.1",
-        "composer/composer": "^1.6"
+        "sensio/framework-extra-bundle": "^5.0",
+        "symfony/swiftmailer-bundle": "^3.0",
+        "symfony/monolog-bundle": "^3.2.0",
+        "symfony/symfony": "^4.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
@@ -25,9 +29,6 @@
         }
     },
     "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.2.24"
-        }
+        "sort-packages": true
     }
 }

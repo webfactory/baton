@@ -1,3 +1,5 @@
+app/config/parameters.yml
+conf/
 logs
 sessions
 node_modules/
@@ -18,4 +20,5 @@ data
 .env
 webhookpassword
 authpasswords
-
+snapshot.sql
+auth.json

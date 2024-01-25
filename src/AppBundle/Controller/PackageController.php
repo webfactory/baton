@@ -32,7 +32,7 @@ class PackageController
      *     requirements={"name"="[^;]+", "_format": "json|html"},
      *     defaults={"_format"="html"}
      * )
-     * @ParamConverter("package", class="AppBundle:Package", options={"repository_method" = "findOneByName"})
+     * @ParamConverter("package", class="AppBundle\Entity\Package", options={"repository_method" = "findOneByName"})
      * @Template()
      */
     public function detailAction(Package $package, Request $request, $_format)
@@ -65,7 +65,7 @@ class PackageController
      *     requirements={"name"="[^;]*"},
      *     defaults={"_format"="json"}
      * )
-     * @ParamConverter("package", class="AppBundle:Package", options={"repository_method" = "findOneByName"})
+     * @ParamConverter("package", class="AppBundle\Entity\Package", options={"repository_method" = "findOneByName"})
      * @Template()
      */
     public function versionsAction(Package $package)

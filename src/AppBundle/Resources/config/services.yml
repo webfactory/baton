@@ -1,6 +1,7 @@
 services:
     app.controller.main:
         class: AppBundle\Controller\MainController
+        public: true
         arguments:
             $formFactory: "@form.factory"
 

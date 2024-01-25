@@ -63,7 +63,7 @@ class VersionConstraintTest extends TestCase
      *
      * @return PackageVersion[]
      */
-    private function matchPackageVersions(VersionConstraint $versionConstraint, array $packageVersions)
+    private function matchPackageVersions(VersionConstraint $versionConstraint, array $packageVersions): array
     {
         $matches = [];
         foreach ($packageVersions as $packageVersion) {

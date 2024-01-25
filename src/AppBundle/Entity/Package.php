@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Describes the mapping for Composer Packages that are used in projects.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PackageRepository")
+ * @ORM\Table(name="Package")
  */
 class Package
 {

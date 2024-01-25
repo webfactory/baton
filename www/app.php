@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 require __DIR__.'/../vendor/autoload.php';
 
 Request::enableHttpMethodParameterOverride();
-Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
 $request = Request::createFromGlobals();
 
 $env = getenv('APP_ENV') ?: 'development';
@@ -30,10 +29,6 @@ if ($debug) {
 }
 
 $kernel = new AppKernel($env, $debug);
-
-if (!$kernel->isDebug()) {
-    $kernel->loadClassCache();
-}
 
 if ($enableCache) {
     class AppCache extends Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache

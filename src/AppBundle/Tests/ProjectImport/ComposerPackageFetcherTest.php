@@ -13,7 +13,7 @@ class ComposerPackageFetcherTest extends TestCase
     /**
      * @test
      */
-    public function fetchPackagesReturnsArrayOfComposerPackages()
+    public function fetchPackagesReturnsArrayOfComposerPackages(): void
     {
         $composerPackageFetcher = new ComposerPackageFetcher(
             $this->getLockFileFetcherMock(file_get_contents(__DIR__.'/composer_test.lock'))
@@ -46,7 +46,7 @@ class ComposerPackageFetcherTest extends TestCase
      */
     private function getLockFileFetcherMock($lockContentsToReturn)
     {
-        $projectProviderMock = $this->createMock(LockFileFetcher::class, [], [], '', false);
+        $projectProviderMock = $this->createMock(LockFileFetcher::class);
         $projectProviderMock->expects($this->once())
             ->method('getLockContents')
             ->willReturn($lockContentsToReturn);

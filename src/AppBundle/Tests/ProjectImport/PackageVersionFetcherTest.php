@@ -39,7 +39,7 @@ class PackageVersionFetcherTest extends TestCase
      */
     private function getPackageProviderMock()
     {
-        $packageProviderMock = $this->createMock(PackageProviderInterface::class, [], [], '', false);
+        $packageProviderMock = $this->createMock(PackageProviderInterface::class);
         $packageProviderMock->expects($this->once())
             ->method('providePackage')
             ->willReturn(new Package('Bar'));
@@ -52,7 +52,7 @@ class PackageVersionFetcherTest extends TestCase
      */
     private function getComposerPackageFetcherMock()
     {
-        $composerPackageFetcherMock = $this->createMock(ComposerPackageFetcher::class, [], [], '', false);
+        $composerPackageFetcherMock = $this->createMock(ComposerPackageFetcher::class);
         $composerPackageFetcherMock->expects($this->once())
             ->method('fetchPackages')
             ->willReturn([new \Composer\Package\Package('Foo', '1.0.0', 'v1.0.0')]);

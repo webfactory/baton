@@ -17,7 +17,7 @@ class DoctrinePackageProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->packageRepository = $this->createMock(PackageRepository::class, [], [], '', false);
+        $this->packageRepository = $this->createMock(PackageRepository::class);
     }
 
     /**

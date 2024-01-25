@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ProjectRepository")
+ * @ORM\Table(name="Project")
  */
 class Project
 {
@@ -28,7 +29,7 @@ class Project
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="vcsUrl", type="string")
      *
      * @var string
      */
@@ -52,7 +53,7 @@ class Project
      * @ORM\ManyToMany(
      *      targetEntity="PackageVersion",
      *      mappedBy="projects",
-     *      cascade="persist"
+     *      cascade={"persist"}
      * )
      *
      * @var Collection|PackageVersion[]
