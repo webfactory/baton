@@ -19,7 +19,7 @@ class VcsDriverFactory
     /** @var array ['platform' => VcsDriverInterface class ] */
     private $drivers;
 
-    public function __construct($githubOAuthToken, $kilnOAuthToken, array $drivers = null)
+    public function __construct($githubOAuthToken, $kilnOAuthToken, ?array $drivers = null)
     {
         $this->githubOAuthToken = $githubOAuthToken;
         $this->kilnOAuthToken = $kilnOAuthToken;

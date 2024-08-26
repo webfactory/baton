@@ -17,7 +17,7 @@ class KilnDriverTest extends TestCase
     /**
      * @var KilnDriver|MockObject
      */
-    private $driver = null;
+    private $driver;
 
     /**
      * Initializes the test environment.

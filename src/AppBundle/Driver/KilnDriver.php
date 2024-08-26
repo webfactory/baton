@@ -41,9 +41,6 @@ class KilnDriver extends VcsDriver
     /** @var string */
     private $oAuthToken;
 
-    /**
-     * {@inheritDoc}
-     */
     public function initialize()
     {
         preg_match('/^(?:https:\/\/webfactory.kilnhg.com\/(.*)\/(.*?)(?:$|\.))/', $this->url, $match);
@@ -81,9 +78,6 @@ class KilnDriver extends VcsDriver
         return 'https://'.$this->originUrl.'/'.$this->owner.'/'.$this->repository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getRootIdentifier()
     {
         if ($this->gitDriver) {
@@ -93,9 +87,6 @@ class KilnDriver extends VcsDriver
         return $this->rootIdentifier;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getUrl()
     {
         if ($this->gitDriver) {
@@ -105,21 +96,11 @@ class KilnDriver extends VcsDriver
         return 'https://'.$this->originUrl.'/'.$this->owner.'/'.$this->repository.'.git';
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param string $operation
-     *                          e.g. listing all Projects $operation = 'Project'
-     *                          e.g. getting file content $operation = 'Repo/{repoId}/Raw/File/{$filePath}
-     */
     protected function getApiUrl()
     {
         return 'https://'.$this->originUrl.'/Api/1.0/';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getSource($identifier)
     {
         if ($this->gitDriver) {
@@ -130,8 +111,6 @@ class KilnDriver extends VcsDriver
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws RuntimeException
      */
     public function getDist($identifier)
@@ -139,9 +118,6 @@ class KilnDriver extends VcsDriver
         throw new RuntimeException('Zip downloads are not supported by the Kiln API');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getComposerInformation($identifier)
     {
         if ($this->gitDriver) {
@@ -170,9 +146,6 @@ class KilnDriver extends VcsDriver
         return $this->infoCache[$identifier];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileContent($file, $identifier)
     {
         if ($this->gitDriver) {
@@ -192,9 +165,6 @@ class KilnDriver extends VcsDriver
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChangeDate($identifier)
     {
         if ($this->gitDriver) {
@@ -207,9 +177,6 @@ class KilnDriver extends VcsDriver
         return new DateTime($commit['commit']['committer']['date']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTags()
     {
         if ($this->gitDriver) {
@@ -230,9 +197,6 @@ class KilnDriver extends VcsDriver
         return $this->tags;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBranches()
     {
         if ($this->gitDriver) {
@@ -258,9 +222,6 @@ class KilnDriver extends VcsDriver
         return $this->branches;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function supports(IOInterface $io, Config $config, $url, $deep = false)
     {
         return false !== strpos($url, 'kilnhg');
@@ -276,9 +237,6 @@ class KilnDriver extends VcsDriver
         return 'ssh://webfactory@'.$this->originUrl.'/'.$this->owner.'/'.$this->repository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getContents($url, $fetchingRepoData = false)
     {
         $contents = file_get_contents($url);
