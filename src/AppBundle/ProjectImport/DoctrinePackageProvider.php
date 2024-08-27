@@ -18,9 +18,6 @@ class DoctrinePackageProvider implements PackageProviderInterface
         $this->packageRepository = $packageRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function providePackage($name)
     {
         $package = $this->packageRepository->findOneBy(['name' => $name]);

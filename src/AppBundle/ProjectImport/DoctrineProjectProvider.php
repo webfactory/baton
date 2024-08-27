@@ -18,9 +18,6 @@ class DoctrineProjectProvider implements ProjectProviderInterface
         $this->projectRepository = $projectRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function provideProject($name)
     {
         $project = $this->projectRepository->findOneBy(['name' => $name]);

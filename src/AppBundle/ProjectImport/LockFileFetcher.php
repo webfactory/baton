@@ -16,8 +16,6 @@ class LockFileFetcher
     }
 
     /**
-     * @param $vcsUrl
-     *
      * @return string|null
      */
     public function getLockContents($vcsUrl)

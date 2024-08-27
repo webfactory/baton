@@ -16,8 +16,8 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('<', '2.0.0');
         $packageVersions = [
-          new PackageVersion('1.0.0', new Package('foo')),
-          new PackageVersion('3.0.0', new Package('foo')),
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('3.0.0', new Package('foo')),
         ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
@@ -33,10 +33,10 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('<=', '2.0.0');
         $packageVersions = [
-        new PackageVersion('1.0.0', new Package('foo')),
-        new PackageVersion('2.0.0', new Package('foo')),
-        new PackageVersion('3.0.0', new Package('foo')),
-      ];
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('2.0.0', new Package('foo')),
+            new PackageVersion('3.0.0', new Package('foo')),
+        ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
@@ -52,9 +52,9 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('>', '2.0.0');
         $packageVersions = [
-        new PackageVersion('1.0.0', new Package('foo')),
-        new PackageVersion('3.0.0', new Package('foo')),
-      ];
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('3.0.0', new Package('foo')),
+        ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
@@ -69,9 +69,9 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('>=', '2.0.0');
         $packageVersions = [
-          new PackageVersion('1.0.0', new Package('foo')),
-          new PackageVersion('2.0.0', new Package('foo')),
-          new PackageVersion('3.0.0', new Package('foo')),
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('2.0.0', new Package('foo')),
+            new PackageVersion('3.0.0', new Package('foo')),
         ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
@@ -88,8 +88,8 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('==', '2.0.0');
         $packageVersions = [
-          new PackageVersion('1.0.0', new Package('foo')),
-          new PackageVersion('2.0.0', new Package('foo')),
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('2.0.0', new Package('foo')),
         ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
@@ -105,9 +105,9 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint('all', '2.0.0');
         $packageVersions = [
-          new PackageVersion('1.0.0', new Package('foo')),
-          new PackageVersion('2.0.0', new Package('foo')),
-          new PackageVersion('3.0.0', new Package('foo')),
+            new PackageVersion('1.0.0', new Package('foo')),
+            new PackageVersion('2.0.0', new Package('foo')),
+            new PackageVersion('3.0.0', new Package('foo')),
         ];
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);

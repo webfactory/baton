@@ -36,7 +36,7 @@ if (!$kernel->isDebug()) {
 }
 
 if ($enableCache) {
-    class AppCache extends \Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache
+    class AppCache extends Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache
     {
     }
     $kernel = new AppCache($kernel);
