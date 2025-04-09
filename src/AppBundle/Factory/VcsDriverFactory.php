@@ -3,6 +3,7 @@
 namespace AppBundle\Factory;
 
 use AppBundle\Exception\InsufficientVcsAccessException;
+use AppBundle\Exception\NoVcsDriverFoundException;
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Composer\Repository\Vcs\VcsDriverInterface;
@@ -37,11 +38,9 @@ class VcsDriverFactory
     /**
      * @param string $vcsUrl
      *
-     * @return VcsDriverInterface
-     *
      * @throws InsufficientVcsAccessException
      */
-    public function getDriver($vcsUrl)
+    public function getDriver($vcsUrl): VcsDriverInterface
     {
         $composerConfig = Factory::createConfig();
         $io = $this->getIO();
@@ -59,6 +58,8 @@ class VcsDriverFactory
                 return $driver;
             }
         }
+
+        throw new NoVcsDriverFoundException('No VCS driver found for URL: ' . $vcsUrl);
     }
 
     /**
