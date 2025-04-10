@@ -10,14 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebhookController
 {
-    /**
-     * @var ImportProjectTask
-     */
-    private $importProjectTask;
-
-    public function __construct(ImportProjectTask $importProjectTask)
-    {
-        $this->importProjectTask = $importProjectTask;
+    public function __construct(
+        private ImportProjectTask $importProjectTask
+    ) {
     }
 
     /**
@@ -32,9 +27,9 @@ class WebhookController
 
         // This works for the Kiln webhook API as well as for GitHub webhooks of content-type "application/x-www-form-urlencoded"
         if ($payload = $request->get('payload')) {
-            $payload = json_decode($payload);
-            if (isset($payload->repository) && $payload->repository && $payload->repository->url) {
-                $repositoryWasImported = $this->importProjectTask->run($payload->repository->url);
+            $payload = json_decode($payload, flags: JSON_THROW_ON_ERROR);
+            if (isset($payload->repository) && $payload->repository && $payload->repository->html_url) {
+                $repositoryWasImported = $this->importProjectTask->run($payload->repository->html_url);
             }
         }
 
