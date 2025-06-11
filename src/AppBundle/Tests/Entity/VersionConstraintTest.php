@@ -5,114 +5,49 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\VersionConstraint;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 class VersionConstraintTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function versionConstraintWithSmallerThanOperatorMatchesPackageVersionsWithSmallerVersionThanTheVersionConstraintsVersion()
+    public static function provideCases(): Generator
     {
-        $versionConstraint = new VersionConstraint('<', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('3.0.0', new Package('foo')),
-        ];
-
-        $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
-
-        $this->assertCount(1, $matches);
-        $this->assertSame('1.0.0', $matches[0]->getPrettyVersion());
+        yield ['<', '2.0.0', ['1.0.0'], ['3.0.0']];
+        yield ['<=', '2.0.0', ['1.0.0', '2.0.0'], ['3.0.0']];
+        yield ['>', '2.0.0', ['3.0.0'], ['1.0.0']];
+        yield ['>=', '2.0.0', ['2.0.0', '3.0.0'], ['1.0.0']];
+        yield ['==', '2.0.0', ['2.0.0'], ['1.0.0', '3.0.0']];
+        yield ['all', '2.0.0', ['1.0.0', '2.0.0', '3.0.0'], []];
     }
 
     /**
      * @test
+     *
+     * @dataProvider provideCases
      */
-    public function versionConstraintWithSmallerEqualsOperatorMatchesPackageVersionsWithSmallerEqualVersionThanTheVersionConstraintsVersion()
+    public function versionConstraintMatches(string $operator, string $version, array $expectedMatches, array $nonMatches)
     {
-        $versionConstraint = new VersionConstraint('<=', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('2.0.0', new Package('foo')),
-            new PackageVersion('3.0.0', new Package('foo')),
-        ];
+        $versionConstraint = new VersionConstraint($operator, $version);
+        $packageVersions = array_merge(
+            array_map(function ($v) { return new PackageVersion($v, new Package('foo')); }, $expectedMatches),
+            array_map(function ($v) { return new PackageVersion($v, new Package('foo')); }, $nonMatches)
+        );
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
-        $this->assertCount(2, $matches);
-        $this->assertSame('1.0.0', $matches[0]->getPrettyVersion());
-        $this->assertSame('2.0.0', $matches[1]->getPrettyVersion());
-    }
+        $this->assertCount(count($expectedMatches), $matches);
 
-    /**
-     * @test
-     */
-    public function versionConstraintWithLargerThanOperatorMatchesPackageVersionsWithLargerVersionThanTheVersionConstraintsVersion()
-    {
-        $versionConstraint = new VersionConstraint('>', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('3.0.0', new Package('foo')),
-        ];
+        $matches = array_map(function ($match) {
+            return $match->getPrettyVersion();
+        }, $matches);
 
-        $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
+        foreach ($expectedMatches as $expected) {
+            $this->assertContains($expected, $matches);
+        }
 
-        $this->assertCount(1, $matches);
-        $this->assertSame('3.0.0', $matches[0]->getPrettyVersion());
-    }
-
-    /**
-     * @test
-     */
-    public function versionConstraintWithLargerEqualsOperatorMatchesPackageVersionsWithLargerEqualVersionThanTheVersionConstraintsVersion()
-    {
-        $versionConstraint = new VersionConstraint('>=', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('2.0.0', new Package('foo')),
-            new PackageVersion('3.0.0', new Package('foo')),
-        ];
-
-        $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
-
-        $this->assertCount(2, $matches);
-        $this->assertSame('2.0.0', $matches[0]->getPrettyVersion());
-        $this->assertSame('3.0.0', $matches[1]->getPrettyVersion());
-    }
-
-    /**
-     * @test
-     */
-    public function versionConstraintWithEqualsOperatorMatchesPackageVersionsWithEqualVersionAsTheVersionConstraintsVersion()
-    {
-        $versionConstraint = new VersionConstraint('==', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('2.0.0', new Package('foo')),
-        ];
-
-        $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
-
-        $this->assertCount(1, $matches);
-        $this->assertSame('2.0.0', $matches[0]->getPrettyVersion());
-    }
-
-    /**
-     * @test
-     */
-    public function versionConstraintWithAllOperatorMatchesAllPackagesVersions()
-    {
-        $versionConstraint = new VersionConstraint('all', '2.0.0');
-        $packageVersions = [
-            new PackageVersion('1.0.0', new Package('foo')),
-            new PackageVersion('2.0.0', new Package('foo')),
-            new PackageVersion('3.0.0', new Package('foo')),
-        ];
-
-        $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
-
-        $this->assertCount(3, $matches);
+        foreach ($nonMatches as $nonMatch) {
+            $this->assertNotContains($nonMatch, $matches);
+        }
     }
 
     /**
