@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Composer\Semver\Comparator;
 use Composer\Semver\VersionParser;
 use InvalidArgumentException;
 
@@ -40,37 +41,10 @@ class VersionConstraint
      */
     public function matches(PackageVersion $packageVersion)
     {
-        switch ($this->operator) {
-            case 'all':
-                return true;
-                break;
-            case '<':
-                if ($packageVersion->getNormalizedVersion() < $this->normalizedVersionString) {
-                    return true;
-                }
-                break;
-            case '<=':
-                if ($packageVersion->getNormalizedVersion() <= $this->normalizedVersionString) {
-                    return true;
-                }
-                break;
-            case '>':
-                if ($packageVersion->getNormalizedVersion() > $this->normalizedVersionString) {
-                    return true;
-                }
-                break;
-            case '>=':
-                if ($packageVersion->getNormalizedVersion() >= $this->normalizedVersionString) {
-                    return true;
-                }
-                break;
-            case '==':
-                if ($packageVersion->getNormalizedVersion() == $this->normalizedVersionString) {
-                    return true;
-                }
-                break;
+        if ('all' === $this->operator) {
+            return true;
         }
 
-        return false;
+        return Comparator::compare($packageVersion->getNormalizedVersion(), $this->operator, $this->normalizedVersionString);
     }
 }
