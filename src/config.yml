@@ -11,7 +11,7 @@ parameters:
     mysql.db: '%env(MYSQL_DATABASE)%'
     mysql.port: '%env(MYSQL_PORT)%'
 
-    framework.trusted_hosts: ['127.0.0.1', 'localhost']
+    framework.trusted_hosts: ['127.0.0.1', 'localhost', '%env(HOSTNAME)%']
 
     app.logging.default_time_format: "Y-m-d H:i:s.u T" # with microseconds and timezone, a format also Splunk can understand
     app.logging.allow_inline_line_breaks: false

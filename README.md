@@ -44,6 +44,12 @@ To get the project up and running you simply need to run these commands:
 
 Optionally run `bin/console doctrine:fixtures:load` to import some generated projects.
 
+If you run Baton under a host name other than `localhost`, you need to set the `HOSTNAME` environment variable, e. g. 
+
+```bash
+HOSTNAME=baton.here2204 bin/console server:run baton.here2204 --docroot=www
+```
+
 ## Tests
 
 Baton has Unit-Tests! Execute `bin/phpunit` to run them.
