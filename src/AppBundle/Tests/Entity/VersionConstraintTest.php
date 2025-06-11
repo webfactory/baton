@@ -35,8 +35,6 @@ class VersionConstraintTest extends TestCase
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
-        $this->assertCount(count($expectedMatches), $matches);
-
         $matches = array_map(function ($match) {
             return $match->getPrettyVersion();
         }, $matches);
@@ -48,6 +46,8 @@ class VersionConstraintTest extends TestCase
         foreach ($nonMatches as $nonMatch) {
             $this->assertNotContains($nonMatch, $matches);
         }
+
+        $this->assertCount(count($expectedMatches), $matches);
     }
 
     /**
