@@ -2,9 +2,13 @@ services:
     app.controller.main:
         class: AppBundle\Controller\MainController
         arguments:
+            $formFactory: "@form.factory"
+
+    app.controller.settings:
+        class: AppBundle\Controller\SettingsController
+        arguments:
             $projectRepository: "@app.project.repository"
             $packageRepository: "@app.package.repository"
-            $formFactory: "@form.factory"
 
     app.controller.importRepositories:
         class: AppBundle\Controller\ImportRepositoriesController

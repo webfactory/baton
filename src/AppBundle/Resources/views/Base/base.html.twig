@@ -32,6 +32,13 @@
         <main>
             {% block main %}{% endblock %}
         </main>
+        <footer>
+            {% block footer %}
+                <div class="mb-5 mt-5 text-center">
+                    <a href="{{ path('settings') }}">Settings</a>
+                </div>
+            {% endblock %}
+        </footer>
     </div>
     <script src="{{ asset('js/scripts.js') }}" type="text/javascript"></script>
     {% block javascript %}
