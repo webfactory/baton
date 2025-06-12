@@ -18,7 +18,7 @@ class VersionConstraint
     /**
      * @var ?string
      */
-    private $normalizedVersionString = null;
+    private $normalizedVersionString;
 
     /**
      * @param string $operator
