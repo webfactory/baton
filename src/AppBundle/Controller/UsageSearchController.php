@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
 
 /**
+ * This controller has historically been used to get the plain search results, either as HTML or JSON, since the main
+ * page was a contained client side logic to download the results via AJAX. Nowadays, the main page is rendered on
+ * server side, and the link is sharable. Still, we want to keep shared links intact, so this has not yet been removed.
+ *
  * @Route(service="app.controller.usageSearch")
  */
 class UsageSearchController

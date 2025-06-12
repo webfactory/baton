@@ -1,24 +1,4 @@
 /**
- * Displays a list of projects matching the criteria in the submitted search form.
- */
-$('.js-findProjectsForm').on('submit', function(event) {
-    event.preventDefault();
-
-    var submittedPackage = $('.js-packageSelect').val();
-    var submittedOperator = $('.js-versionConstraintOperatorSelect').val();
-    var submittedVersionString = $('.js-versionConstraintValueSelect').val();
-
-    $.ajax({
-        url: "/usage-search/" + submittedPackage + ";html/" + submittedOperator + "/" + submittedVersionString,
-        dataType: "html",
-        success: function(resultsHtml) {
-            $("#results").html(resultsHtml);
-        }
-    });
-});
-
-
-/**
  * Update the version select options with available versions of selected package.
  */
 $('.js-packageSelect').on('change', function() {
@@ -31,13 +11,22 @@ $(document).ready(function() {
     if (selectedPackageName != null && selectedPackageName.length > 3) {
         fetchAvailableVersionsForPackage(selectedPackageName, setVersionSelectOptions)
     }
+
+    var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
+    var $versionConstraintOperatorSelect = $('.js-versionConstraintOperatorSelect');
+
+    $versionConstraintOperatorSelect.prop('disabled', true);
+    $versionConstraintValueSelect.prop('disabled', true);
 });
 
 function setVersionSelectOptions(versions) {
     var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
     var $versionConstraintOperatorSelect = $('.js-versionConstraintOperatorSelect');
 
-    $versionConstraintOperatorSelect.val('all');
+    if ($versionConstraintOperatorSelect.val() === '') {
+        $versionConstraintOperatorSelect.val('all');
+    }
+
     $versionConstraintOperatorSelect.prop('disabled', false);
     $versionConstraintValueSelect.prop('disabled', false);
 
@@ -48,6 +37,10 @@ function setVersionSelectOptions(versions) {
     versions.forEach( function (normalizedVersionString) {
         $versionConstraintValueSelect.append('<option value="' + normalizedVersionString + '">' + normalizedVersionString + '</option>');
     });
+
+    if ($versionConstraintValueSelect.attr('data-originally-selected-version')) {
+        $versionConstraintValueSelect.val($versionConstraintValueSelect.attr('data-originally-selected-version'));
+    }
 }
 
 function fetchAvailableVersionsForPackage(name, callback) {

@@ -1,5 +1,5 @@
 {% block datalist_widget %}
-    <input {{ block('widget_attributes') }} list="{{ form.vars.id }}_list" placeholder="{{ form.vars.placeholder }}"/>
+    <input {{ block('widget_attributes') }} list="{{ form.vars.id }}_list" placeholder="{{ form.vars.placeholder }}" {% if value is not empty %}value="{{ value }}" {% endif %}/>
     <datalist id="{{ form.vars.id }}_list">
         {% for choice in choices %}
             <option value="{{ choice.value }}">{{ choice.label }}</option>

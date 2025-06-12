@@ -47,4 +47,14 @@ class VersionConstraint
 
         return Comparator::compare($packageVersion->getNormalizedVersion(), $this->operator, $this->normalizedVersionString);
     }
+
+    public function getOperator(): string
+    {
+        return $this->operator;
+    }
+
+    public function getNormalizedVersionString(): string
+    {
+        return $this->normalizedVersionString;
+    }
 }

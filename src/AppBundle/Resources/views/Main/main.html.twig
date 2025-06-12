@@ -10,21 +10,28 @@
             {{ form_errors(searchPackageForm.package) }}
         </div>
         <div class="form-row pb-2">
-            {{ form_label(searchPackageForm.versionConstraintOperator) }}
-            {{ form_widget(searchPackageForm.versionConstraintOperator, {'attr': {'class': 'js-versionConstraintOperatorSelect form-control col-md-6 offset-md-3'}}) }}
-            {{ form_errors(searchPackageForm.versionConstraintOperator) }}
+            {{ form_label(searchPackageForm.versionConstraint.operator) }}
+            {{ form_widget(searchPackageForm.versionConstraint.operator, {'attr': {'class': 'js-versionConstraintOperatorSelect form-control col-md-6 offset-md-3'}}) }}
+            {{ form_errors(searchPackageForm.versionConstraint.operator) }}
         </div>
         <div class="form-row pb-2">
-            {{ form_label(searchPackageForm.versionConstraintValue) }}
-            {{ form_widget(searchPackageForm.versionConstraintValue, {'attr': {'class': 'js-versionConstraintValueSelect form-control col-md-6 offset-md-3'}}) }}
-            {{ form_errors(searchPackageForm.versionConstraintValue) }}
+            {{ form_label(searchPackageForm.versionConstraint.value) }}
+            {{ form_widget(searchPackageForm.versionConstraint.value, {'attr': {'data-originally-selected-version': searchPackageForm.versionConstraint.vars.value.value is defined ? searchPackageForm.versionConstraint.vars.value.value : null, 'class': 'js-versionConstraintValueSelect form-control col-md-6 offset-md-3'}}) }}
+            {{ form_errors(searchPackageForm.versionConstraint.value) }}
         </div>
         <div class="form-row">
             <button type="submit" class="btn btn-primary col-md-6 offset-md-3">Find projects</button>
         </div>
     {{ form_end(searchPackageForm) }}
 
-    <div class="row mb-3">
-        <div id="results" class="col-md-6 offset-md-3"></div>
-    </div>
+    {% if matchingPackageVersions is defined and package is defined %}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {% include '@App/UsageSearch/searchResults.html.twig' with {
+                    'package': package,
+                    'matchingPackageVersions': matchingPackageVersions,
+                } %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock%}
