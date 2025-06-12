@@ -7,16 +7,17 @@ $('.js-packageSelect').on('change', function() {
 });
 
 $(document).ready(function() {
+    var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
+    var $versionConstraintOperatorSelect = $('.js-versionConstraintOperatorSelect');
+
+    $versionConstraintOperatorSelect.prop('disabled', true);
+    $versionConstraintValueSelect.hide();
+
     var selectedPackageName = $('.js-packageSelect').val();
     if (selectedPackageName != null && selectedPackageName.length > 3) {
         fetchAvailableVersionsForPackage(selectedPackageName, setVersionSelectOptions)
     }
 
-    var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
-    var $versionConstraintOperatorSelect = $('.js-versionConstraintOperatorSelect');
-
-    $versionConstraintOperatorSelect.prop('disabled', true);
-    $versionConstraintValueSelect.prop('disabled', true);
 });
 
 function setVersionSelectOptions(versions) {
@@ -26,9 +27,6 @@ function setVersionSelectOptions(versions) {
     if ($versionConstraintOperatorSelect.val() === '') {
         $versionConstraintOperatorSelect.val('all');
     }
-
-    $versionConstraintOperatorSelect.prop('disabled', false);
-    $versionConstraintValueSelect.prop('disabled', false);
 
     // Clear the old options
     $versionConstraintValueSelect.find('option').remove();
@@ -40,6 +38,27 @@ function setVersionSelectOptions(versions) {
 
     if ($versionConstraintValueSelect.attr('data-originally-selected-version')) {
         $versionConstraintValueSelect.val($versionConstraintValueSelect.attr('data-originally-selected-version'));
+    }
+
+    $versionConstraintOperatorSelect.prop('disabled', false);
+    setVersionConstraintValueHiddenState();
+}
+
+$('.js-versionConstraintOperatorSelect').on('change', setVersionConstraintValueHiddenState);
+
+function setVersionConstraintValueHiddenState() {
+    var $versionConstraintValueSelect = $('.js-versionConstraintValueSelect');
+    var selectedOperator = $('.js-versionConstraintOperatorSelect').val();
+
+    if (selectedOperator === 'all') {
+        $versionConstraintValueSelect.hide();
+        $versionConstraintValueSelect.val('');
+    } else {
+        $versionConstraintValueSelect.show();
+        if (!$versionConstraintValueSelect.val()) {
+            $versionConstraintValueSelect.val($(".js-versionConstraintValueSelect option:first").val());
+        } else {
+        }
     }
 }
 
