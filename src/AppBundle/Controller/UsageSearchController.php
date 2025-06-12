@@ -9,27 +9,27 @@ use InvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * This controller has historically been used to get the plain search results, either as HTML or JSON, since the main
- * page was a contained client side logic to download the results via AJAX. Nowadays, the main page is rendered on
- * server side, and the link is sharable. Still, we want to keep shared links intact, so this has not yet been removed.
+ * This controller provides a JSON API for search results. It is not being used internally in the web interface of Baton.
+ *
+ * Historically, this controller rendered all search results – hence the redirect in case of HTML – and JSON was just an
+ * "extra".
  *
  * @Route(service="app.controller.usageSearch")
  */
 class UsageSearchController
 {
     /**
-     * @var Twig_Environment
+     * @var UrlGeneratorInterface
      */
-    private $twigEnvironment;
+    private $urlGenerator;
 
-    public function __construct(Twig_Environment $twigEnvironment)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->twigEnvironment = $twigEnvironment;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -42,8 +42,19 @@ class UsageSearchController
      * @Template()
      * @ParamConverter("package", class="AppBundle:Package", options={"repository_method" = "findOneByName"})
      */
-    public function searchResultsAction(Request $request, Package $package, $operator, $versionString)
+    public function searchResultsAction(Package $package, $operator, $versionString, $_format)
     {
+        if ('html' === $_format) {
+            // an older version of Baton used this URL to render search results. To keep the URLs intact, we redirect
+            $url = $this->urlGenerator->generate('main', MainController::getUrlParametersForSearchSubmitPage(
+                $package->getName(),
+                $operator,
+                $versionString
+            ));
+
+            return new RedirectResponse($url);
+        }
+
         if (!preg_match(VersionConstraint::VALID_OPERATORS, $operator)) {
             throw new InvalidArgumentException('Operator query parameter must match '.VersionConstraint::VALID_OPERATORS);
         }
@@ -51,20 +62,6 @@ class UsageSearchController
         $normalizedVersionString = (new VersionParser())->normalize($versionString);
 
         $versionConstraint = new VersionConstraint($operator, $normalizedVersionString);
-
-        if ($request->query->get('sharing')) {
-            return new Response(
-                $this->twigEnvironment->render(
-                    '@App/UsageSearch/searchResultsSharing.html.twig',
-                    [
-                        'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),
-                        'package' => $package,
-                        'operator' => $operator,
-                        'versionString' => $versionString,
-                    ]
-                )
-            );
-        }
 
         return [
             'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),

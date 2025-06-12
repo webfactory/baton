@@ -4,6 +4,11 @@ services:
         arguments:
             $formFactory: "@form.factory"
 
+    app.controller.package:
+        class: AppBundle\Controller\PackageController
+        arguments:
+            $urlGenerator: "@router"
+
     app.controller.settings:
         class: AppBundle\Controller\SettingsController
         arguments:
@@ -25,7 +30,7 @@ services:
     app.controller.usageSearch:
         class: AppBundle\Controller\UsageSearchController
         arguments:
-            $twigEnvironment: "@twig"
+            $urlGenerator: "@router"
 
     app.project.repository:
         class: AppBundle\Entity\Repository\ProjectRepository

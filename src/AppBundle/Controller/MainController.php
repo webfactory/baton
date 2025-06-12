@@ -48,4 +48,20 @@ class MainController
             'searchPackageForm' => $searchPackageForm->createView(),
         ];
     }
+
+    /**
+     * Used to redirect to the form submit page from legacy routes.
+     */
+    public static function getUrlParametersForSearchSubmitPage($package, $operator, $versionString): array
+    {
+        return [
+            'search_package' => [
+                'package' => $package,
+                'versionConstraint' => [
+                    'operator' => $operator,
+                    'value' => $versionString,
+                ],
+            ],
+        ];
+    }
 }
