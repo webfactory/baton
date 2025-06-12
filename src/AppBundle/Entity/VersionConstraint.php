@@ -16,9 +16,9 @@ class VersionConstraint
     private $operator;
 
     /**
-     * @var string
+     * @var ?string
      */
-    private $normalizedVersionString;
+    private $normalizedVersionString = null;
 
     /**
      * @param string $operator
@@ -33,7 +33,10 @@ class VersionConstraint
         }
 
         $this->operator = $operator;
-        $this->normalizedVersionString = (new VersionParser())->normalize($versionString);
+
+        if ('all' !== $operator) {
+            $this->normalizedVersionString = (new VersionParser())->normalize($versionString);
+        }
     }
 
     /**
@@ -53,7 +56,7 @@ class VersionConstraint
         return $this->operator;
     }
 
-    public function getNormalizedVersionString(): string
+    public function getNormalizedVersionString(): ?string
     {
         return $this->normalizedVersionString;
     }
