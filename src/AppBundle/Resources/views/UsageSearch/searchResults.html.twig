@@ -10,10 +10,13 @@
                 <strong>Version {{ version.prettyVersion }}</strong><br/>
                 {% if version.projects|length > 0 %}
                     Used by:
-                    {% for project in version.projects %}
-                        <a href="{{ path('project', {'name': project.name}) }}">
+                    {% for project in version.projects|sort((a, b) => a.archived <=> b.archived) %}
+                        <a href="{{ path('project', {'name': project.name}) }}" {% if project.archived %}class="text-secondary"{% endif %}>
                             {{ project.name }}
                         </a>
+                        {%- if project.archived -%}
+                            <span class="badge badge-pill badge-secondary">Archived</span>
+                        {%- endif -%}
                         {% if not loop.last %}, {% endif %}
                     {% endfor %}
                 {% endif %}

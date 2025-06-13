@@ -28,7 +28,9 @@
                     <p><a href="{{ path("import-repositories") }}">Add projects</a></p>
                     <ul class="list-group">
                         {% for project in projects %}
-                            <li class="list-group-item"><a href="{{ path('project', {'name': project.name}) }}">{{ project.name }}</a></li>
+                            <li class="list-group-item"><a href="{{ path('project', {'name': project.name}) }}" {% if project.archived %}class="text-secondary"{% endif %}>
+                                    {{ project.name }} {%-if project.archived %}<span class="badge badge-pill badge-secondary ml-1">Archived</span>{% endif %}
+                            </a></li>
                         {% endfor %}
                     </ul>
                 </div>

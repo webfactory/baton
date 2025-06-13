@@ -42,6 +42,13 @@ class Project
     private $description;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    public $archived = false;
+
+    /**
      * @ORM\ManyToMany(
      *      targetEntity="PackageVersion",
      *      mappedBy="projects",

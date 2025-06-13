@@ -5,7 +5,7 @@
 {% block main %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h2>Project {{ project.name }}</h2>
+            <h2>Project {{ project.name }} {%-if project.archived %}<span class="badge badge-pill badge-secondary ml-1">Archived</span>{% endif %}</h2>
             <p>Imported from <a href="{{ project.vcsUrl }}">{{ project.vcsUrl }}</a></p>
             <h3>Dependencies</h3>
             <ul class="list-group mb-5">

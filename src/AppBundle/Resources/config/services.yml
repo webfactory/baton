@@ -78,6 +78,7 @@ services:
             $entityManager: "@doctrine.orm.entity_manager"
             $projectProvider: "@app.project.provider"
             $packageVersionFetcher: "@app.package_version.fetcher"
+            $vcsDriverFactory: "@app.factory.vcs_driver_factory"
             $logger: "@logger"
 
     app.factory.vcs_driver_factory:
