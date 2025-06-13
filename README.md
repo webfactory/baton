@@ -1,10 +1,10 @@
 # Baton
 
-Baton is a Composer dependency analytics tool which helps you find usages of Composer dependencies in your PHP projects.
+Baton is a Composer dependency analytics tool which can find usages of Composer packages in your PHP projects.
 
-Which of your projects are affected by that vulnerable package version? Is it worth backporting that fix? How many
-package updates do you have to do before you can update your server to the latest PHP version? Baton helps you answer
-these questions.
+Which of your projects are affected by that vulnerable package release? Is it worth backporting that library bug fix?
+How many package updates do you have to do before you can update your server to the latest PHP version? Baton helps you
+answer these questions.
 
 Once installed, you can import any list of GitHub or Kiln repositories to search for package usages in. You can also
 set up a webhook to automatically import new projects whenever they get added to your organisation.
