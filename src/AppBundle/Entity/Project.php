@@ -125,7 +125,6 @@ class Project
         $this->description = $description;
     }
 
-
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
         foreach ($this->packageVersions as $packageVersion) {
