@@ -59,7 +59,7 @@ class VcsDriverFactory
             }
         }
 
-        throw new NoVcsDriverFoundException('No VCS driver found for URL: ' . $vcsUrl);
+        throw new NoVcsDriverFoundException('No VCS driver found for URL: '.$vcsUrl);
     }
 
     /**
