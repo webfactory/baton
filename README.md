@@ -1,6 +1,6 @@
 # Baton
 
-Baton is a Composer dependency analytics tool which can find usages of Composer packages in your PHP projects.
+Baton is a Composer dependency analytics tool which can find usages of Composer packages across your PHP projects.
 
 Which of your projects are affected by that vulnerable package release? Is it worth backporting that library bug fix?
 How many package updates do you have to do before you can update your server to the latest PHP version? Baton helps you
