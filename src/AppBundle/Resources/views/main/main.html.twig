@@ -27,7 +27,7 @@
     {% if matchingPackageVersions is defined and package is defined %}
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                {% include '@App/UsageSearch/searchResults.html.twig' with {
+                {% include '@App/usage_search/search_results.html.twig' with {
                     'package': package,
                     'matchingPackageVersions': matchingPackageVersions,
                 } %}

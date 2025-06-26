@@ -7,9 +7,9 @@ use AppBundle\Entity\VersionConstraint;
 use Composer\Semver\VersionParser;
 use InvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -17,8 +17,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  * Historically, this controller rendered all search results – hence the redirect in case of HTML – and JSON was just an
  * "extra".
- *
- * @Route(service="app.controller.usageSearch")
  */
 class UsageSearchController
 {
@@ -40,7 +38,7 @@ class UsageSearchController
      *     defaults={"_format"="html"}
      * )
      * @Template()
-     * @ParamConverter("package", class="AppBundle:Package", options={"repository_method" = "findOneByName"})
+     * @ParamConverter("package", class="AppBundle\Entity\Package", options={"repository_method" = "findOneByName"})
      */
     public function searchResultsAction(Package $package, $operator, $versionString, $_format)
     {

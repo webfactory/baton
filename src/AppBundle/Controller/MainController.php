@@ -3,22 +3,16 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\SearchPackageType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(service="app.controller.main")
- */
 class MainController
 {
-    /**
-     * @var FormFactory
-     */
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
 
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
     }

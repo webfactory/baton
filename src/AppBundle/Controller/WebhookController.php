@@ -8,9 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @Route(service="app.controller.webhook")
- */
 class WebhookController
 {
     /**
@@ -30,8 +27,8 @@ class WebhookController
     public function updateAction(Request $request)
     {
         set_time_limit(500);
-	
-	$repositoryWasImported = false;
+
+        $repositoryWasImported = false;
 
         // This works for the Kiln webhook API as well as for GitHub webhooks of content-type "application/x-www-form-urlencoded"
         if ($payload = $request->get('payload')) {
@@ -41,6 +38,6 @@ class WebhookController
             }
         }
 
-        return new Response("Repository Import erfolgt: " . $repositoryWasImported);
+        return new Response('Repository Import erfolgt: '.$repositoryWasImported);
     }
 }

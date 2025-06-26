@@ -4,12 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Repository\PackageRepository;
 use AppBundle\Entity\Repository\ProjectRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(service="app.controller.settings")
- */
 class SettingsController
 {
     /**

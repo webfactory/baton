@@ -3,38 +3,26 @@
 namespace AppBundle\Controller;
 
 use AppBundle\ProjectImport\ImportProjectTask;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @Route(service="app.controller.importRepositories")
- */
 class ImportRepositoriesController
 {
-    /**
-     * @var FormFactory
-     */
-    private $formFactory;
+    private FormFactoryInterface $formFactory;
 
-    /**
-     * @var ImportProjectTask
-     */
-    private $importProjectTask;
+    private ImportProjectTask $importProjectTask;
 
-    /**
-     * @var bool
-     */
-    private $demoMode;
+    private bool $demoMode;
 
-    public function __construct(FormFactory $formFactory, ImportProjectTask $importProjectTask, $demoMode)
+    public function __construct(FormFactoryInterface $formFactory, ImportProjectTask $importProjectTask, $demoMode)
     {
         $this->formFactory = $formFactory;
         $this->importProjectTask = $importProjectTask;
-        $this->demoMode = $demoMode;
+        $this->demoMode = $demoMode ?? false;
     }
 
     /**

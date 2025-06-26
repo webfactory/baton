@@ -1,99 +1,45 @@
 services:
-    app.controller.main:
-        class: AppBundle\Controller\MainController
-        public: true
-        arguments:
-            $formFactory: "@form.factory"
+    _defaults:
+        autowire: true
+        autoconfigure: true
 
-    app.controller.package:
-        class: AppBundle\Controller\PackageController
-        arguments:
-            $urlGenerator: "@router"
+    AppBundle\:
+        resource: '../../'
+        exclude:
+            - '../../Tests/'
+            - '../../DependencyInjection/'
+            - '../../Entity/'
+            - '../../Kernel.php'
 
-    app.controller.settings:
-        class: AppBundle\Controller\SettingsController
-        arguments:
-            $projectRepository: "@app.project.repository"
-            $packageRepository: "@app.package.repository"
+    AppBundle\Controller\:
+        resource: '../../Controller/'
+        tags: [ 'controller.service_arguments' ]
 
-    app.controller.importRepositories:
-        class: AppBundle\Controller\ImportRepositoriesController
+    AppBundle\Controller\ImportRepositoriesController:
         arguments:
-            $formFactory: "@form.factory"
-            $importProjectTask: "@app.task.import_project"
             $demoMode: "%demo_mode%"
+        tags: [ 'controller.service_arguments' ]
 
-    app.controller.webhook:
-        class: AppBundle\Controller\WebhookController
-        arguments:
-            $importProjectTask: "@app.task.import_project"
-
-    app.controller.usageSearch:
-        class: AppBundle\Controller\UsageSearchController
-        arguments:
-            $urlGenerator: "@router"
-
-    app.project.repository:
+    AppBundle\Entity\Repository\ProjectRepository:
         class: AppBundle\Entity\Repository\ProjectRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments: ['AppBundle\Entity\Project']
 
-    app.package.repository:
+    AppBundle\Entity\Repository\PackageRepository:
         class: AppBundle\Entity\Repository\PackageRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments: ['AppBundle\Entity\Package']
 
-    app.project.provider:
-        class: AppBundle\ProjectImport\DoctrineProjectProvider
-        arguments:
-            $projectRepository: "@app.project.repository"
-
-    app.package.provider:
-        class: AppBundle\ProjectImport\DoctrinePackageProvider
-        arguments:
-            $packageRepository: "@app.package.repository"
-
-    app.lockfile.fetcher:
-        class: AppBundle\ProjectImport\LockFileFetcher
-        arguments:
-            $vcsDriverFactory: "@app.factory.vcs_driver_factory"
-
-    app.composer_package.fetcher:
-        class: AppBundle\ProjectImport\ComposerPackageFetcher
-        arguments:
-            $lockFileFetcher: "@app.lockfile.fetcher"
-
-    app.package_version.fetcher:
-        class: 'AppBundle\ProjectImport\PackageVersionFetcher'
-        arguments:
-            $packageProvider: "@app.package.provider"
-            $composerPackageFetcher: "@app.composer_package.fetcher"
-
-    app.fixtures:
-        class: AppBundle\DataFixtures\AppFixtures
+    AppBundle\DataFixtures\AppFixtures:
         tags: ['doctrine.fixture.orm']
 
-    app.task.import_project:
-        class: AppBundle\ProjectImport\ImportProjectTask
-        arguments:
-            $entityManager: "@doctrine.orm.entity_manager"
-            $projectProvider: "@app.project.provider"
-            $packageVersionFetcher: "@app.package_version.fetcher"
-            $vcsDriverFactory: "@app.factory.vcs_driver_factory"
-            $logger: "@logger"
+    AppBundle\ProjectImport\ProjectProviderInterface:
+        alias: AppBundle\ProjectImport\DoctrineProjectProvider
 
-    app.factory.vcs_driver_factory:
-        class: AppBundle\Factory\VcsDriverFactory
+    AppBundle\Factory\VcsDriverFactory:
         arguments:
             $githubOAuthToken: "%app.github.token%"
             $kilnOAuthToken: "%app.kiln.token%"
-
-    app.command.import_project:
-        class: AppBundle\Command\ImportProjectCommand
-        arguments:
-            $importProjectTask: "@app.task.import_project"
-        tags:
-            - { name: "console.command" }
 
     app.form.type.datalist_type:
         class: AppBundle\Form\Type\DatalistType
