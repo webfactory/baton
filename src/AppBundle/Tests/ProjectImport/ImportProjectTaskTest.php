@@ -3,6 +3,7 @@
 namespace AppBundle\Tests\Task;
 
 use AppBundle\Entity\Project;
+use AppBundle\Factory\VcsDriverFactory;
 use AppBundle\ProjectImport\ImportProjectTask;
 use AppBundle\ProjectImport\PackageVersionFetcher;
 use AppBundle\ProjectImport\ProjectProviderInterface;
@@ -25,6 +26,7 @@ class ImportProjectTaskTest extends TestCase
             $this->getEntityManagerMock(),
             $this->getProjectProviderMock(),
             $this->getPackageVersionFetcherMock(),
+            $this->createMock(VcsDriverFactory::class),
             new NullLogger()
         );
     }
