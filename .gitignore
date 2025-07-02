@@ -17,7 +17,6 @@ phpunit.xml
 .bowerrc
 .php-cs-fixer.cache
 data
-.env
 webhookpassword
 authpasswords
 snapshot.sql

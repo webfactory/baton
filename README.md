@@ -31,9 +31,9 @@ If you cannot use Port 8000, you can use another one by defining the environment
 
     HTTP_PORT=9000 docker-compose up
 
-You might want to use a `.env` file:
+You might want to use a `.env.local` file:
 
-    cp env-example .env
+    cp env-example .env.local
     docker compose up
 
 ### Without Docker
