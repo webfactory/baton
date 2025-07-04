@@ -5,18 +5,15 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Repository\ProjectRepository;
 use AppBundle\ProjectImport\ImportProjectTask;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ReimportAllProjectsCommand extends Command
 {
-
     public function __construct(
         private readonly ImportProjectTask $importProjectTask,
         private readonly ProjectRepository $projectRepository,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
