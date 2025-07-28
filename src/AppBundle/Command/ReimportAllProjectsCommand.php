@@ -15,8 +15,7 @@ class ReimportAllProjectsCommand extends Command
     public function __construct(
         private readonly ImportProjectTask $importProjectTask,
         private readonly ProjectRepository $projectRepository,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
