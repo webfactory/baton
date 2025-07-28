@@ -68,6 +68,19 @@ Set it as the value of the environment variable `GITHUB_OAUTH_TOKEN` on your ser
 
 The same goes for Kiln repositories. Store your Kiln OAuth token in the `KILN_OAUTH_TOKEN` environment variable on your server.
 
+### Overriding Symfony configuration
+
+You can add your custom Symfony configuration by providing any of
+ - `config.local.yml`
+ - `config_development.local.yml`
+ - `config_production.local.yml`
+ - `config_test.local.yml`
+ - `config_testing.local.yml`
+
+in the `src/` directory.
+
+This allows adding custom configuriation (like custom loggin configuration) without changing any files versioned by git.
+
 ## Features
 
 ### Import Projects

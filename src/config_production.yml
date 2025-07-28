@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: config_production.local.yml, ignore_errors: true }
 
 # following https://github.com/symfony/recipes/blob/4fcfbbebe97e900ba47f94966a8ea4ab1080612d/doctrine/doctrine-bundle/1.12/config/packages/prod/doctrine.yaml
 doctrine:

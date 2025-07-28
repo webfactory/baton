@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: config_development.local.yml, ignore_errors: true }
 
 framework:
     router:   { resource: "%kernel.root_dir%/routing_development.yml" }

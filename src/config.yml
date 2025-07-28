@@ -1,3 +1,6 @@
+imports:
+    - { resource: config.local.yml }
+
 parameters:
     env(MYSQL_HOST): 'mysql'
     env(MYSQL_USER): 'baton'

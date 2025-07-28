@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: config_test.local.yml, ignore_errors: true }
 
 framework:
     test: true
