@@ -1,17 +1,4 @@
 imports:
     - { resource: config.yml }
+    - { resource: config_test.default.yml }
     - { resource: config_test.local.yml, ignore_errors: true }
-
-framework:
-    test: true
-    session:
-        storage_id: session.storage.filesystem
-
-monolog:
-    handlers:
-        main:
-            # Disable logging during test execution. Might be replaced by more advanced
-            # strategies in the future, but for now this change avoids creation of files
-            # and log output on the console during test runs.
-            type: "Null"
-

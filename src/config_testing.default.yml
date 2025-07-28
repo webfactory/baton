@@ -1,0 +1,18 @@
+parameters:
+    app.logging.default_line_format: "[%%datetime%%] [%%extra.unique_id%%] %%channel%%.%%level_name%%: %%message%% [context: %%context%%] [extra: %%extra%%]\n"
+
+    # no line breaks, so that we only have one event in one line in splunk
+    app.logging.allow_inline_line_breaks: false
+
+monolog:
+    handlers:
+        main:
+            type:           fingers_crossed
+            passthru_level: notice
+            action_level:   warning
+            handler:        nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/symfony.log"
+            level: info
+            formatter: app.logging.line_formatter

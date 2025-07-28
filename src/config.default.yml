@@ -1,0 +1,77 @@
+parameters:
+  env(MYSQL_HOST): 'mysql'
+  env(MYSQL_USER): 'baton'
+  env(MYSQL_PASSWORD): 'baton'
+  env(MYSQL_DATABASE): 'baton'
+  env(MYSQL_PORT): '3306'
+
+  mysql.host: '%env(MYSQL_HOST)%'
+  mysql.user: '%env(MYSQL_USER)%'
+  mysql.password: '%env(MYSQL_PASSWORD)%'
+  mysql.db: '%env(MYSQL_DATABASE)%'
+  mysql.port: '%env(MYSQL_PORT)%'
+
+  framework.trusted_hosts: ['127.0.0.1', 'localhost', '%env(HOSTNAME)%']
+
+  app.logging.default_time_format: "Y-m-d H:i:s.u T" # with microseconds and timezone, a format also Splunk can understand
+  app.logging.allow_inline_line_breaks: false
+
+  demo_mode: '%env(DEMO_MODE)%'
+  env(DEMO_MODE): # default is null, set this environment variable on your server to enable demo mode and deactivate project imports via form
+
+  secret: "%env(SECRET)%"
+  env(SECRET): "change_me"
+  app.kiln.token: '%env(KILN_OAUTH_TOKEN)%'
+  app.github.token: '%env(GITHUB_OAUTH_TOKEN)%'
+  env(GITHUB_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with private repositories on GitHub
+  env(KILN_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with repositories on Kiln
+
+
+framework:
+  secret:           "%secret%"
+  router:           { resource: "%kernel.root_dir%/routing.yml" }
+  form:
+    enabled:      true
+    csrf_protection:
+      enabled:  false
+  validation:       { enable_annotations: true }
+  templating:       { engines: ['twig'] }
+  translator:       { fallback: de_DE }
+  session:
+    save_path:    null
+  default_locale:   de_DE
+  trusted_hosts:    "%framework.trusted_hosts%"
+
+twig:
+  strict_variables: "%kernel.debug%"
+  form_themes:
+    - 'AppBundle:Form:fields.html.twig'
+
+doctrine:
+  dbal:
+    host:     "%mysql.host%"
+    port:     "%mysql.port%"
+    dbname:   "%mysql.db%"
+    user:     "%mysql.user%"
+    password: "%mysql.password%"
+    charset:  utf8
+    schema_filter: ~^(?!(_dbversion$|_fixed_tableid$|wfd_))~
+    server_version: 5.7
+  orm:
+    auto_mapping: true
+
+services:
+  app.logging.web_processor:
+    class: Monolog\Processor\WebProcessor
+    arguments: [~, []]
+    tags:
+      - { name: monolog.processor }
+
+  app.logging.line_formatter:
+    class: Monolog\Formatter\LineFormatter
+    arguments:
+      - "%app.logging.default_line_format%"
+      - "%app.logging.default_time_format%"
+    calls:
+      - [includeStacktraces, [true]]
+      - [allowInlineLineBreaks, ["%app.logging.allow_inline_line_breaks%"]]
