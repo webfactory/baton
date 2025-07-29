@@ -10,4 +10,5 @@ monolog:
             # strategies in the future, but for now this change avoids creation of files
             # and log output on the console during test runs.
             type: "Null"
+            priority: -1
 

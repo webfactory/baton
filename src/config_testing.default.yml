@@ -11,8 +11,10 @@ monolog:
             passthru_level: notice
             action_level:   warning
             handler:        nested
+            priority: -1
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/symfony.log"
             level: info
             formatter: app.logging.line_formatter
+            priority: -1
