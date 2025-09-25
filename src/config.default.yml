@@ -21,10 +21,8 @@ parameters:
 
   secret: "%env(SECRET)%"
   env(SECRET): "change_me"
-  app.kiln.token: '%env(KILN_OAUTH_TOKEN)%'
   app.github.token: '%env(GITHUB_OAUTH_TOKEN)%'
   env(GITHUB_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with private repositories on GitHub
-  env(KILN_OAUTH_TOKEN): # default is null, set this environment variable on your server to communicate with repositories on Kiln
 
 
 framework:

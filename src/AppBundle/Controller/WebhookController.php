@@ -25,7 +25,6 @@ class WebhookController
 
         $repositoryWasImported = false;
 
-        // This works for the Kiln webhook API as well as for GitHub webhooks of content-type "application/x-www-form-urlencoded"
         if ($payload = $request->get('payload')) {
             $payload = json_decode($payload, flags: JSON_THROW_ON_ERROR);
             if (isset($payload->repository) && $payload->repository && $payload->repository->html_url) {

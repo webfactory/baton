@@ -6,7 +6,7 @@ Which of your projects are affected by that vulnerable package release? Is it wo
 How many package updates do you have to do before you can update your server to the latest PHP version? Baton helps you
 answer these questions.
 
-Once installed, you can import any list of GitHub or Kiln repositories to search for package usages in. You can also
+Once installed, you can import any list of GitHub repositories to search for package usages in. You can also
 set up a webhook to automatically import new projects whenever they get added to your organisation.
 
 ## Demo
@@ -62,11 +62,9 @@ Baton has Unit-Tests! Execute `bin/phpunit` to run them.
 
 ## Configuration
 
-In order to import private repositories from GitHub you need to provide an [OAuth token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/).
+In order to import private repositories from GitHub you need to provide an [API access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/).
 
 Set it as the value of the environment variable `GITHUB_OAUTH_TOKEN` on your server and you're good to go.
-
-The same goes for Kiln repositories. Store your Kiln OAuth token in the `KILN_OAUTH_TOKEN` environment variable on your server.
 
 ### Overriding Symfony configuration
 
@@ -85,7 +83,7 @@ This allows adding custom configuriation (like custom loggin configuration) with
 
 ### Import Projects
 
-Use the webhook route `/webhook` to import/update repositories on push events (tested with GitHub and Kiln).
+Use the webhook route `/webhook` to import/update repositories on GitHub push events.
 
 You can also import projects by repository URL through the Symfony Command `app:import-project` or the form at `/import-repositories`.
 
@@ -104,7 +102,7 @@ Show Composer Package with list of using projects grouped by version.
 
 ## Roadmap
 
-Right now private repositories are only supported for projects hosted on GitHub or Kiln using OAuth tokens for authentication.
+Right now private repositories are only supported for projects hosted on GitHub, accessible through a GitHub personal access token.
 A more general approach would be to use ssh URLs for importing repositories and pass an authorized ssh identity to the VCS.
 
 ## Contributing
@@ -123,9 +121,8 @@ This is the final commit from the initial implementation in the given timeframe:
 
 ## Credits, Copyright and License
 
-This project was started at the webfactory GmbH, Bonn.
+This project was started at webfactory GmbH, Bonn.
 
-- <http://www.webfactory.de>
-- <http://twitter.com/webfactory>
+- <https://www.webfactory.de>
 
-Copyright 2018 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2018-2025 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
