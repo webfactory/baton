@@ -14,19 +14,14 @@ class VcsDriverFactory
     /** @var string */
     private $githubOAuthToken;
 
-    /** @var string */
-    private $kilnOAuthToken;
-
     /** @var array ['platform' => VcsDriverInterface class ] */
     private $drivers;
 
-    public function __construct($githubOAuthToken, $kilnOAuthToken, ?array $drivers = null)
+    public function __construct($githubOAuthToken, ?array $drivers = null)
     {
         $this->githubOAuthToken = $githubOAuthToken;
-        $this->kilnOAuthToken = $kilnOAuthToken;
         $this->drivers = $drivers ?: [
             'github' => 'Composer\Repository\Vcs\GitHubDriver',
-            'kiln' => 'AppBundle\Driver\KilnDriver',
             'gitlab' => 'Composer\Repository\Vcs\GitLabDriver',
             'git-bitbucket' => 'Composer\Repository\Vcs\GitBitbucketDriver',
             'hg-bitbucket' => 'Composer\Repository\Vcs\HgBitbucketDriver',
@@ -70,9 +65,6 @@ class VcsDriverFactory
         $io = new NullIO();
         if (null !== $this->githubOAuthToken) {
             $io->setAuthentication('github.com', $this->githubOAuthToken, 'x-oauth-basic');
-        }
-        if (null !== $this->kilnOAuthToken) {
-            $io->setAuthentication('webfactory.kilnhg.com', $this->kilnOAuthToken, 'x-oauth-basic');
         }
 
         return $io;

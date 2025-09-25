@@ -2779,20 +2779,6 @@
             "time": "2018-03-20T04:25:58+00:00"
         },
         {
-            "name": "webfactory/doctrine-bundle-default-config",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "ssh://webfactory@webfactory.kilnhg.com/webfactory/default-config/doctrine-bundle-default-config",
-                "reference": "f888684c7356336ca08c8964cc34b9bde15766c0"
-            },
-            "conflict": {
-                "doctrine/doctrine-bundle": "< 1.0"
-            },
-            "type": "library",
-            "time": "2016-04-28T15:03:33+00:00"
-        },
-        {
             "name": "webfactory/slug-validation-bundle",
             "version": "0.1.0",
             "source": {
@@ -2835,25 +2821,6 @@
             ],
             "description": "Transparent validation of URL slugs in Symfony applications.",
             "time": "2016-07-18T10:38:57+00:00"
-        },
-        {
-            "name": "webfactory/symfony-default-config",
-            "version": "2.6.0",
-            "source": {
-                "type": "git",
-                "url": "ssh://webfactory@webfactory.kilnhg.com/webfactory/default-config/symfony-default-config",
-                "reference": "35c1852da68fd4122edffac0acaa57d15d720448"
-            },
-            "require": {
-                "symfony/symfony": "^2.4 | ^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-default": "2.3.x-dev"
-                }
-            },
-            "time": "2017-11-22T13:28:11+00:00"
         },
         {
             "name": "zendframework/zend-code",

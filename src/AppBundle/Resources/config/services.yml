@@ -39,7 +39,6 @@ services:
     AppBundle\Factory\VcsDriverFactory:
         arguments:
             $githubOAuthToken: "%app.github.token%"
-            $kilnOAuthToken: "%app.kiln.token%"
 
     app.form.type.datalist_type:
         class: AppBundle\Form\Type\DatalistType
