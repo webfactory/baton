@@ -33,11 +33,10 @@ class WebhookController
             $requestBody = $request->getContent();
             $hmac = hash_hmac('sha256', $requestBody, $this->webhookSecret);
 
-            if (!hash_equals($hmac, $request->headers->get('X-Hub-Signature-256'))) {
+            if (!hash_equals('sha256='.$hmac, $request->headers->get('X-Hub-Signature-256'))) {
                 throw new BadRequestHttpException('Invalid X-Hub-Signature-256 header');
             }
         }
-
         $repositoryWasImported = false;
 
         if ($payload = $request->get('payload')) {
