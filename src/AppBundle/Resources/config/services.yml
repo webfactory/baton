@@ -20,6 +20,11 @@ services:
             $demoMode: "%demo_mode%"
         tags: [ 'controller.service_arguments' ]
 
+    AppBundle\Controller\WebhookController:
+        arguments:
+            $webhookSecret: "%app.github.webhook_secret%"
+        tags: [ 'controller.service_arguments' ]
+
     AppBundle\Entity\Repository\ProjectRepository:
         class: AppBundle\Entity\Repository\ProjectRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
