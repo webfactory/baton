@@ -7,11 +7,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class WebhookController
 {
     public function __construct(
-        private ImportProjectTask $importProjectTask
+        private ImportProjectTask $importProjectTask,
+        private ?string $webhookSecret = null,
     ) {
     }
 
@@ -22,6 +24,19 @@ class WebhookController
     public function updateAction(Request $request)
     {
         set_time_limit(500);
+
+        if ($this->webhookSecret) {
+            if (!$request->headers->has('X-Hub-Signature-256')) {
+                throw new BadRequestHttpException('X-Hub-Signature-256 header missing');
+            }
+
+            $requestBody = $request->getContent();
+            $hmac = hash_hmac('sha256', $requestBody, $this->webhookSecret);
+
+            if (!hash_equals($hmac, $request->headers->get('X-Hub-Signature-256'))) {
+                throw new BadRequestHttpException('Invalid X-Hub-Signature-256 header');
+            }
+        }
 
         $repositoryWasImported = false;
 
