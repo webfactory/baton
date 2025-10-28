@@ -28,6 +28,7 @@ module.exports = {
                 destDir: 'css'
             }
         ],
+        sassCompiler: 'sass-embedded',
         watch: ['{vendor,src,www}/**/*.{css,scss}', '!www/css/**'],
         postCssPlugins: postCssPlugins
     },
