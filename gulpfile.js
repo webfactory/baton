@@ -1,7 +1,7 @@
 const gulp = require('gulp');
-const $ = require('./node_modules/webfactory-gulp-preset/plugins')(); // loads all gulp-* modules in $.* for easy reference
-
 const config = require('./gulp-config');
+const $ = require('./node_modules/webfactory-gulp-preset/plugins')(config); // loads all gulp-* modules in $.* for easy reference
+
 
 const { scripts } = require('./node_modules/webfactory-gulp-preset/tasks/scripts');
 const { styles } = require('./node_modules/webfactory-gulp-preset/tasks/styles');
