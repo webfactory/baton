@@ -128,15 +128,15 @@ class Project
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
         foreach ($this->packageVersions as $packageVersion) {
-            $importedPackageVersionIsAlreadyUsed = false;
+            $packageVersionIsGoingToStay = false;
 
             foreach ($importedPackageVersions as $importedPackageVersion) {
                 if ($packageVersion->equals($importedPackageVersion)) {
-                    $importedPackageVersionIsAlreadyUsed = true;
+                    $packageVersionIsGoingToStay = true;
                 }
             }
 
-            if (!$importedPackageVersionIsAlreadyUsed) {
+            if (!$packageVersionIsGoingToStay) {
                 $packageVersion->removeUsingProject($this);
             }
         }
