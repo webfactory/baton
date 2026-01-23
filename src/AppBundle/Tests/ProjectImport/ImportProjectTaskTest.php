@@ -2,7 +2,6 @@
 
 namespace AppBundle\Tests\Task;
 
-use AppBundle\Entity\Project;
 use AppBundle\Factory\VcsDriverFactory;
 use AppBundle\ProjectImport\ImportProjectTask;
 use AppBundle\ProjectImport\PackageVersionFetcher;
@@ -10,23 +9,30 @@ use AppBundle\ProjectImport\ProjectProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ImportProjectTaskTest extends TestCase
+class ImportProjectTaskTest extends KernelTestCase
 {
     /**
      * @var ImportProjectTask
      */
     private $importProjectTask;
 
+    private PackageVersionFetcher&MockObject $packageVersionFetcher;
+    private VcsDriverFactory&MockObject $vcsDriverFactory;
+
     protected function setUp(): void
     {
+        parent::setUp();
+        self::bootKernel();
+        $this->vcsDriverFactory = $this->createMock(VcsDriverFactory::class);
+        $this->packageVersionFetcher = $this->createMock(PackageVersionFetcher::class);
         $this->importProjectTask = new ImportProjectTask(
-            $this->getEntityManagerMock(),
-            $this->getProjectProviderMock(),
-            $this->getPackageVersionFetcherMock(),
-            $this->createMock(VcsDriverFactory::class),
+            self::$container->get(EntityManagerInterface::class),
+            self::$container->get(ProjectProviderInterface::class),
+            $this->packageVersionFetcher,
+            $this->vcsDriverFactory,
             new NullLogger()
         );
     }
@@ -36,45 +42,10 @@ class ImportProjectTaskTest extends TestCase
      */
     public function import()
     {
+        $this->packageVersionFetcher->method('fetch')->willReturn(
+            new ArrayCollection()
+        );
+
         $this->assertTrue($this->importProjectTask->run('https://foo.git'));
-    }
-
-    /**
-     * @return EntityManagerInterface|MockObject
-     */
-    private function getEntityManagerMock()
-    {
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
-        $entityManagerMock
-          ->method('flush')
-          ->will($this->returnValue(null));
-
-        return $entityManagerMock;
-    }
-
-    /**
-     * @return ProjectProviderInterface|MockObject
-     */
-    private function getProjectProviderMock()
-    {
-        $projectProviderMock = $this->createMock(ProjectProviderInterface::class);
-        $projectProviderMock->expects($this->once())
-            ->method('provideProject')
-            ->willReturn(new Project('Foo'));
-
-        return $projectProviderMock;
-    }
-
-    /**
-     * @return PackageVersionFetcher|MockObject
-     */
-    private function getPackageVersionFetcherMock()
-    {
-        $packageVersionFetcherMock = $this->createMock(PackageVersionFetcher::class);
-        $packageVersionFetcherMock->expects($this->once())
-            ->method('fetch')
-            ->willReturn(new ArrayCollection());
-
-        return $packageVersionFetcherMock;
     }
 }
