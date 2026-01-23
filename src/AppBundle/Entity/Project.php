@@ -127,24 +127,36 @@ class Project
 
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
-        foreach ($this->packageVersions as $packageVersion) {
-            $importedPackageVersionIsAlreadyUsed = false;
+        foreach ($this->packageVersions as $key => $packageVersion) {
+            $packageVersionIsGoingToStay = false;
 
             foreach ($importedPackageVersions as $importedPackageVersion) {
                 if ($packageVersion->equals($importedPackageVersion)) {
-                    $importedPackageVersionIsAlreadyUsed = true;
+                    $packageVersionIsGoingToStay = true;
+                    break;
                 }
             }
 
-            if (!$importedPackageVersionIsAlreadyUsed) {
+            if (!$packageVersionIsGoingToStay) {
                 $packageVersion->removeUsingProject($this);
+                $this->packageVersions->remove($key);
             }
         }
 
-        $this->packageVersions = $importedPackageVersions;
+        foreach ($importedPackageVersions as $importedPackageVersion) {
+            foreach ($this->packageVersions as $packageVersion) {
+                $importedPackageVersionIsAlreadyInUse = false;
 
-        foreach ($this->packageVersions as $usage) {
-            $usage->addUsingProject($this);
+                if ($packageVersion->equals($importedPackageVersion)) {
+                    $importedPackageVersionIsAlreadyInUse = true;
+                    break;
+                }
+
+                if (!$importedPackageVersionIsAlreadyInUse) {
+                    $this->packageVersions->add($importedPackageVersion);
+                    $packageVersion->addUsingProject($this);
+                }
+            }
         }
     }
 
