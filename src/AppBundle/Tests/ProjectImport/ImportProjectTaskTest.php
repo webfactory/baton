@@ -2,7 +2,6 @@
 
 namespace AppBundle\Tests\Task;
 
-use AppBundle\Entity\Project;
 use AppBundle\Factory\VcsDriverFactory;
 use AppBundle\ProjectImport\ImportProjectTask;
 use AppBundle\ProjectImport\PackageVersionFetcher;
