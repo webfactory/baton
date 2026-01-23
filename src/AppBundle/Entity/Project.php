@@ -133,6 +133,7 @@ class Project
             foreach ($importedPackageVersions as $importedPackageVersion) {
                 if ($packageVersion->equals($importedPackageVersion)) {
                     $packageVersionIsGoingToStay = true;
+                    break;
                 }
             }
 
