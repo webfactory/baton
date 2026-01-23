@@ -127,7 +127,7 @@ class Project
 
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
     {
-        foreach ($this->packageVersions as $packageVersion) {
+        foreach ($this->packageVersions as $key => $packageVersion) {
             $packageVersionIsGoingToStay = false;
 
             foreach ($importedPackageVersions as $importedPackageVersion) {
@@ -139,13 +139,24 @@ class Project
 
             if (!$packageVersionIsGoingToStay) {
                 $packageVersion->removeUsingProject($this);
+                $this->packageVersions->remove($key);
             }
         }
 
-        $this->packageVersions = $importedPackageVersions;
+        foreach ($importedPackageVersions as $importedPackageVersion) {
+            foreach ($this->packageVersions as $packageVersion) {
+                $importedPackageVersionIsAlreadyInUse = false;
 
-        foreach ($this->packageVersions as $usage) {
-            $usage->addUsingProject($this);
+                if ($packageVersion->equals($importedPackageVersion)) {
+                    $importedPackageVersionIsAlreadyInUse = true;
+                    break;
+                }
+
+                if (!$importedPackageVersionIsAlreadyInUse) {
+                    $this->packageVersions->add($importedPackageVersion);
+                    $packageVersion->addUsingProject($this);
+                }
+            }
         }
     }
 
