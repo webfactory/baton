@@ -147,7 +147,6 @@ class Project
             $importedPackageVersionIsAlreadyInUse = false;
 
             foreach ($this->packageVersions as $packageVersion) {
-
                 if ($packageVersion->equals($importedPackageVersion)) {
                     $importedPackageVersionIsAlreadyInUse = true;
                     break;
