@@ -151,11 +151,11 @@ class Project
                     $importedPackageVersionIsAlreadyInUse = true;
                     break;
                 }
+            }
 
-                if (!$importedPackageVersionIsAlreadyInUse) {
-                    $this->packageVersions->add($importedPackageVersion);
-                    $packageVersion->addUsingProject($this);
-                }
+            if (!$importedPackageVersionIsAlreadyInUse) {
+                $this->packageVersions->add($importedPackageVersion);
+                $packageVersion->addUsingProject($this);
             }
         }
     }
