@@ -15,7 +15,7 @@ class VcsDriverFactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->vcsDriverFactory = new VcsDriverFactory(null, 'bar');
+        $this->vcsDriverFactory = new VcsDriverFactory(null);
     }
 
     /**
