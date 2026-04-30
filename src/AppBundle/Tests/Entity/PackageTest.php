@@ -35,4 +35,26 @@ class PackageTest extends TestCase
     {
         $this->assertSame(self::description, $this->package->getDescription());
     }
+
+    /**
+     * @test
+     */
+    public function getVersionReturnsSameInstanceOnRepeatedCallsWithSamePrettyVersionString()
+    {
+        $first = $this->package->getVersion('1.0.0');
+        $second = $this->package->getVersion('1.0.0');
+
+        $this->assertSame($first, $second);
+    }
+
+    /**
+     * @test
+     */
+    public function getVersionCreatesOnlyOnePackageVersionForSamePrettyVersionString()
+    {
+        $this->package->getVersion('1.0.0');
+        $this->package->getVersion('1.0.0');
+
+        $this->assertCount(1, $this->package->getVersions());
+    }
 }
