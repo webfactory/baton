@@ -120,7 +120,10 @@ class Package
         );
 
         if ($packageVersion->isEmpty()) {
-            return new PackageVersion($prettyVersionString, $this);
+            $newVersion = new PackageVersion($prettyVersionString, $this);
+            $this->versions->add($newVersion);
+
+            return $newVersion;
         }
 
         return $packageVersion->first();
