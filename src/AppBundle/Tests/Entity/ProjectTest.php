@@ -5,6 +5,7 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\Package;
 use AppBundle\Entity\PackageVersion;
 use AppBundle\Entity\Project;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class ProjectTest extends TestCase
@@ -34,5 +35,18 @@ class ProjectTest extends TestCase
             self::name,
             $this->project->getPackageVersions()[0]->getProjects()[0]->getName()
         );
+    }
+
+    /**
+     * @test
+     */
+    public function setUsedPackageVersionsSetsAssociationOnProjectAndPackageVersion(): void
+    {
+        $packageVersion = new PackageVersion('1.0.0', new Package('foo/bar'));
+
+        $this->project->setUsedPackageVersions(new ArrayCollection([$packageVersion]));
+
+        $this->assertContains($packageVersion, $this->project->getPackageVersions());
+        $this->assertContains($this->project, $packageVersion->getProjects());
     }
 }

@@ -155,7 +155,7 @@ class Project
 
             if (!$importedPackageVersionIsAlreadyInUse) {
                 $this->packageVersions->add($importedPackageVersion);
-                $packageVersion->addUsingProject($this);
+                $importedPackageVersion->addUsingProject($this);
             }
         }
     }
