@@ -6,6 +6,7 @@ use AppBundle\Exception\InsufficientVcsAccessException;
 use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use AppBundle\Factory\VcsDriverFactory;
 use Composer\Repository\Vcs\GitHubDriver;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -75,7 +76,13 @@ class ImportProjectTask
             $project->archived = $repoData['archived'] ?? false;
         }
 
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->flush();
+        } catch (UniqueConstraintViolationException $exception) {
+            $this->logger->warning('UniqueConstraintViolation during import of '.$vcsUrl.', likely a concurrent request.', ['exception' => $exception]);
+
+            return false;
+        }
 
         $this->logger->notice('Imported Project '.$project->getName());
 
