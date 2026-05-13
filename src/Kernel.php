@@ -14,10 +14,16 @@ class Kernel extends BaseKernel
     protected function configureContainer(ContainerConfigurator $container, LoaderInterface $loader, ContainerBuilder $builder): void
     {
         $loader->load(__DIR__.'/config_'.$this->environment.'.yml');
+        $loader->load(__DIR__.'/App/Resources/config/services.yml');
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
+        if ('development' === $this->environment) {
+            $routes->import(__DIR__.'/routing_development.php');
+        } else {
+            $routes->import(__DIR__.'/routing.php');
+        }
     }
 
     public function getLogDir(): string

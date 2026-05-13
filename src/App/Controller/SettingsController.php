@@ -22,7 +22,7 @@ class SettingsController
     {
         return new Response(
             $this->twig->render(
-                '@AppBundle/settings/settings.html.twig',
+                'settings/settings.html.twig',
                 [
                     'projects' => $this->projectRepository->findBy([], ['name' => 'ASC']),
                     'packages' => $this->packageRepository->findBy([], ['name' => 'ASC']),

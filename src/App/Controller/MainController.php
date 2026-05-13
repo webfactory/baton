@@ -30,7 +30,7 @@ class MainController
 
             return new Response(
                 $this->twig->render(
-                    '@AppBundle/main/main.html.twig',
+                    'main/main.html.twig',
                     [
                         'searchPackageForm' => $searchPackageForm->createView(),
                         'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),
@@ -42,7 +42,7 @@ class MainController
 
         return new Response(
             $this->twig->render(
-                '@AppBundle/main/main.html.twig',
+                'main/main.html.twig',
                 [
                     'searchPackageForm' => $searchPackageForm->createView(),
                 ]

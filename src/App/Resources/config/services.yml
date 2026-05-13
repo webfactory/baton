@@ -7,6 +7,5 @@ services:
         resource: '../../'
         exclude:
             - '../../Tests/'
-            - '../../DependencyInjection/'
             - '../../Entity/'
             - '../../Kernel.php'

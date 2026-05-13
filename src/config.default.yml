@@ -29,7 +29,6 @@ parameters:
 
 framework:
   secret:           "%secret%"
-  router:           { resource: "%kernel.project_dir%/src/routing.yml" }
   form:
     enabled:      true
     csrf_protection:
@@ -44,7 +43,7 @@ framework:
 twig:
   strict_variables: "%kernel.debug%"
   form_themes:
-    - '@AppBundle/Form/fields.html.twig'
+    - 'Form/fields.html.twig'
 
 doctrine:
   dbal:
@@ -57,8 +56,14 @@ doctrine:
     schema_filter: ~^(?!(_dbversion$|_fixed_tableid$|wfd_))~
     server_version: '5.7'
   orm:
-    auto_mapping: true
     enable_native_lazy_objects: true
+    mappings:
+      App:
+        is_bundle: false
+        type: attribute
+        dir: '%kernel.project_dir%/src/App/Entity'
+        prefix: 'App\Entity'
+        alias: App
 
 services:
   app.logging.web_processor:

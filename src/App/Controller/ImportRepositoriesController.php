@@ -48,7 +48,7 @@ class ImportRepositoriesController
         }
 
         return new Response(
-            $this->twig->render('@AppBundle/import_repositories/import_form.html.twig',
+            $this->twig->render('import_repositories/import_form.html.twig',
                 [
                     'importProjectsForm' => $projectImportForm->createView(),
                     'imports' => $imports,

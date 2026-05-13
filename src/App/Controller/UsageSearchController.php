@@ -60,7 +60,7 @@ class UsageSearchController
 
         return new Response(
             $this->twig->render(
-                '@AppBundle/usage_search/search_results.json.twig',
+                'usage_search/search_results.json.twig',
                 [
                     'matchingPackageVersions' => $packageEntity->getMatchingVersionsWithProjects($versionConstraint),
                     'package' => $packageEntity,

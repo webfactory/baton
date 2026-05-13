@@ -25,7 +25,7 @@ class ProjectController
         }
 
         return new Response(
-            $this->twig->render('@AppBundle/project/detail.html.twig', ['project' => $project])
+            $this->twig->render('project/detail.html.twig', ['project' => $project])
         );
     }
 }

@@ -48,7 +48,7 @@ class PackageController
 
         return new Response(
             $this->twig->render(
-                '@AppBundle/package/detail.'.$_format.'.twig',
+                'package/detail.'.$_format.'.twig',
                 ['package' => $package]
             )
         );
@@ -69,7 +69,7 @@ class PackageController
 
         return new Response(
             $this->twig->render(
-                '@AppBundle/package/versions.json.twig',
+                'package/versions.json.twig',
                 ['packageVersions' => $package->getVersions()]
             )
         );
