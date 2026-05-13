@@ -4,7 +4,7 @@
     "description": "Composer Dependency Tracking",
     "require": {
         "php": "^8.1",
-        "composer/composer": "^1.6",
+        "composer/composer": "^2.0",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "doctrine/migrations": "^2.0",
