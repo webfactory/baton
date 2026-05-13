@@ -16,107 +16,65 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', unique: true)]
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     #[ORM\Column(name: 'vcsUrl', type: 'string')]
-    /**
-     * @var string
-     */
-    private $vcsUrl;
+    private ?string $vcsUrl = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    /**
-     * @var string|null
-     */
-    private $description;
+    private ?string $description = null;
 
     #[ORM\Column(type: 'boolean')]
-    /**
-     * @var bool
-     */
-    public $archived = false;
+    public bool $archived = false;
 
     #[ORM\ManyToMany(targetEntity: PackageVersion::class, mappedBy: 'projects', cascade: ['persist'])]
-    /**
-     * @var Collection|PackageVersion[]
-     */
-    private $packageVersions;
+    private Collection $packageVersions;
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
         $this->packageVersions = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getVcsUrl()
+    public function getVcsUrl(): ?string
     {
         return $this->vcsUrl;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return Collection|PackageVersion[]
-     */
-    public function getPackageVersions()
+    public function getPackageVersions(): Collection
     {
         return $this->packageVersions;
     }
 
-    /**
-     * @param string $vcsUrl
-     */
-    public function setVcsUrl($vcsUrl)
+    public function setVcsUrl(string $vcsUrl): void
     {
         $this->vcsUrl = $vcsUrl;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    public function setUsedPackageVersions(ArrayCollection $importedPackageVersions)
+    public function setUsedPackageVersions(ArrayCollection $importedPackageVersions): void
     {
         foreach ($this->packageVersions as $key => $packageVersion) {
             $packageVersionIsGoingToStay = false;
@@ -151,7 +109,7 @@ class Project
         }
     }
 
-    public function addUsage(PackageVersion $packageVersion)
+    public function addUsage(PackageVersion $packageVersion): void
     {
         // TODO: remove addUsage, then also remove from PackageVersion::addUsingProject()?
         if ($this->packageVersions->contains($packageVersion)) {
@@ -161,7 +119,7 @@ class Project
         $packageVersion->addUsingProject($this);
     }
 
-    public function removeUsage(PackageVersion $usage)
+    public function removeUsage(PackageVersion $usage): void
     {
         // TODO: remove removeUsage, then also remove from PackageVersion::removeUsingProject()?
         if (!$this->packageVersions->contains($usage)) {

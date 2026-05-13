@@ -16,8 +16,13 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class VcsDriverFactory
 {
-    /** @var array ['platform' => VcsDriverInterface class ] */
-    private $drivers;
+    /**
+     * @var array<
+     *     string, // platform
+     *     class-string<VcsDriverInterface>
+     * >
+     */
+    private array $drivers;
 
     public function __construct(
         #[Autowire(param: 'app.github.token')]
@@ -34,12 +39,7 @@ class VcsDriverFactory
         ];
     }
 
-    /**
-     * @param string $vcsUrl
-     *
-     * @throws InsufficientVcsAccessException
-     */
-    public function getDriver($vcsUrl): VcsDriverInterface
+    public function getDriver(string $vcsUrl): VcsDriverInterface
     {
         $composerConfig = Factory::createConfig();
         $io = $this->getIO();
@@ -63,10 +63,7 @@ class VcsDriverFactory
         throw new NoVcsDriverFoundException('No VCS driver found for URL: '.$vcsUrl);
     }
 
-    /**
-     * @return NullIO
-     */
-    private function getIO()
+    private function getIO(): NullIO
     {
         $io = new NullIO();
         if (null !== $this->githubOAuthToken) {

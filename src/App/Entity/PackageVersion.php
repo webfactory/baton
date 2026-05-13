@@ -21,44 +21,29 @@ class PackageVersion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(name: 'prettyVersion', type: 'string')]
-    /**
-     * @var string
-     */
-    private $prettyVersion;
+    private string $prettyVersion;
 
     #[ORM\ManyToOne(targetEntity: Package::class, inversedBy: 'versions', cascade: ['persist'])]
-    /**
-     * @var Package
-     */
-    private $package;
+    private Package $package;
 
     #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'usages')]
     #[ORM\JoinTable(name: 'packageversion_project',
         joinColumns: [new ORM\JoinColumn(name: 'packageversion_id', referencedColumnName: 'id')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id')]
     )]
-    /**
-     * @var Collection|Project[]
-     */
-    private $projects;
+    private Collection $projects;
 
-    /**
-     * @param string $prettyVersion
-     */
-    public function __construct($prettyVersion, Package $package)
+    public function __construct(string $prettyVersion, Package $package)
     {
         $this->prettyVersion = $prettyVersion;
         $this->package = $package;
         $this->projects = new ArrayCollection();
     }
 
-    public function addUsingProject(Project $project)
+    public function addUsingProject(Project $project): void
     {
         if ($this->projects->contains($project)) {
             return;
@@ -67,7 +52,7 @@ class PackageVersion
         $project->addUsage($this);
     }
 
-    public function removeUsingProject(Project $project)
+    public function removeUsingProject(Project $project): void
     {
         if (!$this->projects->contains($project)) {
             return;
@@ -76,51 +61,33 @@ class PackageVersion
         $project->removeUsage($this);
     }
 
-    /**
-     * @return bool
-     */
-    public function equals(PackageVersion $packageVersion)
+    public function equals(PackageVersion $packageVersion): bool
     {
         return $this->package->getId() === $packageVersion->getPackage()->getId()
             && $this->prettyVersion === $packageVersion->getPrettyVersion();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrettyVersion()
+    public function getPrettyVersion(): string
     {
         return $this->prettyVersion;
     }
 
-    /**
-     * @return string
-     */
-    public function getNormalizedVersion()
+    public function getNormalizedVersion(): string
     {
         return (new VersionParser())->normalize($this->getPrettyVersion());
     }
 
-    /**
-     * @return Package
-     */
-    public function getPackage()
+    public function getPackage(): Package
     {
         return $this->package;
     }
 
-    /**
-     * @return Collection|Project[]
-     */
-    public function getProjects()
+    public function getProjects(): Collection
     {
         return $this->projects;
     }

@@ -38,13 +38,13 @@ class VersionConstraintTest extends TestCase
     {
         $versionConstraint = new VersionConstraint($operator, $version);
         $packageVersions = array_merge(
-            array_map(fn($v) => new PackageVersion($v, new Package('foo')), $expectedMatches),
-            array_map(fn($v) => new PackageVersion($v, new Package('foo')), $nonMatches)
+            array_map(fn ($v) => new PackageVersion($v, new Package('foo')), $expectedMatches),
+            array_map(fn ($v) => new PackageVersion($v, new Package('foo')), $nonMatches)
         );
 
         $matches = $this->matchPackageVersions($versionConstraint, $packageVersions);
 
-        $matches = array_map(fn($match) => $match->getPrettyVersion(), $matches);
+        $matches = array_map(fn ($match) => $match->getPrettyVersion(), $matches);
 
         foreach ($expectedMatches as $expected) {
             $this->assertContains($expected, $matches);
@@ -59,8 +59,8 @@ class VersionConstraintTest extends TestCase
 
     /**
      * @param PackageVersion[] $packageVersions
-     * 
-     * @return PackageVersion[] 
+     *
+     * @return PackageVersion[]
      */
     private function matchPackageVersions(VersionConstraint $versionConstraint, array $packageVersions): array
     {

@@ -23,12 +23,7 @@ class ImportProjectTask
     ) {
     }
 
-    /**
-     * @param string $vcsUrl
-     *
-     * @return bool indicates import success|failure
-     */
-    public function run($vcsUrl)
+    public function run(string $vcsUrl): bool
     {
         $this->logger->notice('Importing Repository '.$vcsUrl);
 
@@ -71,12 +66,7 @@ class ImportProjectTask
         return true;
     }
 
-    /**
-     * @param string $vcsUrl
-     *
-     * @return string
-     */
-    private function getProjectNameFromUrl($vcsUrl)
+    private function getProjectNameFromUrl(string $vcsUrl): string
     {
         $fromSlash = substr($vcsUrl, strrpos($vcsUrl, '/') + 1);
         $fromLastSlashToFirstPeriod = explode('.', $fromSlash)[0];

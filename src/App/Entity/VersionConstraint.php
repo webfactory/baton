@@ -12,23 +12,11 @@ class VersionConstraint
 {
     public const VALID_OPERATORS = '(==|>=|<=|>|<|all)';
 
-    /**
-     * @var string
-     */
-    private $operator;
+    private string $operator;
 
-    /**
-     * @var ?string
-     */
-    private $normalizedVersionString;
+    private ?string $normalizedVersionString = null;
 
-    /**
-     * @param string $operator
-     * @param string $versionString e.g. 1.0.0
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct($operator, $versionString)
+    public function __construct(string $operator, string $versionString)
     {
         if (!preg_match(self::VALID_OPERATORS, $operator)) {
             throw new InvalidArgumentException('The operator must match the regex expression '.self::VALID_OPERATORS);
@@ -41,10 +29,7 @@ class VersionConstraint
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function matches(PackageVersion $packageVersion)
+    public function matches(PackageVersion $packageVersion): bool
     {
         if ('all' === $this->operator) {
             return true;

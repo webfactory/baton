@@ -19,98 +19,56 @@ class Package
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', unique: true)]
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    /**
-     * @var string|null
-     */
-    private $description;
+    private ?string $description;
 
     #[ORM\OneToMany(targetEntity: PackageVersion::class, mappedBy: 'package', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    /**
-     * @var Collection|PackageVersion[]
-     */
-    private $versions;
+    private Collection $versions;
 
-    /**
-     * @param string      $name
-     * @param string|null $description
-     */
-    public function __construct($name, $description = null)
+    public function __construct(string $name, ?string $description = null)
     {
         $this->name = $name;
         $this->description = $description;
         $this->versions = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return Collection|PackageVersion[]
-     */
-    public function getMatchingVersionsWithProjects(VersionConstraint $versionConstraint)
+    public function getMatchingVersionsWithProjects(VersionConstraint $versionConstraint): Collection
     {
         return $this->versions->filter(
-            function ($packageVersion) use ($versionConstraint) {
-                /* @var PackageVersion $packageVersion */
-                return $versionConstraint->matches($packageVersion) && 0 !== $packageVersion->getProjects()->count();
-            }
+            fn ($packageVersion) => $versionConstraint->matches($packageVersion) && 0 !== $packageVersion->getProjects()->count()
         );
     }
 
-    /**
-     * @param string $prettyVersionString
-     *
-     * @return PackageVersion
-     */
-    public function getVersion($prettyVersionString)
+    public function getVersion(string $prettyVersionString): PackageVersion
     {
         $packageVersion = $this->versions->filter(
-            function ($packageVersion) use ($prettyVersionString) {
-                /* @var PackageVersion $packageVersion */
-                return $packageVersion->getPrettyVersion() === $prettyVersionString;
-            }
+            fn ($packageVersion) => $packageVersion->getPrettyVersion() === $prettyVersionString
         );
 
         if ($packageVersion->isEmpty()) {
@@ -123,10 +81,7 @@ class Package
         return $packageVersion->first();
     }
 
-    /**
-     * @return Collection|PackageVersion[]
-     */
-    public function getVersions()
+    public function getVersions(): Collection
     {
         return $this->versions;
     }

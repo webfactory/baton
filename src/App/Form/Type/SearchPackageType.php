@@ -23,10 +23,7 @@ class SearchPackageType extends AbstractType
                 'class' => Package::class,
                 'choice_label' => 'name',
                 'choice_value' => 'name',
-                'query_builder' => function (EntityRepository $repo) {
-                    return $repo->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
-                },
+                'query_builder' => fn (EntityRepository $repo) => $repo->createQueryBuilder('p')->orderBy('p.name', 'ASC'),
                 'placeholder' => 'First choose a package',
                 'choice_translation_domain' => false,
                 'label_attr' => ['class' => 'sr-only'],
