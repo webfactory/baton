@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\ProjectImport\ImportProjectTask;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Twig\Environment;
@@ -66,7 +66,7 @@ class ImportRepositoriesController
                 TextareaType::class,
                 [
                     'label' => 'Repository URLs separated by comma',
-                    'constraints' => [new NotBlank()]
+                    'constraints' => [new NotBlank()],
                 ]
             )->setMethod('POST')
             ->getForm();

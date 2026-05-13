@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\PackageRepository;
 use App\Entity\VersionConstraint;
+use App\Repository\PackageRepository;
 use Composer\Semver\VersionParser;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\RedirectResponse;

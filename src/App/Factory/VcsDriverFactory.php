@@ -21,8 +21,7 @@ class VcsDriverFactory
         #[Autowire(param: 'app.github.token')]
         private ?string $githubOAuthToken = null,
         ?array $drivers = null,
-    )
-    {
+    ) {
         $this->drivers = $drivers ?: [
             'github' => 'Composer\Repository\Vcs\GitHubDriver',
             'gitlab' => 'Composer\Repository\Vcs\GitLabDriver',
