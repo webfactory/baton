@@ -9,49 +9,39 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Describes a Composer package used in a specific version number.
- *
- * @ORM\Entity
- * @ORM\Table(name="PackageVersion", uniqueConstraints={@ORM\UniqueConstraint(name="uniq_package_version", columns={"package_id", "prettyVersion"})})
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'PackageVersion', uniqueConstraints: [
+    new ORM\UniqueConstraint(name: 'uniq_package_version', columns: ['package_id', 'prettyVersion']),
+])]
 class PackageVersion
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
      * @var int
      */
     private $id;
 
+    #[ORM\Column(name: 'prettyVersion', type: 'string')]
     /**
-     * @ORM\Column(name="prettyVersion", type="string")
-     *
      * @var string
      */
     private $prettyVersion;
 
+    #[ORM\ManyToOne(targetEntity: Package::class, inversedBy: 'versions', cascade: ['persist'])]
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="Package",
-     *      inversedBy="versions",
-     *      cascade={"persist"}
-     * )
-     *
      * @var Package
      */
     private $package;
 
+    #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'usages')]
+    #[ORM\JoinTable(name: 'packageversion_project',
+        joinColumns: [new ORM\JoinColumn(name: 'packageversion_id', referencedColumnName: 'id')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id')]
+    )]
     /**
-     * @ORM\ManyToMany(
-     *      targetEntity="Project",
-     *      inversedBy="usages"
-     * )
-     * @ORM\JoinTable(name="packageversion_project",
-     *     joinColumns={@ORM\JoinColumn(name="packageversion_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id")}
-     * )
-     *
      * @var Collection|Project[]
      */
     private $projects;

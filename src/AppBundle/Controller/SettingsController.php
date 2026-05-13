@@ -4,36 +4,30 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Repository\PackageRepository;
 use AppBundle\Entity\Repository\ProjectRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
 
 class SettingsController
 {
-    /**
-     * @var ProjectRepository
-     */
-    private $projectRepo;
-
-    /**
-     * @var PackageRepository
-     */
-    private $packageRepo;
-
-    public function __construct(ProjectRepository $projectRepository, PackageRepository $packageRepository)
-    {
-        $this->projectRepo = $projectRepository;
-        $this->packageRepo = $packageRepository;
+    public function __construct(
+        private ProjectRepository $projectRepository,
+        private PackageRepository $packageRepository,
+        private Environment $twig,
+    ) {
     }
 
-    /**
-     * @Route("/settings", name="settings")
-     * @Template()
-     */
-    public function settingsAction(): array
+    #[Route('/settings', name: 'settings')]
+    public function settingsAction(): Response
     {
-        return [
-            'projects' => $this->projectRepo->findBy([], ['name' => 'ASC']),
-            'packages' => $this->packageRepo->findBy([], ['name' => 'ASC']),
-        ];
+        return new Response(
+            $this->twig->render(
+                '@AppBundle/settings/settings.html.twig',
+                [
+                    'projects' => $this->projectRepository->findBy([], ['name' => 'ASC']),
+                    'packages' => $this->packageRepository->findBy([], ['name' => 'ASC']),
+                ]
+            )
+        );
     }
 }

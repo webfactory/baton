@@ -2,7 +2,7 @@
 
 // based on https://github.com/symfony/recipes/blob/984d337aabb837ab5f20322af0290111f98c164a/symfony/framework-bundle/4.2/public/index.php
 
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/config/bootstrap.php';

@@ -6,7 +6,6 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['development' => true, 'test' => true],
-    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     AppBundle\AppBundle::class => ['all' => true],
 
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['development' => true, 'test' => true],

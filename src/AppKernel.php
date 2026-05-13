@@ -5,7 +5,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
         foreach ($contents as $class => $envs) {
@@ -20,12 +20,12 @@ class AppKernel extends Kernel
         $loader->load(__DIR__.'/config_'.$this->environment.'.yml');
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return __DIR__.'/../var/cache/'.$this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return __DIR__.'/../logs';
     }
@@ -33,7 +33,7 @@ class AppKernel extends Kernel
     /**
      * @return string
      */
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return __DIR__.'/../';
     }

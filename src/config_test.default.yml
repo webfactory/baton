@@ -1,7 +1,7 @@
 framework:
     test: true
     session:
-        storage_id: session.storage.filesystem
+        storage_factory_id: session.storage.factory.mock_file
 
 monolog:
     handlers:
@@ -9,6 +9,6 @@ monolog:
             # Disable logging during test execution. Might be replaced by more advanced
             # strategies in the future, but for now this change avoids creation of files
             # and log output on the console during test runs.
-            type: "Null"
+            type: "null"
             priority: -1
 

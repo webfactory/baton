@@ -2,15 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Package;
+use AppBundle\Entity\Repository\PackageRepository;
 use AppBundle\Entity\VersionConstraint;
 use Composer\Semver\VersionParser;
 use InvalidArgumentException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 /**
  * This controller provides a JSON API for search results. It is not being used internally in the web interface of Baton.
@@ -20,37 +21,34 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class UsageSearchController
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
-        $this->urlGenerator = $urlGenerator;
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private PackageRepository $packageRepository,
+        private Environment $twig,
+    ) {
     }
 
-    /**
-     * @Route(
-     *     "/usage-search/{package};{_format}/{operator}/{versionString}",
-     *     name="search-usages",
-     *     requirements={"package"="[^;]+", "_format": "json|html"},
-     *     defaults={"_format"="html"}
-     * )
-     * @Template()
-     * @ParamConverter("package", class="AppBundle\Entity\Package", options={"repository_method" = "findOneByName"})
-     */
-    public function searchResultsAction(Package $package, $operator, $versionString, $_format)
+    #[Route(
+        '/usage-search/{package};{_format}/{operator}/{versionString}',
+        name: 'search-usages',
+        requirements: ['package' => '[^;]+', '_format' => 'json|html'],
+        defaults: ['_format' => 'html']
+    )]
+    public function searchResultsAction(string $package, string $operator, string $versionString, string $_format): Response
     {
         if ('html' === $_format) {
             // an older version of Baton used this URL to render search results. To keep the URLs intact, we redirect
-            $url = $this->urlGenerator->generate('main', MainController::getUrlParametersForSearchSubmitPage(
-                $package->getName(),
-                $operator,
-                $versionString
-            ));
+            $url = $this->urlGenerator->generate(
+                'main',
+                MainController::getUrlParametersForSearchSubmitPage($package, $operator, $versionString)
+            );
 
             return new RedirectResponse($url);
+        }
+
+        $packageEntity = $this->packageRepository->findOneByName($package);
+        if (!$packageEntity) {
+            throw new NotFoundHttpException();
         }
 
         if (!preg_match(VersionConstraint::VALID_OPERATORS, $operator)) {
@@ -58,14 +56,18 @@ class UsageSearchController
         }
 
         $normalizedVersionString = (new VersionParser())->normalize($versionString);
-
         $versionConstraint = new VersionConstraint($operator, $normalizedVersionString);
 
-        return [
-            'matchingPackageVersions' => $package->getMatchingVersionsWithProjects($versionConstraint),
-            'package' => $package,
-            'operator' => $operator,
-            'versionString' => $versionString,
-        ];
+        return new Response(
+            $this->twig->render(
+                '@AppBundle/usage_search/search_results.json.twig',
+                [
+                    'matchingPackageVersions' => $packageEntity->getMatchingVersionsWithProjects($versionConstraint),
+                    'package' => $packageEntity,
+                    'operator' => $operator,
+                    'versionString' => $versionString,
+                ]
+            )
+        );
     }
 }

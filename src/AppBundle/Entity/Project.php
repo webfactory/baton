@@ -2,60 +2,49 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ProjectRepository")
- * @ORM\Table(name="Project")
- */
+#[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[ORM\Table(name: 'Project')]
 class Project
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
      * @var int
      */
     private $id;
 
+    #[ORM\Column(type: 'string', unique: true)]
     /**
-     * @ORM\Column(type="string", unique=true)
-     *
      * @var string
      */
     private $name;
 
+    #[ORM\Column(name: 'vcsUrl', type: 'string')]
     /**
-     * @ORM\Column(name="vcsUrl", type="string")
-     *
      * @var string
      */
     private $vcsUrl;
 
+    #[ORM\Column(type: 'string', nullable: true)]
     /**
-     * @ORM\Column(type="string", nullable=true)
-     *
      * @var string|null
      */
     private $description;
 
+    #[ORM\Column(type: 'boolean')]
     /**
-     * @ORM\Column(type="boolean")
-     *
      * @var bool
      */
     public $archived = false;
 
+    #[ORM\ManyToMany(targetEntity: PackageVersion::class, mappedBy: 'projects', cascade: ['persist'])]
     /**
-     * @ORM\ManyToMany(
-     *      targetEntity="PackageVersion",
-     *      mappedBy="projects",
-     *      cascade={"persist"}
-     * )
-     *
      * @var Collection|PackageVersion[]
      */
     private $packageVersions;

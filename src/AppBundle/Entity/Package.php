@@ -2,49 +2,41 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Repository\PackageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Describes the mapping for Composer Packages that are used in projects.
- *
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PackageRepository")
- * @ORM\Table(name="Package")
  */
+#[ORM\Entity(repositoryClass: PackageRepository::class)]
+#[ORM\Table(name: 'Package')]
 class Package
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
      * @var int
      */
     private $id;
 
+    #[ORM\Column(type: 'string', unique: true)]
     /**
-     * @ORM\Column(type="string", unique=true)
-     *
      * @var string
      */
     private $name;
 
+    #[ORM\Column(type: 'string', nullable: true)]
     /**
-     * @ORM\Column(type="string", nullable=true)
-     *
      * @var string|null
      */
     private $description;
 
+    #[ORM\OneToMany(targetEntity: PackageVersion::class, mappedBy: 'package', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     /**
-     * @ORM\OneToMany(
-     *      targetEntity="PackageVersion",
-     *      mappedBy="package",
-     *      cascade={"persist", "remove"}
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     *
      * @var Collection|PackageVersion[]
      */
     private $versions;

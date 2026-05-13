@@ -29,8 +29,8 @@ class ImportProjectTaskTest extends KernelTestCase
         $this->vcsDriverFactory = $this->createMock(VcsDriverFactory::class);
         $this->packageVersionFetcher = $this->createMock(PackageVersionFetcher::class);
         $this->importProjectTask = new ImportProjectTask(
-            self::$container->get(EntityManagerInterface::class),
-            self::$container->get(ProjectProviderInterface::class),
+            self::getContainer()->get(EntityManagerInterface::class),
+            self::getContainer()->get(ProjectProviderInterface::class),
             $this->packageVersionFetcher,
             $this->vcsDriverFactory,
             new NullLogger()

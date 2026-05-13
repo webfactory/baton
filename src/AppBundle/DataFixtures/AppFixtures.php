@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $versionStrings = ['1.0.0', '2.0.0', '3.0.0'];
         for ($i = 0; $i < 2; ++$i) {

@@ -3,9 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\ProjectImport\ImportProjectTask;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class WebhookController
@@ -16,9 +16,7 @@ class WebhookController
     ) {
     }
 
-    /**
-     * @Route("/webhook", name="webhook", methods={"POST"})
-     */
+    #[Route('/webhook', name: 'webhook', methods: ['POST'])]
     public function updateAction(Request $request)
     {
         set_time_limit(500);
