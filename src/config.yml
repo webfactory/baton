@@ -1,3 +1,0 @@
-imports:
-    - { resource: config.default.yml }
-    - { resource: config.local.yml, ignore_errors: true }
