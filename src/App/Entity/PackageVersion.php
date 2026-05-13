@@ -24,10 +24,10 @@ class PackageVersion
     private ?int $id = null;
 
     #[ORM\Column(name: 'prettyVersion')]
-    private string $prettyVersion;
+    private readonly string $prettyVersion;
 
     #[ORM\ManyToOne(targetEntity: Package::class, inversedBy: 'versions', cascade: ['persist'])]
-    private Package $package;
+    private readonly Package $package;
 
     #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'usages')]
     #[ORM\JoinTable(name: 'packageversion_project',

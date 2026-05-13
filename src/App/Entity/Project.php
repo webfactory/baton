@@ -19,7 +19,7 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    private string $name;
+    private readonly string $name;
 
     #[ORM\Column(name: 'vcsUrl')]
     private ?string $vcsUrl = null;

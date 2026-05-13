@@ -22,7 +22,7 @@ class Package
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    private string $name;
+    private readonly string $name;
 
     #[ORM\Column(nullable: true)]
     private ?string $description;

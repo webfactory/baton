@@ -12,9 +12,9 @@ class VersionConstraint
 {
     public const VALID_OPERATORS = '(==|>=|<=|>|<|all)';
 
-    private string $operator;
+    private readonly string $operator;
 
-    private ?string $normalizedVersionString = null;
+    private readonly ?string $normalizedVersionString;
 
     public function __construct(string $operator, string $versionString)
     {
@@ -23,10 +23,9 @@ class VersionConstraint
         }
 
         $this->operator = $operator;
-
-        if ('all' !== $operator) {
-            $this->normalizedVersionString = (new VersionParser())->normalize($versionString);
-        }
+        $this->normalizedVersionString = ('all' !== $operator)
+            ? (new VersionParser())->normalize($versionString)
+            : null;
     }
 
     public function matches(PackageVersion $packageVersion): bool
