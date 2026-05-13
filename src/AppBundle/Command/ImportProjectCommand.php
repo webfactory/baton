@@ -28,7 +28,7 @@ class ImportProjectCommand extends Command
           ->addArgument('vcsUrl', InputArgument::REQUIRED, 'http Url of the vcs repository');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $vcsUrl = $input->getArgument('vcsUrl');
         $importSucess = $this->importProjectTask->run($vcsUrl);
@@ -38,5 +38,7 @@ class ImportProjectCommand extends Command
         } else {
             $output->writeln('Import failed for '.$vcsUrl.'. Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.');
         }
+
+        return Command::SUCCESS;
     }
 }

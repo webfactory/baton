@@ -34,7 +34,7 @@ framework:
     enabled:      true
     csrf_protection:
       enabled:  false
-  validation:       { enable_annotations: true }
+  validation:       { enable_attributes: true }
   translator:       { fallback: de_DE }
   session:
     save_path:    null
@@ -55,9 +55,10 @@ doctrine:
     password: "%mysql.password%"
     charset:  utf8
     schema_filter: ~^(?!(_dbversion$|_fixed_tableid$|wfd_))~
-    server_version: 5.7
+    server_version: '5.7'
   orm:
     auto_mapping: true
+    enable_native_lazy_objects: true
 
 services:
   app.logging.web_processor:
