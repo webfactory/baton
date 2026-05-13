@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\ProjectImport\ImportProjectTask;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +17,7 @@ class WebhookController
     }
 
     /**
-     * @Route("/webhook", name="webhook")
-     * @Method({"POST"})
+     * @Route("/webhook", name="webhook", methods={"POST"})
      */
     public function updateAction(Request $request)
     {
