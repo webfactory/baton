@@ -6,25 +6,25 @@
         "php": "^8.2",
         "composer/composer": "^2.0",
         "doctrine/dbal": "^4.0",
-        "doctrine/doctrine-bundle": "^2.13",
+        "doctrine/doctrine-bundle": "^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/migrations": "^3.0",
         "doctrine/orm": "^3.0",
-        "symfony/asset": "^7.2",
-        "symfony/console": "^7.2",
+        "symfony/asset": "^8.0",
+        "symfony/console": "^8.0",
         "symfony/dotenv": "^8.0",
-        "symfony/form": "^7.2",
-        "symfony/framework-bundle": "^7.2",
+        "symfony/form": "^8.0",
+        "symfony/framework-bundle": "^8.0",
         "symfony/monolog-bundle": "^3.2.0",
-        "symfony/translation": "^7.2",
-        "symfony/twig-bundle": "^7.2",
-        "symfony/validator": "^7.2",
-        "symfony/yaml": "^7.2"
+        "symfony/translation": "^8.0",
+        "symfony/twig-bundle": "^8.0",
+        "symfony/validator": "^8.0",
+        "symfony/yaml": "^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
-        "symfony/web-profiler-bundle": "^7.2"
+        "phpunit/phpunit": "^11.0",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "symfony/web-profiler-bundle": "^8.0"
     },
     "autoload": {
         "psr-4": {

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SearchPackageType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('package', DatalistType::class, [
@@ -32,7 +32,7 @@ class SearchPackageType extends AbstractType
             ->add('versionConstraint', VersionConstraintType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('translation_domain', false);

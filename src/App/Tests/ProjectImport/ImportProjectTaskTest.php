@@ -37,6 +37,14 @@ class ImportProjectTaskTest extends KernelTestCase
         );
     }
 
+    protected function tearDown(): void
+    {
+        // Symfony's ErrorHandler::register() adds an exception handler on kernel boot in debug mode.
+        // Restore it here so PHPUnit 11's exception-handler-depth check passes.
+        restore_exception_handler();
+        parent::tearDown();
+    }
+
     /**
      * @test
      */

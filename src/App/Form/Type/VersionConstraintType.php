@@ -15,7 +15,7 @@ use TypeError;
 
 class VersionConstraintType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('operator', ChoiceType::class, [
@@ -70,7 +70,7 @@ class VersionConstraintType extends AbstractType
         });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 }
