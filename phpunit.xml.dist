@@ -6,7 +6,7 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>src/AppBundle/Tests</directory>
+            <directory>src/App/Tests</directory>
         </testsuite>
     </testsuites>
 

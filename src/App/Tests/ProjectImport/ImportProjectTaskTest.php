@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Tests\Task;
+
+use App\Factory\VcsDriverFactory;
+use App\ProjectImport\ImportProjectTask;
+use App\ProjectImport\PackageVersionFetcher;
+use App\ProjectImport\ProjectProviderInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\NullLogger;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class ImportProjectTaskTest extends KernelTestCase
+{
+    /**
+     * @var ImportProjectTask
+     */
+    private $importProjectTask;
+
+    private PackageVersionFetcher&MockObject $packageVersionFetcher;
+    private VcsDriverFactory&MockObject $vcsDriverFactory;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        self::bootKernel();
+        $this->vcsDriverFactory = $this->createMock(VcsDriverFactory::class);
+        $this->packageVersionFetcher = $this->createMock(PackageVersionFetcher::class);
+        $this->importProjectTask = new ImportProjectTask(
+            self::getContainer()->get(EntityManagerInterface::class),
+            self::getContainer()->get(ProjectProviderInterface::class),
+            $this->packageVersionFetcher,
+            $this->vcsDriverFactory,
+            new NullLogger()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function import()
+    {
+        $this->packageVersionFetcher->method('fetch')->willReturn(
+            new ArrayCollection()
+        );
+
+        $this->assertTrue($this->importProjectTask->run('https://foo.git'));
+    }
+}
