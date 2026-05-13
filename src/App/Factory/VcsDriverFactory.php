@@ -10,18 +10,19 @@ use Composer\Repository\Vcs\VcsDriverInterface;
 use Composer\Util\HttpDownloader;
 use Composer\Util\ProcessExecutor;
 use RuntimeException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class VcsDriverFactory
 {
-    /** @var string */
-    private $githubOAuthToken;
-
     /** @var array ['platform' => VcsDriverInterface class ] */
     private $drivers;
 
-    public function __construct($githubOAuthToken, ?array $drivers = null)
+    public function __construct(
+        #[Autowire(param: 'app.github.token')]
+        private ?string $githubOAuthToken = null,
+        ?array $drivers = null,
+    )
     {
-        $this->githubOAuthToken = $githubOAuthToken;
         $this->drivers = $drivers ?: [
             'github' => 'Composer\Repository\Vcs\GitHubDriver',
             'gitlab' => 'Composer\Repository\Vcs\GitLabDriver',

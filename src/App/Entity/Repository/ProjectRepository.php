@@ -3,11 +3,17 @@
 namespace App\Entity\Repository;
 
 use App\Entity\Project;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ProjectRepository extends EntityRepository
+class ProjectRepository extends ServiceEntityRepository
 {
-    public function add(Project $project)
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Project::class);
+    }
+
+    public function add(Project $project): void
     {
         $this->getEntityManager()->persist($project);
     }

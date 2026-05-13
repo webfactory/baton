@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Twig\Environment;
@@ -19,7 +20,8 @@ class ImportRepositoriesController
         private FormFactoryInterface $formFactory,
         private ImportProjectTask $importProjectTask,
         private Environment $twig,
-        $demoMode = null,
+        #[Autowire(param: 'demo_mode')]
+        mixed $demoMode = null,
     ) {
         $this->demoMode = (bool) $demoMode;
     }

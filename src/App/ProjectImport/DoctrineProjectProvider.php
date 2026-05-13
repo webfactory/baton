@@ -4,10 +4,12 @@ namespace App\ProjectImport;
 
 use App\Entity\Project;
 use App\Entity\Repository\ProjectRepository;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 /**
  * Tries to fetch existing Project entity or creates a new one.
  */
+#[AsAlias(ProjectProviderInterface::class)]
 class DoctrineProjectProvider implements ProjectProviderInterface
 {
     /** @var ProjectRepository */
