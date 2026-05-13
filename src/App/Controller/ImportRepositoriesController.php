@@ -26,7 +26,7 @@ class ImportRepositoriesController
         $this->demoMode = (bool) $demoMode;
     }
 
-    #[Route('/import-repositories', name: 'import-repositories')]
+    #[Route('import-repositories', name: 'import-repositories')]
     public function importFormAction(Request $request): Response
     {
         $projectImportForm = $this->getProjectImportForm();

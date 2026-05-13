@@ -17,7 +17,7 @@ class MainController
     ) {
     }
 
-    #[Route('/', name: 'main')]
+    #[Route('', name: 'main')]
     public function mainAction(Request $request): Response
     {
         $searchPackageForm = $this->formFactory->create(SearchPackageType::class, null, ['method' => 'GET']);

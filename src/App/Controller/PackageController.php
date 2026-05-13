@@ -21,7 +21,7 @@ class PackageController
     }
 
     #[Route(
-        '/package/{name};{_format}',
+        'package/{name};{_format}',
         name: 'package',
         requirements: ['name' => '[^;]+', '_format' => 'json|html'],
         defaults: ['_format' => 'html']
@@ -55,7 +55,7 @@ class PackageController
     }
 
     #[Route(
-        '/package-versions/{name};{_format}',
+        'package-versions/{name};{_format}',
         name: 'package-versions',
         requirements: ['name' => '[^;]*'],
         defaults: ['_format' => 'json']

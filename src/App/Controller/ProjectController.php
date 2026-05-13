@@ -16,7 +16,7 @@ class ProjectController
     ) {
     }
 
-    #[Route('/project/{name}', name: 'project', requirements: ['name' => '.+'])]
+    #[Route('project/{name}', name: 'project', requirements: ['name' => '.+'])]
     public function detailAction(string $name): Response
     {
         $project = $this->projectRepository->findOneByName($name);

@@ -29,7 +29,7 @@ class UsageSearchController
     }
 
     #[Route(
-        '/usage-search/{package};{_format}/{operator}/{versionString}',
+        'usage-search/{package};{_format}/{operator}/{versionString}',
         name: 'search-usages',
         requirements: ['package' => '[^;]+', '_format' => 'json|html'],
         defaults: ['_format' => 'html']

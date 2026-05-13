@@ -17,7 +17,7 @@ class SettingsController
     ) {
     }
 
-    #[Route('/settings', name: 'settings')]
+    #[Route('settings', name: 'settings')]
     public function settingsAction(): Response
     {
         return new Response(
