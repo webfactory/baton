@@ -18,13 +18,13 @@ class Package
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', unique: true)]
+    #[ORM\Column(unique: true)]
     private string $name;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?string $description;
 
     #[ORM\OneToMany(targetEntity: PackageVersion::class, mappedBy: 'package', cascade: ['persist', 'remove'])]

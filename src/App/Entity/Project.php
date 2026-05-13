@@ -15,19 +15,19 @@ class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', unique: true)]
+    #[ORM\Column(unique: true)]
     private string $name;
 
-    #[ORM\Column(name: 'vcsUrl', type: 'string')]
+    #[ORM\Column(name: 'vcsUrl')]
     private ?string $vcsUrl = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column]
     public bool $archived = false;
 
     #[ORM\ManyToMany(targetEntity: PackageVersion::class, mappedBy: 'projects', cascade: ['persist'])]

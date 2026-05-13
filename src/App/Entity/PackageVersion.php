@@ -20,10 +20,10 @@ class PackageVersion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'prettyVersion', type: 'string')]
+    #[ORM\Column(name: 'prettyVersion')]
     private string $prettyVersion;
 
     #[ORM\ManyToOne(targetEntity: Package::class, inversedBy: 'versions', cascade: ['persist'])]
