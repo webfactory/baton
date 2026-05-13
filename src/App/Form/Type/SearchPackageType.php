@@ -6,6 +6,7 @@ namespace App\Form\Type;
 
 use App\Entity\Package;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +17,8 @@ class SearchPackageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('package', DatalistType::class, [
+            ->add('package', EntityType::class, [
+                'block_prefix' => 'datalist',
                 'label' => 'Package name',
                 'class' => Package::class,
                 'choice_label' => 'name',
