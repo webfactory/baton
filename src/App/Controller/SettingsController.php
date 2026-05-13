@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Repository\PackageRepository;
-use App\Entity\Repository\ProjectRepository;
+use App\Repository\PackageRepository;
+use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;

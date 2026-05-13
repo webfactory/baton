@@ -3,7 +3,7 @@
 namespace App\ProjectImport;
 
 use App\Entity\Package;
-use App\Entity\Repository\PackageRepository;
+use App\Repository\PackageRepository;
 
 /**
  * Tries to fetch existing Package entity or creates a new one.

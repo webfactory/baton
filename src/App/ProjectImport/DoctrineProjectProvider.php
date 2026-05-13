@@ -3,7 +3,7 @@
 namespace App\ProjectImport;
 
 use App\Entity\Project;
-use App\Entity\Repository\ProjectRepository;
+use App\Repository\ProjectRepository;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 /**

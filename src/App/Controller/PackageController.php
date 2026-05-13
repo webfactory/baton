@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Repository\PackageRepository;
+use App\Repository\PackageRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

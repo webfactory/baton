@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Repository\PackageRepository;
+use App\Repository\PackageRepository;
 use App\Entity\VersionConstraint;
 use Composer\Semver\VersionParser;
 use InvalidArgumentException;

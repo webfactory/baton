@@ -3,7 +3,7 @@
 namespace App\Tests\ProjectImport;
 
 use App\Entity\Package;
-use App\Entity\Repository\PackageRepository;
+use App\Repository\PackageRepository;
 use App\ProjectImport\DoctrinePackageProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

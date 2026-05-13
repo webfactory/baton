@@ -8,5 +8,5 @@ services:
         exclude:
             - '../../Tests/'
             - '../../DependencyInjection/'
-            - '../../Entity/*.php'
+            - '../../Entity/'
             - '../../Kernel.php'

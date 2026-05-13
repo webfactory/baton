@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Repository\ProjectRepository;
+use App\Repository\ProjectRepository;
 use App\ProjectImport\ImportProjectTask;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
