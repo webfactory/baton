@@ -10,16 +10,14 @@ use App\ProjectImport\PackageVersionFetcher;
 use App\ProjectImport\ProjectProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ImportProjectTaskTest extends KernelTestCase
 {
-    /**
-     * @var ImportProjectTask
-     */
-    private $importProjectTask;
+    private ImportProjectTask $importProjectTask;
 
     private PackageVersionFetcher&MockObject $packageVersionFetcher;
     private VcsDriverFactory&MockObject $vcsDriverFactory;
@@ -47,10 +45,8 @@ class ImportProjectTaskTest extends KernelTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function import()
+    #[Test]
+    public function import(): void
     {
         $this->packageVersionFetcher->method('fetch')->willReturn(
             new ArrayCollection()

@@ -8,54 +8,44 @@ use App\Entity\Package;
 use App\Entity\PackageVersion;
 use App\Entity\Project;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class PackageVersionTest extends TestCase
 {
     public const version = '1.0.0';
 
-    /**
-     * @var PackageVersion
-     */
-    private $packageVersion;
+    private PackageVersion $packageVersion;
 
     protected function setUp(): void
     {
         $this->packageVersion = new PackageVersion(self::version, new Package('webfactory/foo'));
     }
 
-    /**
-     * @test
-     */
-    public function addProjectAddsProject()
+    #[Test]
+    public function addProjectAddsProject(): void
     {
         $this->packageVersion->addUsingProject(new Project('bar'));
 
-        $this->assertTrue(count($this->packageVersion->getProjects()) > 0);
+        $this->assertNotEmpty($this->packageVersion->getProjects());
     }
 
-    /**
-     * @test
-     */
-    public function getVersionReturnsVersion()
+    #[Test]
+    public function getVersionReturnsVersion(): void
     {
         $this->assertSame(self::version, $this->packageVersion->getPrettyVersion());
     }
 
-    /**
-     * @test
-     */
-    public function getPackageReturnsAssociatedPackage()
+    #[Test]
+    public function getPackageReturnsAssociatedPackage(): void
     {
         $packageName = $this->packageVersion->getPackage()->getName();
 
         $this->assertSame('webfactory/foo', $packageName);
     }
 
-    /**
-     * @test
-     */
-    public function getProjectsReturnsArrayOfProjects()
+    #[Test]
+    public function getProjectsReturnsArrayOfProjects(): void
     {
         $this->packageVersion->addUsingProject(new Project('bar'));
 

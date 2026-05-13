@@ -9,25 +9,21 @@ use App\ProjectImport\ComposerPackageFetcher;
 use App\ProjectImport\PackageProviderInterface;
 use App\ProjectImport\PackageVersionFetcher;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class PackageVersionFetcherTest extends TestCase
 {
-    /**
-     * @var PackageVersionFetcher
-     */
-    private $packageVersionFetcher;
+    private PackageVersionFetcher $packageVersionFetcher;
 
     protected function setUp(): void
     {
         $this->packageVersionFetcher = new PackageVersionFetcher($this->getPackageProviderMock(), $this->getComposerPackageFetcherMock());
     }
 
-    /**
-     * @test
-     */
-    public function fetchPackagesReturnsArrayCollectionOfPackageVersion()
+    #[Test]
+    public function fetchPackagesReturnsArrayCollectionOfPackageVersion(): void
     {
         $packageVersions = $this->packageVersionFetcher->fetch('https://foo.git');
 
@@ -36,10 +32,7 @@ class PackageVersionFetcherTest extends TestCase
         $this->assertSame('v1.0.0', $packageVersions[0]->getPrettyVersion());
     }
 
-    /**
-     * @return PackageProviderInterface|MockObject
-     */
-    private function getPackageProviderMock()
+    private function getPackageProviderMock(): PackageProviderInterface&MockObject
     {
         $packageProviderMock = $this->createMock(PackageProviderInterface::class);
         $packageProviderMock->expects($this->once())
@@ -49,10 +42,7 @@ class PackageVersionFetcherTest extends TestCase
         return $packageProviderMock;
     }
 
-    /**
-     * @return ComposerPackageFetcher|MockObject
-     */
-    private function getComposerPackageFetcherMock()
+    private function getComposerPackageFetcherMock(): ComposerPackageFetcher&MockObject
     {
         $composerPackageFetcherMock = $this->createMock(ComposerPackageFetcher::class);
         $composerPackageFetcherMock->expects($this->once())

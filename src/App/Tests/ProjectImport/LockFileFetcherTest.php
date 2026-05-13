@@ -7,25 +7,21 @@ namespace App\Tests\ProjectImport;
 use App\Factory\VcsDriverFactory;
 use App\ProjectImport\LockFileFetcher;
 use Composer\Repository\Vcs\VcsDriver;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class LockFileFetcherTest extends TestCase
 {
-    /**
-     * @var LockFileFetcher
-     */
-    private $lockFileFetcher;
+    private LockFileFetcher $lockFileFetcher;
 
     protected function setUp(): void
     {
         $this->lockFileFetcher = new LockFileFetcher($this->getVcsDriverFactoryMock());
     }
 
-    /**
-     * @test
-     */
-    public function getLockContentsReturnsComposerLockContentsAsString()
+    #[Test]
+    public function getLockContentsReturnsComposerLockContentsAsString(): void
     {
         $contents = $this->lockFileFetcher->getLockContents('https://foo.git');
         $composerLockHashFromTestFile = '00ff294db3665b98a4e585c174e10928';
@@ -34,10 +30,7 @@ class LockFileFetcherTest extends TestCase
         $this->assertIsString($contents);
     }
 
-    /**
-     * @return VcsDriverFactory|MockObject $vcsDriverFactory
-     */
-    private function getVcsDriverFactoryMock()
+    private function getVcsDriverFactoryMock(): VcsDriverFactory&MockObject
     {
         $vcsDriverMock = $this->getMockBuilder(VcsDriver::class)
             ->disableOriginalConstructor()

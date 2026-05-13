@@ -7,25 +7,21 @@ namespace App\Tests\ProjectImport;
 use App\Entity\Package;
 use App\ProjectImport\DoctrinePackageProvider;
 use App\Repository\PackageRepository;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DoctrinePackageProviderTest extends TestCase
 {
-    /**
-     * @var PackageRepository|MockObject
-     */
-    private $packageRepository;
+    private PackageRepository&MockObject $packageRepository;
 
     protected function setUp(): void
     {
         $this->packageRepository = $this->createMock(PackageRepository::class);
     }
 
-    /**
-     * @test
-     */
-    public function providePackageReturnsNewPackageObjectIfNoneFound()
+    #[Test]
+    public function providePackageReturnsNewPackageObjectIfNoneFound(): void
     {
         $this->packageRepository
             ->expects($this->once())
@@ -39,10 +35,8 @@ class DoctrinePackageProviderTest extends TestCase
         $this->assertSame('Foo', $package->getName());
     }
 
-    /**
-     * @test
-     */
-    public function providePackageReturnsExistingPackageObjectIfFound()
+    #[Test]
+    public function providePackageReturnsExistingPackageObjectIfFound(): void
     {
         $this->packageRepository
             ->expects($this->once())

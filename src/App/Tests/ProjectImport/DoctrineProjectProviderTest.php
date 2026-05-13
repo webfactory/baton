@@ -7,25 +7,21 @@ namespace App\Tests\ProjectImport;
 use App\Entity\Project;
 use App\ProjectImport\DoctrineProjectProvider;
 use App\Repository\ProjectRepository;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DoctrineProjectProviderTest extends TestCase
 {
-    /**
-     * @var ProjectRepository|MockObject
-     */
-    private $projectRepository;
+    private ProjectRepository&MockObject $projectRepository;
 
     protected function setUp(): void
     {
         $this->projectRepository = $this->createMock(ProjectRepository::class);
     }
 
-    /**
-     * @test
-     */
-    public function provideProjectReturnsNewProjectObjectIfNoneFound()
+    #[Test]
+    public function provideProjectReturnsNewProjectObjectIfNoneFound(): void
     {
         $this->projectRepository
             ->expects($this->once())
@@ -33,16 +29,14 @@ class DoctrineProjectProviderTest extends TestCase
             ->willReturn(null);
         $doctrineProjectProvider = new DoctrineProjectProvider($this->projectRepository);
 
-        $package = $doctrineProjectProvider->provideProject('Foo');
+        $project = $doctrineProjectProvider->provideProject('Foo');
 
-        $this->assertInstanceOf(Project::class, $package);
-        $this->assertSame('Foo', $package->getName());
+        $this->assertInstanceOf(Project::class, $project);
+        $this->assertSame('Foo', $project->getName());
     }
 
-    /**
-     * @test
-     */
-    public function provideProjectReturnsExistingProjectObjectIfFound()
+    #[Test]
+    public function provideProjectReturnsExistingProjectObjectIfFound(): void
     {
         $this->projectRepository
             ->expects($this->once())
@@ -56,10 +50,8 @@ class DoctrineProjectProviderTest extends TestCase
         $this->assertSame('Bar', $project->getName());
     }
 
-    /**
-     * @test
-     */
-    public function provideProjectTellsEntityManagerToPersistProvidedProjectObject()
+    #[Test]
+    public function provideProjectTellsEntityManagerToPersistProvidedProjectObject(): void
     {
         $this->projectRepository
             ->expects($this->once())

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Entity;
 
 use App\Entity\Package;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class PackageTest extends TestCase
@@ -12,36 +13,27 @@ class PackageTest extends TestCase
     public const name = 'webfactory/bar';
     public const description = 'foo';
 
-    /**
-     * @var Package
-     */
-    private $package;
+    private Package $package;
 
     protected function setUp(): void
     {
         $this->package = new Package(self::name, self::description);
     }
 
-    /**
-     * @test
-     */
-    public function getNameReturnsName()
+    #[Test]
+    public function getNameReturnsName(): void
     {
         $this->assertSame(self::name, $this->package->getName());
     }
 
-    /**
-     * @test
-     */
-    public function getDescriptionReturnsDescription()
+    #[Test]
+    public function getDescriptionReturnsDescription(): void
     {
         $this->assertSame(self::description, $this->package->getDescription());
     }
 
-    /**
-     * @test
-     */
-    public function getVersionReturnsSameInstanceOnRepeatedCallsWithSamePrettyVersionString()
+    #[Test]
+    public function getVersionReturnsSameInstanceOnRepeatedCallsWithSamePrettyVersionString(): void
     {
         $first = $this->package->getVersion('1.0.0');
         $second = $this->package->getVersion('1.0.0');
@@ -49,10 +41,8 @@ class PackageTest extends TestCase
         $this->assertSame($first, $second);
     }
 
-    /**
-     * @test
-     */
-    public function getVersionCreatesOnlyOnePackageVersionForSamePrettyVersionString()
+    #[Test]
+    public function getVersionCreatesOnlyOnePackageVersionForSamePrettyVersionString(): void
     {
         $this->package->getVersion('1.0.0');
         $this->package->getVersion('1.0.0');
