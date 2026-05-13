@@ -7,14 +7,8 @@ use Composer\Package\Package;
 
 class ComposerPackageFetcher
 {
-    /**
-     * @var LockFileFetcher
-     */
-    private $lockFileFetcher;
-
-    public function __construct(LockFileFetcher $lockFileFetcher)
+    public function __construct(private LockFileFetcher $lockFileFetcher)
     {
-        $this->lockFileFetcher = $lockFileFetcher;
     }
 
     /**

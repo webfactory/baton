@@ -7,16 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class PackageVersionFetcher
 {
-    /** @var PackageProviderInterface */
-    private $packageProvider;
-
-    /** @var ComposerPackageFetcher */
-    private $composerPackageFetcher;
-
-    public function __construct(PackageProviderInterface $packageProvider, ComposerPackageFetcher $composerPackageFetcher)
-    {
-        $this->packageProvider = $packageProvider;
-        $this->composerPackageFetcher = $composerPackageFetcher;
+    public function __construct(
+        private PackageProviderInterface $packageProvider,
+        private ComposerPackageFetcher $composerPackageFetcher,
+    ) {
     }
 
     /**

@@ -10,12 +10,8 @@ use App\Entity\Repository\PackageRepository;
  */
 class DoctrinePackageProvider implements PackageProviderInterface
 {
-    /** @var PackageRepository */
-    private $packageRepository;
-
-    public function __construct(PackageRepository $packageRepository)
+    public function __construct(private PackageRepository $packageRepository)
     {
-        $this->packageRepository = $packageRepository;
     }
 
     public function providePackage($name)

@@ -12,33 +12,13 @@ use Psr\Log\LoggerInterface;
 
 class ImportProjectTask
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var ProjectProviderInterface */
-    private $projectProvider;
-
-    /** @var PackageVersionFetcher */
-    private $packageVersionFetcher;
-
-    /** @var VcsDriverFactory */
-    private $vcsDriverFactory;
-
-    /** @var LoggerInterface */
-    private $logger;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        ProjectProviderInterface $projectProvider,
-        PackageVersionFetcher $packageVersionFetcher,
-        VcsDriverFactory $vcsDriverFactory,
-        LoggerInterface $logger
+        private EntityManagerInterface $entityManager,
+        private ProjectProviderInterface $projectProvider,
+        private PackageVersionFetcher $packageVersionFetcher,
+        private VcsDriverFactory $vcsDriverFactory,
+        private LoggerInterface $logger,
     ) {
-        $this->entityManager = $entityManager;
-        $this->projectProvider = $projectProvider;
-        $this->packageVersionFetcher = $packageVersionFetcher;
-        $this->vcsDriverFactory = $vcsDriverFactory;
-        $this->logger = $logger;
     }
 
     /**

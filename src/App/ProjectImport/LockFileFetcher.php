@@ -7,12 +7,8 @@ use Composer\Downloader\TransportException;
 
 class LockFileFetcher
 {
-    /** @var VcsDriverFactory */
-    private $vcsDriverFactory;
-
-    public function __construct(VcsDriverFactory $vcsDriverFactory)
+    public function __construct(private VcsDriverFactory $vcsDriverFactory)
     {
-        $this->vcsDriverFactory = $vcsDriverFactory;
     }
 
     /**

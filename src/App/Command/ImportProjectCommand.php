@@ -10,13 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportProjectCommand extends Command
 {
-    /** @var ImportProjectTask */
-    private $importProjectTask;
-
-    public function __construct(ImportProjectTask $importProjectTask)
+    public function __construct(private ImportProjectTask $importProjectTask)
     {
-        $this->importProjectTask = $importProjectTask;
-
         parent::__construct();
     }
 
