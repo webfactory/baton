@@ -7,6 +7,8 @@ use AppBundle\Exception\NoVcsDriverFoundException;
 use Composer\Factory;
 use Composer\IO\NullIO;
 use Composer\Repository\Vcs\VcsDriverInterface;
+use Composer\Util\HttpDownloader;
+use Composer\Util\ProcessExecutor;
 use RuntimeException;
 
 class VcsDriverFactory
@@ -39,12 +41,14 @@ class VcsDriverFactory
     {
         $composerConfig = Factory::createConfig();
         $io = $this->getIO();
+        $httpDownloader = new HttpDownloader($io, $composerConfig);
+        $process = new ProcessExecutor($io);
 
         /** @var VcsDriverInterface $driver */
         foreach ($this->drivers as $driver) {
             if ($driver::supports($io, $composerConfig, $vcsUrl)) {
                 try {
-                    $driver = new $driver(['url' => $vcsUrl], $io, $composerConfig);
+                    $driver = new $driver(['url' => $vcsUrl], $io, $composerConfig, $httpDownloader, $process);
                     $driver->initialize();
                 } catch (RuntimeException $exception) {
                     throw new InsufficientVcsAccessException('Failed to communicate with repository. Check that you have sufficient access with your authentication method.', 0, $exception);

@@ -25,16 +25,16 @@ parameters:
   app.github.webhook_secret: '%env(GITHUB_WEBHOOK_SECRET)%'
   env(GITHUB_OAUTH_TOKEN): ~ # default is null, set this environment variable on your server to communicate with private repositories on GitHub
   env(GITHUB_WEBHOOK_SECRET): ~ # default is null, set this environment variable on your server to validate webhook payloads
+  env(HOSTNAME): 'localhost'
 
 framework:
   secret:           "%secret%"
-  router:           { resource: "%kernel.root_dir%/routing.yml" }
+  router:           { resource: "%kernel.project_dir%/src/routing.yml" }
   form:
     enabled:      true
     csrf_protection:
       enabled:  false
   validation:       { enable_annotations: true }
-  templating:       { engines: ['twig'] }
   translator:       { fallback: de_DE }
   session:
     save_path:    null

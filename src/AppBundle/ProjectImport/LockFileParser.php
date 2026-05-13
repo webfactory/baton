@@ -4,15 +4,15 @@ namespace AppBundle\ProjectImport;
 
 use AppBundle\Exception\ProjectHasNoComposerPackageUsageInfoException;
 use Composer\Json\JsonFile;
+use Composer\Package\CompletePackage;
 use Composer\Package\Loader\ArrayLoader;
-use Composer\Package\Package;
 
 class LockFileParser
 {
     /**
      * @param string $lockContents JSON string
      *
-     * @return Package[]
+     * @return CompletePackage[]
      */
     public static function getPackages($lockContents)
     {
@@ -31,8 +31,8 @@ class LockFileParser
         }
 
         foreach ($lockedPackages as $packageConfig) {
-            $package = $packageLoader->load($packageConfig, Package::class);
-            if ($package instanceof Package) {
+            $package = $packageLoader->load($packageConfig, CompletePackage::class);
+            if ($package instanceof CompletePackage) {
                 $packages[] = $package;
             }
         }

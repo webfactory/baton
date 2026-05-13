@@ -1,5 +1,5 @@
 framework:
-    router:   { resource: "%kernel.root_dir%/routing_development.yml" }
+    router:   { resource: "%kernel.project_dir%/src/routing_development.yml" }
     profiler:
         enabled: true
 
