@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\ProjectImport\ImportProjectTask;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:import-project',
+    description: 'Imports project and extracts relevant composer dependency information.',
+)]
 class ImportProjectCommand extends Command
 {
     public function __construct(private ImportProjectTask $importProjectTask)
@@ -19,10 +24,7 @@ class ImportProjectCommand extends Command
 
     protected function configure(): void
     {
-        $this
-          ->setName('app:import-project')
-          ->setDescription('Imports project and extracts relevant composer dependency information.')
-          ->addArgument('vcsUrl', InputArgument::REQUIRED, 'http Url of the vcs repository');
+        $this->addArgument('vcsUrl', InputArgument::REQUIRED, 'http Url of the vcs repository');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

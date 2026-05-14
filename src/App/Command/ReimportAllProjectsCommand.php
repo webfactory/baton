@@ -6,10 +6,15 @@ namespace App\Command;
 
 use App\ProjectImport\ImportProjectTask;
 use App\Repository\ProjectRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:reimport-all-projects',
+    description: 'Re-Imports all projects that have already been imported and updates metadata and relevant composer dependency information.',
+)]
 class ReimportAllProjectsCommand extends Command
 {
     public function __construct(
@@ -17,13 +22,6 @@ class ReimportAllProjectsCommand extends Command
         private readonly ProjectRepository $projectRepository,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('app:reimport-all-projects')
-            ->setDescription('Re-Imports all projects that have already been imported and updates metadata and relevant composer dependency information.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
