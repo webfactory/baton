@@ -55,7 +55,7 @@ class MainController
     /**
      * Used to redirect to the form submit page from legacy routes.
      */
-    public static function getUrlParametersForSearchSubmitPage($package, $operator, $versionString): array
+    public static function getUrlParametersForSearchSubmitPage(string $package, string $operator, string $versionString): array
     {
         return [
             'search_package' => [

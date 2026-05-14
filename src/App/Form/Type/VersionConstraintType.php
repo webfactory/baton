@@ -41,7 +41,7 @@ class VersionConstraintType extends AbstractType
         $builder->get('value')->resetViewTransformers(); // hack to disable validation against empty list
 
         $builder->addModelTransformer(new class implements DataTransformerInterface {
-            public function transform($value)
+            public function transform(mixed $value): mixed
             {
                 if (null === $value) {
                     return null;
@@ -57,7 +57,7 @@ class VersionConstraintType extends AbstractType
                 ];
             }
 
-            public function reverseTransform($value)
+            public function reverseTransform(mixed $value): mixed
             {
                 if (null === $value) {
                     return null;

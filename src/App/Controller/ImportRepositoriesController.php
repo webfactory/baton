@@ -8,6 +8,7 @@ use App\ProjectImport\ImportProjectTask;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -60,7 +61,7 @@ class ImportRepositoriesController
         );
     }
 
-    private function getProjectImportForm()
+    private function getProjectImportForm(): FormInterface
     {
         return $this->formFactory->createBuilder()
             ->add(

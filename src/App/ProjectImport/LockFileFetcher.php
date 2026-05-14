@@ -13,10 +13,7 @@ class LockFileFetcher
     {
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLockContents($vcsUrl)
+    public function getLockContents(string $vcsUrl): ?string
     {
         try {
             $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);

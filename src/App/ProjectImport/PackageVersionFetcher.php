@@ -16,11 +16,9 @@ class PackageVersionFetcher
     }
 
     /**
-     * @param string $vcsUrl
-     *
-     * @return ArrayCollection|PackageVersion[]
+     * @return ArrayCollection<array-key, PackageVersion>
      */
-    public function fetch($vcsUrl)
+    public function fetch(string $vcsUrl): ArrayCollection
     {
         $usages = new ArrayCollection();
 

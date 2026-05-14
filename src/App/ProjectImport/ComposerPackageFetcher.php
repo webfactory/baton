@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\ProjectImport;
 
 use App\Exception\ProjectHasNoComposerPackageUsageInfoException;
-use Composer\Package\Package;
 
 class ComposerPackageFetcher
 {
@@ -13,12 +12,7 @@ class ComposerPackageFetcher
     {
     }
 
-    /**
-     * @param string $vcsUrl
-     *
-     * @return Package[]
-     */
-    public function fetchPackages($vcsUrl)
+    public function fetchPackages(string $vcsUrl): array
     {
         $lockContents = $this->lockFileFetcher->getLockContents($vcsUrl);
 

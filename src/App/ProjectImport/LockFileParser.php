@@ -14,9 +14,9 @@ class LockFileParser
     /**
      * @param string $lockContents JSON string
      *
-     * @return CompletePackage[]
+     * @return list<CompletePackage>
      */
-    public static function getPackages($lockContents)
+    public static function getPackages(string $lockContents): array
     {
         $lockData = JsonFile::parseJson($lockContents);
         $packages = [];

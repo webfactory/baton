@@ -21,7 +21,7 @@ class WebhookController
     }
 
     #[Route('webhook', name: 'webhook', methods: ['POST'])]
-    public function updateAction(Request $request)
+    public function updateAction(Request $request): Response
     {
         set_time_limit(500);
 
