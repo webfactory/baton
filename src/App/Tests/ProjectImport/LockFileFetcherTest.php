@@ -8,7 +8,7 @@ use App\Factory\VcsDriverFactory;
 use App\ProjectImport\LockFileFetcher;
 use Composer\Repository\Vcs\VcsDriver;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 class LockFileFetcherTest extends TestCase
@@ -30,7 +30,7 @@ class LockFileFetcherTest extends TestCase
         $this->assertIsString($contents);
     }
 
-    private function getVcsDriverFactoryMock(): VcsDriverFactory&MockObject
+    private function getVcsDriverFactoryMock(): VcsDriverFactory&Stub
     {
         $vcsDriverMock = $this->getMockBuilder(VcsDriver::class)
             ->disableOriginalConstructor()
@@ -39,11 +39,11 @@ class LockFileFetcherTest extends TestCase
             ->method('getFileContent')
             ->willReturn(file_get_contents(__DIR__.'/composer_test.lock'));
 
-        $vcsDriverFactoryMock = $this->getMockBuilder(VcsDriverFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $vcsDriverFactoryMock->method('getDriver')->willReturn($vcsDriverMock);
+        $vcsDriverFactoryStub = $this->createStub(VcsDriverFactory::class);
+        $vcsDriverFactoryStub
+            ->method('getDriver')
+            ->willReturn($vcsDriverMock);
 
-        return $vcsDriverFactoryMock;
+        return $vcsDriverFactoryStub;
     }
 }

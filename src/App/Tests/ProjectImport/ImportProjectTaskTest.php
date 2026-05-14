@@ -11,7 +11,7 @@ use App\ProjectImport\ProjectProviderInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -19,15 +19,15 @@ class ImportProjectTaskTest extends KernelTestCase
 {
     private ImportProjectTask $importProjectTask;
 
-    private PackageVersionFetcher&MockObject $packageVersionFetcher;
-    private VcsDriverFactory&MockObject $vcsDriverFactory;
+    private PackageVersionFetcher&Stub $packageVersionFetcher;
+    private VcsDriverFactory&Stub $vcsDriverFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
         self::bootKernel();
-        $this->vcsDriverFactory = $this->createMock(VcsDriverFactory::class);
-        $this->packageVersionFetcher = $this->createMock(PackageVersionFetcher::class);
+        $this->vcsDriverFactory = $this->createStub(VcsDriverFactory::class);
+        $this->packageVersionFetcher = $this->createStub(PackageVersionFetcher::class);
         $this->importProjectTask = new ImportProjectTask(
             self::getContainer()->get(EntityManagerInterface::class),
             self::getContainer()->get(ProjectProviderInterface::class),
@@ -48,9 +48,9 @@ class ImportProjectTaskTest extends KernelTestCase
     #[Test]
     public function import(): void
     {
-        $this->packageVersionFetcher->method('fetch')->willReturn(
-            new ArrayCollection()
-        );
+        $this->packageVersionFetcher
+            ->method('fetch')
+            ->willReturn(new ArrayCollection());
 
         $this->assertTrue($this->importProjectTask->run('https://foo.git'));
     }
