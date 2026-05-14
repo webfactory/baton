@@ -13,9 +13,9 @@ use Twig\Environment;
 class SettingsController
 {
     public function __construct(
-        private ProjectRepository $projectRepository,
-        private PackageRepository $packageRepository,
-        private Environment $twig,
+        private readonly ProjectRepository $projectRepository,
+        private readonly PackageRepository $packageRepository,
+        private readonly Environment $twig,
     ) {
     }
 

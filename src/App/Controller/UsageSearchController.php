@@ -24,9 +24,9 @@ use Twig\Environment;
 class UsageSearchController
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private PackageRepository $packageRepository,
-        private Environment $twig,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly PackageRepository $packageRepository,
+        private readonly Environment $twig,
     ) {
     }
 

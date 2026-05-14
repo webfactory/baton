@@ -15,11 +15,11 @@ use Psr\Log\LoggerInterface;
 class ImportProjectTask
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private ProjectProviderInterface $projectProvider,
-        private PackageVersionFetcher $packageVersionFetcher,
-        private VcsDriverFactory $vcsDriverFactory,
-        private LoggerInterface $logger,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ProjectProviderInterface $projectProvider,
+        private readonly PackageVersionFetcher $packageVersionFetcher,
+        private readonly VcsDriverFactory $vcsDriverFactory,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

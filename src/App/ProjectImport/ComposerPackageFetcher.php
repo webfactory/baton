@@ -8,7 +8,7 @@ use App\Exception\ProjectHasNoComposerPackageUsageInfoException;
 
 class ComposerPackageFetcher
 {
-    public function __construct(private LockFileFetcher $lockFileFetcher)
+    public function __construct(private readonly LockFileFetcher $lockFileFetcher)
     {
     }
 

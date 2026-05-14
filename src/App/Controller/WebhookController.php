@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class WebhookController
 {
     public function __construct(
-        private ImportProjectTask $importProjectTask,
+        private readonly ImportProjectTask $importProjectTask,
         #[Autowire(param: 'app.github.webhook_secret')]
         private ?string $webhookSecret = null,
     ) {

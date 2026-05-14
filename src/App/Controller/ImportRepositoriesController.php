@@ -20,9 +20,9 @@ class ImportRepositoriesController
     private bool $demoMode;
 
     public function __construct(
-        private FormFactoryInterface $formFactory,
-        private ImportProjectTask $importProjectTask,
-        private Environment $twig,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly ImportProjectTask $importProjectTask,
+        private readonly Environment $twig,
         #[Autowire(param: 'demo_mode')]
         mixed $demoMode = null,
     ) {

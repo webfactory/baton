@@ -13,8 +13,8 @@ use Twig\Environment;
 class ProjectController
 {
     public function __construct(
-        private ProjectRepository $projectRepository,
-        private Environment $twig,
+        private readonly ProjectRepository $projectRepository,
+        private readonly Environment $twig,
     ) {
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ImportProjectCommand extends Command
 {
-    public function __construct(private ImportProjectTask $importProjectTask)
+    public function __construct(private readonly ImportProjectTask $importProjectTask)
     {
         parent::__construct();
     }

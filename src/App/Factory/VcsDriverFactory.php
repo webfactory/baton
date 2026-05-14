@@ -22,11 +22,11 @@ class VcsDriverFactory
      *     class-string<VcsDriverInterface>
      * >
      */
-    private array $drivers;
+    private readonly array $drivers;
 
     public function __construct(
         #[Autowire(param: 'app.github.token')]
-        private ?string $githubOAuthToken = null,
+        private readonly ?string $githubOAuthToken = null,
         ?array $drivers = null,
     ) {
         $this->drivers = $drivers ?: [

@@ -14,8 +14,8 @@ use Twig\Environment;
 class MainController
 {
     public function __construct(
-        private FormFactoryInterface $formFactory,
-        private Environment $twig,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly Environment $twig,
     ) {
     }
 
