@@ -36,7 +36,6 @@ return static function (ContainerConfigurator $container): void {
             'csrf_protection' => ['enabled' => false],
         ],
         'validation' => true,
-        'translator' => ['fallback' => 'de_DE'],
         'session' => ['save_path' => null],
         'default_locale' => 'de_DE',
         'trusted_hosts' => '%framework.trusted_hosts%',
