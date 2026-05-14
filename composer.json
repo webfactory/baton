@@ -15,7 +15,7 @@
         "symfony/dotenv": "^8.0",
         "symfony/form": "^8.0",
         "symfony/framework-bundle": "^8.0",
-        "symfony/monolog-bundle": "^3.2.0",
+        "symfony/monolog-bundle": "^4.0",
         "symfony/translation": "^8.0",
         "symfony/twig-bundle": "^8.0",
         "symfony/validator": "^8.0",
