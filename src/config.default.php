@@ -50,7 +50,7 @@ return static function (ContainerConfigurator $container): void {
             'password' => '%mysql.password%',
             'charset' => 'utf8',
             'schema_filter' => '~^(?!(_dbversion$|_fixed_tableid$|wfd_))~',
-            'server_version' => '5.7',
+            'server_version' => '8.0',
         ],
         'orm' => [
             'enable_native_lazy_objects' => true,
