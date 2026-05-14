@@ -16,7 +16,7 @@ class VersionConstraint
 
     private readonly ?string $normalizedVersionString;
 
-    public function __construct(string $operator, string $versionString)
+    public function __construct(string $operator, ?string $versionString)
     {
         if (!preg_match(self::VALID_OPERATORS, $operator)) {
             throw new InvalidArgumentException('The operator must match the regex expression '.self::VALID_OPERATORS);
