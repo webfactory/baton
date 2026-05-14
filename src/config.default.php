@@ -31,12 +31,7 @@ return static function (ContainerConfigurator $container): void {
 
     $container->extension('framework', [
         'secret' => '%secret%',
-        'form' => [
-            'enabled' => true,
-            'csrf_protection' => ['enabled' => false],
-        ],
-        'validation' => true,
-        'session' => ['save_path' => null],
+        'form' => ['csrf_protection' => ['enabled' => false]],
         'default_locale' => 'de_DE',
         'trusted_hosts' => '%framework.trusted_hosts%',
     ]);
