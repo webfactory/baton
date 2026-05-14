@@ -26,7 +26,7 @@ class ReimportAllProjectsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $errorCode = 0;
+        $returnCode = Command::SUCCESS;
 
         $projects = $this->projectRepository->findAll();
 
@@ -37,10 +37,10 @@ class ReimportAllProjectsCommand extends Command
                 $output->writeln('Successfully re-imported '.$project->getVcsUrl());
             } else {
                 $output->writeln('Re-import failed for '.$project->getVcsUrl().'. Make sure you have sufficient repository access and that it contains a composer.lock file. See logs for details.');
-                $errorCode = 1;
+                $returnCode = Command::FAILURE;
             }
         }
 
-        return $errorCode;
+        return $returnCode;
     }
 }
