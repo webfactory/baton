@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Composer Dependency Tracking",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "composer/composer": "^2.0",
         "doctrine/dbal": "^4.0",
         "doctrine/doctrine-bundle": "^3.0",
