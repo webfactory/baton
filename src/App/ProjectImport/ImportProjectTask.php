@@ -50,7 +50,7 @@ class ImportProjectTask
 
                 return false;
             }
-            $project->archived = $repoData['archived'] ?? false;
+            $project->setArchived($repoData['archived'] ?? false);
         }
 
         try {

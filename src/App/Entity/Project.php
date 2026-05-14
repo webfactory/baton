@@ -28,7 +28,7 @@ class Project
     private ?string $description = null;
 
     #[ORM\Column]
-    public bool $archived = false;
+    private bool $archived = false;
 
     #[ORM\ManyToMany(targetEntity: PackageVersion::class, mappedBy: 'projects', cascade: ['persist'])]
     private Collection $packageVersions;
@@ -64,6 +64,11 @@ class Project
         return $this->packageVersions;
     }
 
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
     public function setVcsUrl(string $vcsUrl): void
     {
         $this->vcsUrl = $vcsUrl;
@@ -72,6 +77,11 @@ class Project
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function setArchived(bool $archived): void
+    {
+        $this->archived = $archived;
     }
 
     public function setUsedPackageVersions(ArrayCollection $importedPackageVersions): void
