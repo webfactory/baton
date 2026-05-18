@@ -26,7 +26,7 @@ class PackageVersion
     #[ORM\Column(name: 'prettyVersion')]
     private readonly string $prettyVersion;
 
-    #[ORM\ManyToOne(targetEntity: Package::class, inversedBy: 'versions', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: Package::class, cascade: ['persist'], inversedBy: 'versions')]
     private readonly Package $package;
 
     #[ORM\ManyToMany(targetEntity: Project::class, inversedBy: 'usages')]
