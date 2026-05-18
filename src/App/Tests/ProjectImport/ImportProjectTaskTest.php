@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Task;
+namespace App\Tests\ProjectImport;
 
 use App\Factory\VcsDriverFactory;
 use App\ProjectImport\ImportProjectTask;
@@ -20,19 +20,17 @@ class ImportProjectTaskTest extends KernelTestCase
     private ImportProjectTask $importProjectTask;
 
     private PackageVersionFetcher&Stub $packageVersionFetcher;
-    private VcsDriverFactory&Stub $vcsDriverFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
         self::bootKernel();
-        $this->vcsDriverFactory = $this->createStub(VcsDriverFactory::class);
         $this->packageVersionFetcher = $this->createStub(PackageVersionFetcher::class);
         $this->importProjectTask = new ImportProjectTask(
             self::getContainer()->get(EntityManagerInterface::class),
             self::getContainer()->get(ProjectProviderInterface::class),
             $this->packageVersionFetcher,
-            $this->vcsDriverFactory,
+            $this->createStub(VcsDriverFactory::class),
             new NullLogger()
         );
     }
