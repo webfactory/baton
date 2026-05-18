@@ -39,7 +39,7 @@ class WebhookController
         }
         $repositoryWasImported = false;
 
-        if ($payload = $request->get('payload')) {
+        if ($payload = $request->request->get('payload')) {
             $payload = json_decode($payload, flags: JSON_THROW_ON_ERROR);
             if (isset($payload->repository) && $payload->repository && $payload->repository->html_url) {
                 $repositoryWasImported = $this->importProjectTask->run($payload->repository->html_url);
