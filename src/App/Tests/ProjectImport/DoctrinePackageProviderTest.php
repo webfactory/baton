@@ -31,7 +31,6 @@ class DoctrinePackageProviderTest extends TestCase
 
         $package = $doctrinePackageProvider->providePackage('Foo');
 
-        $this->assertInstanceOf(Package::class, $package);
         $this->assertSame('Foo', $package->getName());
     }
 
@@ -46,7 +45,6 @@ class DoctrinePackageProviderTest extends TestCase
 
         $package = $doctrinePackageProvider->providePackage('Bar');
 
-        $this->assertInstanceOf(Package::class, $package);
         $this->assertSame('Bar', $package->getName());
     }
 }

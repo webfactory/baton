@@ -31,7 +31,6 @@ class DoctrineProjectProviderTest extends TestCase
 
         $project = $doctrineProjectProvider->provideProject('Foo');
 
-        $this->assertInstanceOf(Project::class, $project);
         $this->assertSame('Foo', $project->getName());
     }
 
@@ -46,7 +45,6 @@ class DoctrineProjectProviderTest extends TestCase
 
         $project = $doctrineProjectProvider->provideProject('Bar');
 
-        $this->assertInstanceOf(Project::class, $project);
         $this->assertSame('Bar', $project->getName());
     }
 

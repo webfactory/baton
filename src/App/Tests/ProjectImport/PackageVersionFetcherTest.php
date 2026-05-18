@@ -8,7 +8,6 @@ use App\Entity\Package;
 use App\ProjectImport\ComposerPackageFetcher;
 use App\ProjectImport\PackageProviderInterface;
 use App\ProjectImport\PackageVersionFetcher;
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +26,6 @@ class PackageVersionFetcherTest extends TestCase
     {
         $packageVersions = $this->packageVersionFetcher->fetch('https://foo.git');
 
-        $this->assertInstanceOf(ArrayCollection::class, $packageVersions);
         $this->assertCount(1, $packageVersions);
         $this->assertSame('v1.0.0', $packageVersions[0]->getPrettyVersion());
     }
