@@ -19,4 +19,10 @@ class ProjectRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($project);
     }
+
+    public function findOneByName(string $name): ?Project
+    {
+        /* @var Project|null */
+        return $this->findOneBy(['name' => $name]);
+    }
 }

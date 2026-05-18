@@ -19,4 +19,10 @@ class PackageRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($package);
     }
+
+    public function findOneByName(string $name): ?Package
+    {
+        /* @var Package|null */
+        return $this->findOneBy(['name' => $name]);
+    }
 }
