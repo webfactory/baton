@@ -12,7 +12,7 @@ use App\Repository\PackageRepository;
  */
 class DoctrinePackageProvider implements PackageProviderInterface
 {
-    public function __construct(private PackageRepository $packageRepository)
+    public function __construct(private readonly PackageRepository $packageRepository)
     {
     }
 

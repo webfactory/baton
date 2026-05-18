@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 #[AsAlias(ProjectProviderInterface::class)]
 class DoctrineProjectProvider implements ProjectProviderInterface
 {
-    public function __construct(private ProjectRepository $projectRepository)
+    public function __construct(private readonly ProjectRepository $projectRepository)
     {
     }
 

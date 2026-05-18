@@ -16,7 +16,7 @@ class WebhookController
     public function __construct(
         private readonly ImportProjectTask $importProjectTask,
         #[Autowire(param: 'app.github.webhook_secret')]
-        private ?string $webhookSecret = null,
+        private readonly ?string $webhookSecret = null,
     ) {
     }
 
