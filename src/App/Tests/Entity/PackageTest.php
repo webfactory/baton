@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 class PackageTest extends TestCase
 {
-    public const name = 'webfactory/bar';
-    public const description = 'foo';
+    public const string name = 'webfactory/bar';
+    public const string description = 'foo';
 
     private Package $package;
 

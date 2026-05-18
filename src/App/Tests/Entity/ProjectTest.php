@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProjectTest extends TestCase
 {
-    public const name = 'foo';
+    public const string name = 'foo';
 
     private Project $project;
 

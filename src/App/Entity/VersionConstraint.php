@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class VersionConstraint
 {
-    public const VALID_OPERATORS = '(==|>=|<=|>|<|all)';
+    public const string VALID_OPERATORS = '(==|>=|<=|>|<|all)';
 
     private readonly string $operator;
 
