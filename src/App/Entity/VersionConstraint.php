@@ -24,7 +24,7 @@ class VersionConstraint
 
         $this->operator = $operator;
         $this->normalizedVersionString = ('all' !== $operator)
-            ? (new VersionParser())->normalize($versionString)
+            ? new VersionParser()->normalize($versionString)
             : null;
     }
 

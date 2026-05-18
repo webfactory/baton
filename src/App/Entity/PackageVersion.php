@@ -79,7 +79,7 @@ class PackageVersion
 
     public function getNormalizedVersion(): string
     {
-        return (new VersionParser())->normalize($this->getPrettyVersion());
+        return new VersionParser()->normalize($this->getPrettyVersion());
     }
 
     public function getPackage(): Package

@@ -57,7 +57,7 @@ class UsageSearchController
             throw new InvalidArgumentException('Operator query parameter must match '.VersionConstraint::VALID_OPERATORS);
         }
 
-        $normalizedVersionString = (new VersionParser())->normalize($versionString);
+        $normalizedVersionString = new VersionParser()->normalize($versionString);
         $versionConstraint = new VersionConstraint($operator, $normalizedVersionString);
 
         return new Response(
