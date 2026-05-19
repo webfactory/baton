@@ -1,5 +1,0 @@
-app:
-    resource: "@AppBundle/Controller"
-    prefix: /
-    defaults: { _locale: en }
-    type: annotation

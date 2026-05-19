@@ -16,6 +16,7 @@ phpunit.xml
 .idea/
 .bowerrc
 .php-cs-fixer.cache
+.phpunit.result.cache
 data
 webhookpassword
 authpasswords

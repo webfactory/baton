@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../../'
+        exclude:
+            - '../../Tests/'
+            - '../../Entity/'
+            - '../../Kernel.php'

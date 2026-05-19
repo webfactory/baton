@@ -11,7 +11,7 @@ module.exports = {
                 files: [
                     '../node_modules/jquery/dist/jquery.min.js',
                     '../node_modules/bootstrap/dist/js/bootstrap.min.js',
-                    '../src/AppBundle/Resources/public/js/searchProjectsWithPackageVersionForm.js',
+                    '../src/App/Resources/public/js/searchProjectsWithPackageVersionForm.js',
                 ],
                 destDir: 'js'
             }

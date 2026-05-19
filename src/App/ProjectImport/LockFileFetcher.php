@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\ProjectImport;
+
+use App\Factory\VcsDriverFactory;
+use Composer\Downloader\TransportException;
+
+class LockFileFetcher
+{
+    public function __construct(private readonly VcsDriverFactory $vcsDriverFactory)
+    {
+    }
+
+    public function getLockContents(string $vcsUrl): ?string
+    {
+        try {
+            $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);
+
+            return $vcsDriver->getFileContent('composer.lock', 'master');
+        } catch (TransportException $exception) {
+            if (404 === $exception->getStatusCode()) {
+                return null;
+            }
+
+            throw $exception;
+        }
+    }
+}

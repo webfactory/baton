@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Repository\PackageRepository;
+use App\Repository\ProjectRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
+
+class SettingsController
+{
+    public function __construct(
+        private readonly ProjectRepository $projectRepository,
+        private readonly PackageRepository $packageRepository,
+        private readonly Environment $twig,
+    ) {
+    }
+
+    #[Route('settings', name: 'settings')]
+    public function settingsAction(): Response
+    {
+        return new Response(
+            $this->twig->render(
+                'settings/settings.html.twig',
+                [
+                    'projects' => $this->projectRepository->findBy([], ['name' => 'ASC']),
+                    'packages' => $this->packageRepository->findBy([], ['name' => 'ASC']),
+                ]
+            )
+        );
+    }
+}

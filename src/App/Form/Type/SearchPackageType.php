@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Form\Type;
+
+use App\Entity\Package;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+class SearchPackageType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('package', EntityType::class, [
+                'block_prefix' => 'datalist',
+                'label' => 'Package name',
+                'class' => Package::class,
+                'choice_label' => 'name',
+                'choice_value' => 'name',
+                'query_builder' => fn (EntityRepository $repo) => $repo->createQueryBuilder('p')->orderBy('p.name', 'ASC'),
+                'placeholder' => 'First choose a package',
+                'choice_translation_domain' => false,
+                'label_attr' => ['class' => 'sr-only'],
+                'required' => true,
+                'constraints' => [new NotBlank()],
+            ])
+            ->add('versionConstraint', VersionConstraintType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefault('translation_domain', false);
+    }
+}
