@@ -15,16 +15,18 @@ class LockFileFetcher
 
     public function getLockContents(string $vcsUrl): ?string
     {
-        try {
-            $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);
+        $vcsDriver = $this->vcsDriverFactory->getDriver($vcsUrl);
 
-            return $vcsDriver->getFileContent('composer.lock', 'master');
-        } catch (TransportException $exception) {
-            if (404 === $exception->getStatusCode()) {
-                return null;
+        foreach (['main', 'master'] as $branch) {
+            try {
+                return $vcsDriver->getFileContent('composer.lock', $branch);
+            } catch (TransportException $exception) {
+                if (404 !== $exception->getStatusCode()) {
+                    throw $exception;
+                }
             }
-
-            throw $exception;
         }
+
+        return null;
     }
 }
