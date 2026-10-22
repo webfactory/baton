@@ -7,5 +7,5 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $container): void {
     $container->import(__DIR__.'/config.php');
     $container->import(__DIR__.'/config_test.default.php');
-    $container->import(__DIR__.'/config_test.local.php', 'php', true);
+    $container->import(__DIR__.'/config_test.local.yml', null, true);
 };
